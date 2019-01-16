@@ -31,7 +31,11 @@ $(document).ready(function() {
 			}, 3000);
 
     }
-  })
+  });
+
+  $('#splashLoginBtn').click(function() {
+    window.location.href = 'https://login.oregonstate.edu/idp/profile/cas/login?service=file:///Users/Omeed/Desktop/OSU/grad/cs562%20-%20software%20proj%20management/project/osu-community-marketplace/osucm/index.html/';
+  });
 });
 
 function chooseBackgroundImg() {
