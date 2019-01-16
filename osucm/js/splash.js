@@ -1,6 +1,7 @@
 $(document).ready(function() {
   var bgImgPath = './splash/' + chooseBackgroundImg();
   $('#splashImg').attr('src', bgImgPath);
+  $('#splashImg').fadeIn(1000);
 
   $('#closeNotifyX, #closeNotifyBtn').click(function () {
     $('#notifyEmail').val('');
