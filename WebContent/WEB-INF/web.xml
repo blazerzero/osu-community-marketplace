@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" metadata-complete="true" version="3.0">
+  <display-name>osu-community-marketplace</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+    <description></description>
+    <display-name>LoginController</display-name>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>com.osucm.controller.LoginController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/LoginController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ListingController</display-name>
+    <servlet-name>ListingController</servlet-name>
+    <servlet-class>com.osucm.controller.ListingController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ListingController</servlet-name>
+    <url-pattern>/ListingController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>SavedListingController</display-name>
+    <servlet-name>SavedListingController</servlet-name>
+    <servlet-class>com.osucm.controller.SavedListingController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SavedListingController</servlet-name>
+    <url-pattern>/SavedListingController</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
