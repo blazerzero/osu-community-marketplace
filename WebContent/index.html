@@ -26,35 +26,93 @@
       <div class='osu'>OSU</div>
       <div class='cm'>COMMUNITY MARKETPLACE</div>
     </div>
-    <div class='splash-options' id='splashLearnMoreBtn'>LEARN MORE</div>
+    <div class='splash-options' data-toggle='modal' data-target='#learnMoreModal'>LEARN MORE</div>
     <div class='splash-options' data-toggle='modal' data-target='#notifyMeModal'>NOTIFY ME!</div>
     <!--<div class='splash-options' id='splashLoginBtn'>LOG IN</div>-->
   </div>
 
-  <div class="modal fade" id="notifyMeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Notify Me</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='closeNotifyX'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <label for="basic-url" id="notifyEmailLabel">Email Address:</label>
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" id="notifyEmail" aria-describedby="basic-addon3">
+  <div class="modal fade" id="notifyMeModal" tabindex="-1" role="dialog" aria-labelledby="notifyMeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notifyMeModalLabel">Notify Me</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='closeNotifyX'>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="alert alert-danger" role="alert" id="invalidNotifyEmailAlert"></div>
-        <div class="alert alert-success" role="alert" id="notifySuccessAlert">Thanks! We'll email you when the marketplace is live!</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeNotifyBtn'>Close</button>
-        <button type="submit" class="btn btn-primary" id='submitNotifyBtn'>Submit</button>
+        <div class="modal-body">
+          <label for="basic-url" id="notifyEmailLabel">Email Address:</label>
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" id="notifyEmail" aria-describedby="basic-addon3">
+          </div>
+          <div class="alert alert-danger" role="alert" id="invalidNotifyEmailAlert"></div>
+          <div class="alert alert-success" role="alert" id="notifySuccessAlert">Thanks! We'll email you when the marketplace is live!</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeNotifyBtn'>Close</button>
+          <button type="submit" class="btn btn-primary" id='submitNotifyBtn'>Submit</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
+  
+  <div class="modal fade" id="learnMoreModal" tabindex="-1" role="dialog" aria-labelledby="learnMoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="learnMoreModalLabel">Learn More</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='closeLearnMoreX'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+ 		  <ul class="nav nav-tabs" id="myTab" role="tablist">
+ 			<li class="nav-item">
+   			  <a class="nav-link active" id="faq-tab" data-toggle="tab" href="#faq" role="tab" aria-controls="faq" aria-selected="true">About the Marketplace</a>
+ 			</li>
+		  	<li class="nav-item">
+		      <a class="nav-link" id="dev-tab" data-toggle="tab" href="#dev" role="tab" aria-controls="dev" aria-selected="false">About the Creators</a>
+		  	</li>
+		  </ul>
+		  <div class="tab-content" id="myTabContent">
+		    <div class="tab-pane fade show active" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+		      <br/>
+		      <h5 class="card-title"><strong>What is OSU Community Marketplace?</strong></h5>
+   		 	  <p class="card-text">
+   		  		The OSU Community Marketplace is an all-in-one hub for members of the OSU community to buy and sell products and services, as well as share housing availabilities, exclusively to other OSU community members.
+  		  	  </p>
+		    </div>
+		    <div class="tab-pane fade" id="dev" role="tabpanel" aria-labelledby="dev-tab">
+		      <br/>
+		      <h5 class="card-title"><strong>The Development Team</strong></h5>
+   		  	  <p class="card-text">
+   		  		Omeed Habibelahian<br/>
+   		  		<small>Project Manager and Developer</small>
+   		  	  </p>
+     		  <p class="card-text">
+     		  	Sheekha Jariwala<br/>
+     		  	<small>Developer</small>
+     		  </p>
+		    </div>
+		  </div>
+ 		  	  <!-- <h5 class="card-title"><strong>How do I create an account?</strong></h5>
+ 		  	  <p class="card-text">
+ 		  	  	All you have to do is click "Log Me In!" and you'll be redirected to the university's CAS ONID authentication system. 
+ 		  	  	If you're logging in for the first time, you'll be given the option to enter a couple more pieces of information about yourself, like your contact email and phone number, before continuing into the marketplace.
+ 		  	  	If you've logged in before, there's nothing more that you'd need to do. You're in!
+ 		  	  </p>
+ 		  	  <h5 class="card-title"><strong>How is my account pre-populated with my information?</strong></h5>
+ 		  	  <p class="card-text">
+ 		  	  	By using your ONID credentials, your account is pre-populated with general information about you, such as your name, your ONID, and your OSU email address. 
+ 		  	  	This is how we verify that you're a member of the OSU community.
+ 		  	  </p>-->
+	    </div>
+	    <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id='closeLearnMoreBtn'>Close</button>
+        </div>
+	  </div>
+    </div>
+  </div>
+  
 </body>
 </html>
