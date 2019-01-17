@@ -9,26 +9,40 @@ $(document).ready(function() {
   });
 
   $('#submitNotifyBtn').click(function() {
-    var email = $('#notifyEmail').val();
+	var notifyObj = new Object();
+    notifyObj.email = $('#notifyEmail').val();
     var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
-    if (email == '') {
+    if (notifyObj.email == '') {
       $('#invalidNotifyEmailAlert').html("Please enter an email address.");
   		$('#invalidNotifyEmailAlert').show();
     }
-    if (!pattern.test(email)) {
+    if (!pattern.test(notifyObj.email)) {
       $('#invalidNotifyEmailAlert').html("Invalid email address.");
   		$('#invalidNotifyEmailAlert').show();
     }
     else {
       $('#notifyEmail').val('');
-      // save email in db table of emails to notify
-      $('#invalidNotifyEmailAlert').hide();
-      $('#notifySuccessAlert').show();
-
-      setTimeout(function() {
-        $('#notifySuccessAlert').hide();
-        $('#notifyMeModal').modal('hide');
-			}, 3000);
+      console.log(JSON.stringify(notifyObj));
+      var status = sendDataSync(JSON.stringify(notifyObj), "addNotifyEmail", "NotifyController");
+      if (status == "JDBC_OK") {
+	      $('#invalidNotifyEmailAlert').hide();
+	      $('#notifyEmailLabel').css('display', 'none');
+	      $('#notifyEmail').css('display', 'none');
+	      $('#closeNotifyBtn').css('display', 'none');
+	      $('#submitNotifyBtn').css('display', 'none');
+	      $('#notifySuccessAlert').show();
+	
+	      setTimeout(function() {
+	        $('#notifySuccessAlert').hide();
+	        $('#notifyMeModal').modal('hide');
+	        setTimeout(function() {
+	        	$('#notifyEmailLabel').css('display', 'block');
+			    $('#notifyEmail').css('display', 'block');
+				$('#closeNotifyBtn').css('display', 'block');
+				$('#submitNotifyBtn').css('display', 'block');
+	        }, 1000);
+	      }, 3000);
+      }
 
     }
   });

@@ -1,8 +1,8 @@
 package com.osucm.database.pojo;
 
-public class NotifyPojo {
+public class NotifyPojo extends BasePojo {
 	
-	private String email;
+	public String email;
 
 	public String getEmail() {
 		return email;
@@ -11,7 +11,5 @@ public class NotifyPojo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 }

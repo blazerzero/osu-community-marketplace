@@ -7,6 +7,18 @@
   
   <servlet>
     <description></description>
+    <display-name>NotifyController</display-name>
+    <servlet-name>NotifyController</servlet-name>
+    <servlet-class>com.osucm.controller.NotifyController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>NotifyController</servlet-name>
+    <url-pattern>/NotifyController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
     <display-name>LoginController</display-name>
     <servlet-name>LoginController</servlet-name>
     <servlet-class>com.osucm.controller.LoginController</servlet-class>
