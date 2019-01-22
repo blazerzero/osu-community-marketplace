@@ -7,6 +7,8 @@ $(document).ready(function() {
     $('#notifyEmail').val('');
     $('#invalidNotifyEmailAlert').hide();
   });
+  
+  
 
   $('#submitNotifyBtn').click(function() {
 	var notifyObj = new Object();
@@ -56,4 +58,13 @@ function chooseBackgroundImg() {
   var images = ['corvallis.jpg', 'bend.jpg', 'portland.jpg'];
   var idx = Math.floor(Math.random() * images.length);
   return images[idx];
+}
+
+function searchKeyPress(e) {
+  e = e || window.event;
+  if (e.keyCode == 13) {
+	  $('#submitNotifyBtn').click();
+	  return false;
+  }
+  return true;
 }

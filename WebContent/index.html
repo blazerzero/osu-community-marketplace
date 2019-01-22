@@ -43,7 +43,7 @@
         <div class="modal-body">
           <label for="basic-url" id="notifyEmailLabel">Email Address:</label>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" id="notifyEmail" aria-describedby="basic-addon3">
+            <input type="email" class="form-control" id="notifyEmail" aria-describedby="basic-addon3" onkeypress="return searchKeyPress(event);">
           </div>
           <div class="alert alert-danger" role="alert" id="invalidNotifyEmailAlert"></div>
           <div class="alert alert-success" role="alert" id="notifySuccessAlert">Thanks! We'll email you when the marketplace is live!</div>
