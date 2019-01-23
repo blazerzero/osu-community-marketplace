@@ -116,8 +116,20 @@ html {
 	padding-bottom: 2vw;
 }
 
-/* Site Navigation Pane */
+#page-title {
+	padding-bottom: 1vw;
+}
 
+.row.listing-row {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+}
+
+.list-price {
+	color: green;
+}
+
+/* Site Navigation Pane */
 .sidenav {
 	font-size: 1.5em;
 	font-weight: bold;
@@ -169,18 +181,4 @@ html {
 
 .title-cm {
 	color: black;
-}
-
-/* Web Pages Behind the Authentication Wall */
-#page-title {
-	padding-bottom: 1vw;
-}
-
-.row.listing-row {
-	padding-top: 1vw;
-	padding-bottom: 1vw;
-}
-
-.list-price {
-	color: green;
 }
