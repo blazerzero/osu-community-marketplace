@@ -111,6 +111,7 @@ html {
 }
 
 #content {
+	width: auto;
 	padding-left: 4vw;
 	padding-top: 2vw;
 	padding-bottom: 2vw;
@@ -161,7 +162,7 @@ html {
 	text-decoration: none !important;
 }
 
-/* Header*/
+/* Header */
 .toptitle {
 	background-color: #d73f09;
 	display: inline-block;
@@ -181,4 +182,17 @@ html {
 
 .title-cm {
 	color: black;
+}
+
+/* home.html */
+#home-name {
+	color: grey;
+}
+
+.home-search {
+	display: inline-block;
+}
+
+#incompleteHomeSearchAlert {
+	display: none;
 }

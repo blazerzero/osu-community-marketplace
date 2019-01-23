@@ -25,6 +25,60 @@
   	<div class="sidenav" id="sidenav"></div>
   	<div id="content">
   	  <!--  PAGE CONTENT GOES HERE -->
+  	  <center><h1 id="home-name">Hi, Omeed!</h1></center>
+  	  <br/>
+  	  <div class="dropdown-divider"></div>
+  	  <br/>
+  	  <div id="home-search">
+  	  	<center><h2 id="page-title">Search Listings</h2></center>
+  	  	<div class="input-group mb-3">
+  	  	  <div class="input-group-prepend">
+	  	  	<select class="input-group-text" id="homeSearchType">
+  		  	  <option value="">Listing type</option>
+  		  	  <option value="p">Products</option>
+  		  	  <option value="s">Services</option>
+  		  	  <option value="h">Housing</option>
+	  	  	</select>
+	  	  </div>
+  		  <input type="text" class="form-control" id="homeSearchInput" placeholder="Search keywords" aria-label="Search keywords" aria-describedby="homeSearchType">
+  		  <div class="input-group-append">
+    		<button class="btn btn-primary" id="homeSearchSubmitBtn">Search</button>
+  		  </div>
+          <div class="alert alert-danger" role="alert" id="incompleteHomeSearchAlert"></div>
+	  	</div>  
+  	  </div>
+  	  <br/>
+  	  <div class="dropdown-divider"></div>
+  	  <br/>
+ 	  <center><h2 id="page-title">Recently Saved Listings</h2></center>
+  	  <div class="row listing-row">
+	    <div class="col-sm-6">
+	      <div class="card">
+	        <div class="card-body">
+	          <h5 class="card-title">Special title treatment</h5>
+	          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+	          <h5 class="card-title list-price"><strong>$100</strong></h5>
+	          <a href="#" class="btn btn-primary">View Listing</a>
+	      	</div>
+	      	<div class="card-footer text-muted text-center">
+    		  Saved 2 days ago
+ 		  	</div>
+	      </div>
+	  	</div>
+	  	<div class="col-sm-6">
+	      <div class="card">
+	        <div class="card-body">
+	          <h5 class="card-title">Special title treatment</h5>
+	          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+	          <h5 class="card-title list-price"><strong>$100</strong></h5>
+	          <a href="#" class="btn btn-primary">View Listing</a>
+	      	</div>
+	      	<div class="card-footer text-muted text-center">
+    		  Saved 2 days ago
+ 		  	</div>
+	      </div>
+	  	</div>
+	  </div>
   	</div>
   </div>
 </body>
