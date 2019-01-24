@@ -3,8 +3,10 @@ $(document).ready(function() {
 	var newLen = 2;
 	var myLen = 2;
 	
+	var html = '';
 	$('#home-saved-listings').append('<div class="row listing-row">');
 	while (savedLen > 0) {
+		
 		$('#home-saved-listings').append(
 				  '<div class="col-sm-4">'
 			    +   '<div class="card">'
@@ -22,6 +24,7 @@ $(document).ready(function() {
 			  	+ '</div>');
 		savedLen--;
 	}
+	console.log('')
 	$('#home-saved-listings').append('</div>');
 	
 	$('#home-new-listings').append('<div class="row listing-row">');
