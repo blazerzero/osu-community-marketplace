@@ -3,164 +3,68 @@ $(document).ready(function() {
 	var newLen = 2;
 	var myLen = 2;
 	
-	if (savedLen == 2) {
+	$('#home-saved-listings').append('<div class="row listing-row">');
+	while (savedLen > 0) {
 		$('#home-saved-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  	+ '<div class="col-sm-6">'
-	    + 	'<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+(savedLen-1)+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  + '</div>');
+				  '<div class="col-sm-4">'
+			    +   '<div class="card">'
+			    +     '<div class="card-body">'
+			    +      	'<h5 class="card-title">Special title treatment</h5>'
+			    +    	'<img src="./splash/corvallis.jpg" class="main-listing-img" alt="MU">'
+			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
+			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+			    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
+			    +  	  '</div>'
+			    +  	  '<div class="card-footer text-muted text-center">'
+		    	+	  	'Posted 2 days ago'
+		 		+  	  '</div>'
+			    +  	'</div>'
+			  	+ '</div>');
+		savedLen--;
 	}
-	else if (savedLen == 1) {
-    	$('#home-saved-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-      + '</div>');
-    }
+	$('#home-saved-listings').append('</div>');
 	
-	if (newLen == 2) {
+	$('#home-new-listings').append('<div class="row listing-row">');
+	while (newLen > 0) {
 		$('#home-new-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  	+ '<div class="col-sm-6">'
-	    + 	'<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+(newLen-1)+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  + '</div>');
+				  '<div class="col-sm-4">'
+			    +   '<div class="card">'
+			    +     '<div class="card-body">'
+			    +      	'<h5 class="card-title">Special title treatment</h5>'
+			    +    	'<img src="./splash/bend.jpg" class="main-listing-img" alt="MU">'
+			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
+			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+			    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
+			    +  	  '</div>'
+			    +  	  '<div class="card-footer text-muted text-center">'
+		    	+	  	'Posted 2 days ago'
+		 		+  	  '</div>'
+			    +  	'</div>'
+			  	+ '</div>');
+		newLen--;
 	}
-	else if (newLen == 1) {
-    	$('#home-new-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-      + '</div>');
-    }
+	$('#home-new-listings').append('</div>');
 	
-	if (myLen == 2) {
+	$('#home-my-listings').append('<div class="row listing-row">');
+	while (myLen > 0) {
 		$('#home-my-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  	+ '<div class="col-sm-6">'
-	    + 	'<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+(myLen-1)+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-	  + '</div>');
+				  '<div class="col-sm-4">'
+			    +   '<div class="card">'
+			    +     '<div class="card-body">'
+			    +      	'<h5 class="card-title">Special title treatment</h5>'
+			    +    	'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
+			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
+			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+			    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
+			    +  	  '</div>'
+			    +  	  '<div class="card-footer text-muted text-center">'
+		    	+	  	'Posted 2 days ago'
+		 		+  	  '</div>'
+			    +  	'</div>'
+			  	+ '</div>');
+		myLen--;
 	}
-	else if (myLen == 1) {
-    	$('#home-my-listings').append(
-		'<div class="row listing-row">'		
-	    + '<div class="col-sm-6">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">Special title treatment</h5>'
-	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
-	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted 2 days ago'
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>'
-      + '</div>');
-    }
+	$('#home-my-listings').append('</div>');
 	
 	$('#homeSearchSubmitBtn').click(function() {
 		var typeVal = $('#homeSearchType').val();

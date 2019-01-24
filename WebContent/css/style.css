@@ -111,6 +111,7 @@ html {
 	padding-left: 4vw;
 	padding-top: 2vw;
 	padding-bottom: 2vw;
+	padding-right: 4vw;
 }
 
 #page-title {
@@ -131,14 +132,18 @@ html {
 	color: green;
 }
 
+.body-section {
+	min-width: 80vw;
+}
+
 /* Site Navigation Pane */
 .sidenav {
-	font-size: 1.5em;
+	font-size: 1.25em;
 	font-weight: bold;
-	max-width: 100%;
+	width: 10vw;
 	display: inline-block;
 	padding-left: 2vw;
-	padding-right: 4vw;
+	padding-right: 2vw;
 	padding-top: 2vw;
 	padding-bottom: 2vw;
 	border-right: solid grey 1px;
@@ -194,5 +199,31 @@ html {
 	display: inline-block;
 }
 
+/* Home Page */
 #incompleteHomeSearchAlert { display: none; }
+
+/* Search Page */
 #incompleteSearchAlert { display: none; }
+
+/* Main Listing Formatting */
+.main-listing-img {
+	width: 20vw;
+	overflow: hidden;
+}
+
+/* View Listings Page */
+.listing-div {
+	display: flex;
+	flex-direction: row;
+}
+
+#view-listing-img {
+  	width: 40vw;
+  	overflow: hidden; 
+  	padding-right: 1vw;
+}
+
+.listing-info {
+	padding: 1vw;
+	width: 40vw;
+}
