@@ -10,6 +10,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
@@ -23,6 +24,7 @@ $(document).ready(function() {
 	    + 	'<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+(savedLen-1)+'" class="btn btn-primary">View Listing</a>'
@@ -41,6 +43,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/corvallis.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
@@ -60,6 +63,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
@@ -73,6 +77,7 @@ $(document).ready(function() {
 	    + 	'<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+(newLen-1)+'" class="btn btn-primary">View Listing</a>'
@@ -91,6 +96,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/bend.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
@@ -110,6 +116,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
@@ -123,6 +130,7 @@ $(document).ready(function() {
 	    + 	'<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+(myLen-1)+'" class="btn btn-primary">View Listing</a>'
@@ -141,6 +149,7 @@ $(document).ready(function() {
 	    +   '<div class="card">'
 	    +     '<div class="card-body">'
 	    +      	'<h5 class="card-title">Special title treatment</h5>'
+	    +    	'<img src="./splash/portland.jpg" id="listing-img" width="300" height="200" alt="MU">'
 	    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
 	    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
 	    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
@@ -178,7 +187,7 @@ function validateSearchForm(type, input) {
 		return false;
 	}
 	if (input.includes('?') || input.includes('&') || input.includes('!') || input.includes('/') || input.includes('\\')) {
-		$('#incompleteHomeSearchAlert').html("Keywords cannot include special characters.");
+		$('#incompleteHomeSearchAlert').html("Keywords cannot include special characters (&, !, /, \\.");
 		$('#incompleteHomeSearchAlert').css("display", "block");
 		return false;
 	}

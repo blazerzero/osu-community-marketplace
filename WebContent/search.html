@@ -26,6 +26,15 @@
   	<div id="content">
   	  <!--  PAGE CONTENT GOES HERE -->
   	  <center><h2 id="page-title"></h2></center>
+  	  <div>
+  	  	<div class="input-group mb-3">
+  		  <input type="text" class="form-control" id="searchInput" placeholder="Search listings" aria-label="Search listings" aria-describedby="searchType">
+  		  <div class="input-group-append">
+    		<button class="btn btn-primary" id="searchSubmitBtn">Search</button>
+  		  </div>
+	  	</div>  
+  	  </div>
+  	  <div class="alert alert-danger" role="alert" id="incompleteSearchAlert"></div>
   	  <div id="listings"></div>
   	</div>
   </div>
