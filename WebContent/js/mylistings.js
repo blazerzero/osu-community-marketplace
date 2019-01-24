@@ -1,27 +1,8 @@
 $(document).ready(function() {
-	var url = new URL(window.location.href);
-	var type = url.searchParams.get("type");
-	var query = url.searchParams.get("query");
-	console.log("query: " + query);
-	var type = window.location.href.split('=')[1].substring(0,7);
-	console.log("Listing type: " + type);
-	if (type == 'product') {
-		$(document).attr('title', 'Search Products - OSU Community Marketplace');
-		$('#page-title').html('Search for a Product');
-	}
-	else if (type == 'service') {
-		$(document).attr('title', 'Search Services - OSU Community Marketplace');
-		$('#page-title').html('Search for a Service');
-	}
-	else if (type == 'housing') {
-		$(document).attr('title', 'Search for Housing - OSU Community Marketplace');
-		$('#page-title').html('Search for Housing');
-	}
-	
-	var len = 6;
+	var len = 4;
 	while (len > 0) {
 		if (len >= 2) {
-			$('#listings').append(
+			$('#my-listings').append(
 			'<div class="row listing-row">'		
 		    + '<div class="col-sm-6">'
 		    +   '<div class="card">'
@@ -53,7 +34,7 @@ $(document).ready(function() {
 		  	len -= 2;
 		}
 		else if (len >= 1) {
-	    	$('#listings').append(
+	    	$('#my-listings').append(
 			'<div class="row listing-row">'		
 		    + '<div class="col-sm-6">'
 		    +   '<div class="card">'
