@@ -4,70 +4,69 @@ $(document).ready(function() {
 	var myLen = 2;
 	
 	var html = '';
-	$('#home-saved-listings').append('<div class="row listing-row">');
+	html += '<div class="row listing-row">';
 	while (savedLen > 0) {
-		
-		$('#home-saved-listings').append(
-				  '<div class="col-sm-4">'
-			    +   '<div class="card">'
-			    +     '<div class="card-body">'
-			    +      	'<h5 class="card-title">Special title treatment</h5>'
-			    +    	'<img src="./splash/corvallis.jpg" class="main-listing-img" alt="MU">'
-			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-			    +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
-			    +  	  '</div>'
-			    +  	  '<div class="card-footer text-muted text-center">'
-		    	+	  	'Posted 2 days ago'
-		 		+  	  '</div>'
-			    +  	'</div>'
-			  	+ '</div>');
+		html += '<div class="col-sm-4">'
+		      +   '<div class="card">'
+		      +     '<div class="card-body">'
+		      +      	'<h5 class="card-title">Listing Title</h5>'
+		      +    		'<img src="./splash/corvallis.jpg" class="main-listing-img" alt="MU">'
+		      +      	'<p class="card-text">Listing description</p>'
+		      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+		      +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
+		      +  	  '</div>'
+		      +  	  '<div class="card-footer text-muted text-center">'
+	      	  +	  	'Posted 2 days ago'
+	 		  +  	  '</div>'
+		      +  	'</div>'
+		  	  + '</div>';
 		savedLen--;
 	}
-	console.log('')
-	$('#home-saved-listings').append('</div>');
+	html += '</div>';
+	$('#home-saved-listings').append(html);
 	
-	$('#home-new-listings').append('<div class="row listing-row">');
+	html = '<div class="row listing-row">';
 	while (newLen > 0) {
-		$('#home-new-listings').append(
-				  '<div class="col-sm-4">'
-			    +   '<div class="card">'
-			    +     '<div class="card-body">'
-			    +      	'<h5 class="card-title">Special title treatment</h5>'
-			    +    	'<img src="./splash/bend.jpg" class="main-listing-img" alt="MU">'
-			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-			    +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
-			    +  	  '</div>'
-			    +  	  '<div class="card-footer text-muted text-center">'
-		    	+	  	'Posted 2 days ago'
-		 		+  	  '</div>'
-			    +  	'</div>'
-			  	+ '</div>');
+		html += '<div class="col-sm-4">'
+		      +   '<div class="card">'
+		      +     '<div class="card-body">'
+		      +      	'<h5 class="card-title">Listing Title</h5>'
+		      +    		'<img src="./splash/bend.jpg" class="main-listing-img" alt="MU">'
+		      +      	'<p class="card-text">Listing description</p>'
+		      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+		      +      	'<a href="viewlisting.html?listingID='+newLen+'" class="btn btn-primary">View Listing</a>'
+		      +  	  '</div>'
+		      +  	  '<div class="card-footer text-muted text-center">'
+	      	  +	  	'Posted 2 days ago'
+	 		  +  	  '</div>'
+		      +  	'</div>'
+		  	  + '</div>';
 		newLen--;
 	}
-	$('#home-new-listings').append('</div>');
+	html += '</div>';
+	$('#home-new-listings').append(html);
 	
-	$('#home-my-listings').append('<div class="row listing-row">');
+	var html = '';
+	html += '<div class="row listing-row">';
 	while (myLen > 0) {
-		$('#home-my-listings').append(
-				  '<div class="col-sm-4">'
-			    +   '<div class="card">'
-			    +     '<div class="card-body">'
-			    +      	'<h5 class="card-title">Special title treatment</h5>'
-			    +    	'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
-			    +      	'<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
-			    +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-			    +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
-			    +  	  '</div>'
-			    +  	  '<div class="card-footer text-muted text-center">'
-		    	+	  	'Posted 2 days ago'
-		 		+  	  '</div>'
-			    +  	'</div>'
-			  	+ '</div>');
+		html += '<div class="col-sm-4">'
+		      +   '<div class="card">'
+		      +     '<div class="card-body">'
+		      +      	'<h5 class="card-title">Listing Title</h5>'
+		      +    		'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
+		      +      	'<p class="card-text">Listing description</p>'
+		      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+		      +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
+		      +  	  '</div>'
+		      +  	  '<div class="card-footer text-muted text-center">'
+	      	  +	  	'Posted 2 days ago'
+	 		  +  	  '</div>'
+		      +  	'</div>'
+		  	  + '</div>';
 		myLen--;
 	}
-	$('#home-my-listings').append('</div>');
+	html += '</div>';
+	$('#home-my-listings').append(html);
 	
 	$('#homeSearchSubmitBtn').click(function() {
 		var typeVal = $('#homeSearchType').val();

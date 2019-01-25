@@ -209,12 +209,14 @@ html {
 .main-listing-img {
 	width: 20vw;
 	overflow: hidden;
+	margin-bottom: 1vw;
 }
 
 /* View Listings Page */
 .listing-div {
 	display: flex;
 	flex-direction: row;
+	padding-top: 2vw;
 }
 
 #view-listing-img {
