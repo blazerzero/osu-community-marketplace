@@ -117,6 +117,7 @@ html {
 
 #page-title {
 	padding-bottom: 1vw;
+	text-align: center;
 }
 
 .row.listing-row {
@@ -201,9 +202,17 @@ html {
 }
 
 /* Home Page */
+#home-name { text-align: center; }
 #incompleteHomeSearchAlert { display: none; }
 
 /* Search Page */
+.sort-section {
+	display: flex;
+	flex-direction: row;
+}
+.search-sort-label {
+	padding-right: 1vw;
+}
 #incompleteSearchAlert { display: none; }
 
 /* Main Listing Formatting */
@@ -230,3 +239,5 @@ html {
 	padding: 1vw;
 	width: 40vw;
 }
+
+#listingEmail { cursor: pointer; }

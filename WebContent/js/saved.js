@@ -24,7 +24,7 @@ $(document).ready(function() {
 		  	+ '<div class="col-sm-4">'
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="clos deleteSavedListingX" aria-label="Close" data-id="'+(len-1)+'">'
+		    +		'<button type="button" class="close deleteSavedListingX" aria-label="Close" data-id="'+(len-1)+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">Listing Title</h5>'
