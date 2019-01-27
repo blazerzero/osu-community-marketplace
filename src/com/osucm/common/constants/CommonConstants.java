@@ -10,4 +10,5 @@ public interface CommonConstants {
 	String STATUS_AUTH_SUCCESS = "AuthenticationSuccess";
 	
 	String OP_ADD_NOTIFY_EMAIL = "addNotifyEmail";
+	String OP_GET_LISTINGS = "getListings";
 }
