@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	var url = new URL(window.location.href);
+	var listingID = url.searchParams.get("listingID");
+
 	var onid = 'habibelo';
 	var firstname = 'Omeed';
 	var middlename = 'Alexander';
@@ -13,4 +16,22 @@ $(document).ready(function() {
 	$('#listingEmail').click(function() {
 		window.location.href="mailto:"+email+"?subject="+subject;
 	});
-});;
+	
+	// insert code to check if the user has already saved this listing
+	// retrieve the list of the user's saved listings and check if this listing is in that list
+	
+	$('#saveListingBtn').click(function() {
+		var savedListing = new Object;
+		savedListing.onid = onid; // this should hold the ONID of the logged-in user
+		savedListing.listingID = listingID;
+		savedListing.dateSaved = new Date().getTime();
+		// var status = sendDataSync(JSON.stringify(savedListing), "saveListing", "ListingController");
+		var status = "JDBC_OK";
+		if (status == "JDBC_OK") {
+			$('#saveListingBtn').removeClass('btn-primary');
+			$('#saveListingBtn').addClass('btn-success');
+			$('#saveListingBtn').attr('disabled', 'disabled');
+			$('#saveListingBtn').html('Saved!');
+		}
+	});
+});

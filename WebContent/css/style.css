@@ -132,6 +132,8 @@ html {
 
 .list-price {
 	color: green;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
 }
 
 .body-section {
@@ -245,6 +247,7 @@ html {
 }
 
 #listingEmail { cursor: pointer; }
+#saveListingBtn { margin-top: 1vw; }
 
 /* New Listing Page */
 .listing-split {

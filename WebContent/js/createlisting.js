@@ -69,9 +69,29 @@ $(document).ready(function() {
 		
 		if (ready) {
 			/* code to post listing */
+			var type = "";
+			if ($('#listingType').val() == 'p') type = 'product';
+			else if ($('#listingType').val() == 's') type = 'service';
+			else if ($('#listingType').val() == 'h') type = 'housing';
+			var newListing = new Object();
+			newListing.onid = "habibelo"; // once connected with ONID, this should hold the ONID of the logged-in user
+			newListing.title = $('#listingTitle').val();
+			newListing.type = type;
+			newListing.description = $('#listingDescription').val();
+			newListing.datePosted = new Date().getTime();
+			newListing.price = $('#listingPrice').val();
+			newListing.showEmail = $('#selectShowEmail').val();
+			newListing.showPhone = $('#selectShowPhone').val();
+			// var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
 			var status = "JDBC_OK";
 			if (status == "JDBC_OK") {
-				window.location.href = "./mylistings.html";
+				$('#postListingBtn').removeClass('btn-primary');
+				$('#postListingBtn').addClass('btn-success');
+				$('#postListingBtn').attr('disabled', 'disabled');
+				$('#postListingBtn').html('Posted!');
+				setTimeout(function() {
+					window.location.href = "./mylistings.html";
+				}, 1000);
 			}
 		}
 	});
