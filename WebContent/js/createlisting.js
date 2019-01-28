@@ -35,6 +35,47 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#postListingBtn').click(function() {
+		var ready = true;
+		if ($('#listingTitle').val() == '') {
+			ready = false;
+			$('#listingTitleSection').css('box-shadow', '0 0 5px red');
+		} else $('#listingTitleSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#listingDescription').val() == '') {
+			ready = false;
+			$('#listingDescriptionSection').css('box-shadow', '0 0 5px red');
+		} else $('#listingDescriptionSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#selectListingType').val() == '') {
+			ready = false;
+			$('#listingTypeSection').css('box-shadow', '0 0 5px red');
+		} else $('#listingTypeSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#listingPrice').val() == '') {
+			ready = false;
+			$('#listingPriceSection').css('box-shadow', '0 0 5px red');
+		} else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#selectShowEmail').val() == '') {
+			ready = false;
+			$('#showEmailSection').css('box-shadow', '0 0 5px red');
+		} else $('#showEmailSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#selectShowPhone').val() == '') {
+			ready = false;
+			$('#showPhoneSection').css('box-shadow', '0 0 5px red');
+		} else $('#showPhoneSection').css('box-shadow', '0 0 0 white');
+		
+		if (ready) {
+			/* code to post listing */
+			var status = "JDBC_OK";
+			if (status == "JDBC_OK") {
+				window.location.href = "./mylistings.html";
+			}
+		}
+	});
+	
 });
 
 function deletePhoto(deleteBtn) {

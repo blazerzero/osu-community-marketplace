@@ -26,13 +26,13 @@
   	<div id="content">
   	  <div class="body-section">
   	  	<h2 id="page-title">New Listing</h2>
-  	  	<div class="input-group mb-3">
+  	  	<div class="input-group mb-3" id="listingTitleSection">
   		  <div class="input-group-prepend">
     		<span class="input-group-text" id="listingTitleLabel">Listing Title</span>
   		  </div>
  		  <input type="text" class="form-control" aria-label="Listing Title" aria-describedby="listingTitleLabel" id="listingTitle">
 		</div>
-		<div class="input-group mb-3">
+		<div class="input-group mb-3" id="listingDescriptionSection">
   		  <div class="input-group-prepend">
   		  	<span class="input-group-text">Description</span>
   		  </div>
@@ -50,7 +50,18 @@
 		  	<div id="uploadedFiles"></div>
 		  </div>
 	  	  <div class="listing-details">
-	  	  	<div class="input-group mb-3">
+	  	  	<div class="input-group mb-3" id="listingTypeSection">
+  			  <div class="input-group-prepend">
+    			<label class="input-group-text" for="selectListingType">Listing type:</label>
+  			  </div>
+  			  <select class="custom-select" id="selectListingType">
+    			<option value="">Pick a type</option>
+    			<option value="p">Product</option>
+    			<option value="s">Service</option>
+    			<option value="h">Housing</option>
+  			  </select>
+			</div>
+	  	  	<div class="input-group mb-3" id="listingPriceSection">
   		  	  <div class="input-group-prepend">
     		  	<span class="input-group-text" id="listingPriceLabel">Price</span>
   		  	  </div>
@@ -59,22 +70,22 @@
   		  	  </div>
  		  	  <input type="text" class="form-control" aria-label="Price" aria-describedby="listingPriceLabel" id="listingPrice">
 	  	  	</div>
-	  	  	<div class="input-group mb-3">
+	  	  	<div class="input-group mb-3" id="showEmailSection">
   			  <div class="input-group-prepend">
     			<label class="input-group-text" for="selectShowEmail">Do you want your email address to be visible?</label>
   			  </div>
   			  <select class="custom-select" id="selectShowEmail">
-    			<option selected>Select One</option>
+    			<option value="">Select One</option>
     			<option value="1">Yes</option>
     			<option value="0">No</option>
   			  </select>
 			</div>
-			<div class="input-group mb-3">
+			<div class="input-group mb-3" id="showPhoneSection">
   			  <div class="input-group-prepend">
     			<label class="input-group-text" for="selectShowPhone">Do you want your phone number to be visible?</label>
   			  </div>
   			  <select class="custom-select" id="selectShowPhone">
-    			<option selected>Select One</option>
+    			<option value="">Select One</option>
     			<option value="1">Yes</option>
     			<option value="0">No</option>
   			  </select>
