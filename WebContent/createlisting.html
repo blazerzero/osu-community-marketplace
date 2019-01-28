@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>New Listing - OSU Community Marketplace</title>
+
+  <!-- JS files -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/datatransfer.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/sidenav.js"></script>
+  <script src="js/createlisting.js"></script>
+
+  <!-- CSS files -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="header"></div>
+  <div class="content-structure">
+  	<div class="sidenav" id="sidenav"></div>
+  	<div id="content">
+  	  <div class="body-section">
+  	  	<h2 id="page-title">New Listing</h2>
+  	  	<div class="input-group mb-3">
+  		  <div class="input-group-prepend">
+    		<span class="input-group-text" id="listingTitleLabel">Listing Title</span>
+  		  </div>
+ 		  <input type="text" class="form-control" aria-label="Listing Title" aria-describedby="listingTitleLabel" id="listingTitle">
+		</div>
+		<div class="input-group mb-3">
+  		  <div class="input-group-prepend">
+  		  	<span class="input-group-text">Description</span>
+  		  </div>
+  		  <textarea class="form-control" aria-label="With textarea" id="listingDescription"></textarea>
+	  	</div>
+	  	<br/>
+	  	<div class="listing-split">
+	  	  <div class="listing-images">
+	  	  	<h4 id="page-title">Upload Photos/Videos</h4>
+	  	  	<h6 id="page-title">(Max. 15 photos/videos)</h6>
+		  	<input class="file-adder" type="file" id="fileAdder" accept=".jpg,.jpeg,.png,.heic" multiple>
+		  	<button class="btn btn-secondary" id="addImageBtn">Add Photos</button><br/><br/>
+		  	<div class="alert alert-danger" role="alert" id="uploadErrorAlert">Not all photos could be uploaded. Maximum number of photos reached.</div>
+		  	<h5 id="page-title">Uploaded Photos/Videos:</h5>
+		  	<div id="uploadedFiles"></div>
+		  </div>
+	  	  <div class="listing-details">
+	  	  	<div class="input-group mb-3">
+  		  	  <div class="input-group-prepend">
+    		  	<span class="input-group-text" id="listingPriceLabel">Price</span>
+  		  	  </div>
+  		  	  <div class="input-group-prepend">
+   			  	<span class="input-group-text">$</span>
+  		  	  </div>
+ 		  	  <input type="text" class="form-control" aria-label="Price" aria-describedby="listingPriceLabel" id="listingPrice">
+	  	  	</div>
+	  	  	<div class="input-group mb-3">
+  			  <div class="input-group-prepend">
+    			<label class="input-group-text" for="selectShowEmail">Do you want your email address to be visible?</label>
+  			  </div>
+  			  <select class="custom-select" id="selectShowEmail">
+    			<option selected>Select One</option>
+    			<option value="1">Yes</option>
+    			<option value="0">No</option>
+  			  </select>
+			</div>
+			<div class="input-group mb-3">
+  			  <div class="input-group-prepend">
+    			<label class="input-group-text" for="selectShowPhone">Do you want your phone number to be visible?</label>
+  			  </div>
+  			  <select class="custom-select" id="selectShowPhone">
+    			<option selected>Select One</option>
+    			<option value="1">Yes</option>
+    			<option value="0">No</option>
+  			  </select>
+			</div>
+		  </div>
+	  	</div>
+  	  </div>
+  	</div>
+  </div>
+</body>
+</html>

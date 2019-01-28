@@ -170,6 +170,10 @@ html {
 	text-decoration: none !important;
 }
 
+.btn.btn-primary.new-listing {
+	margin-bottom: 2vw;
+}
+
 /* Header */
 .toptitle {
 	background-color: #d73f09;
@@ -241,3 +245,31 @@ html {
 }
 
 #listingEmail { cursor: pointer; }
+
+/* New Listing Page */
+.listing-split {
+	display: flex;
+	flex-direction: row;
+}
+
+.listing-images {
+	display: flex;
+	flex-direction: column;
+	width: 40vw;
+	height: 100%;
+	padding-right: 1vw;
+	align-content: center;
+}
+
+.file-adder {
+	display: none;
+}
+
+#addImageBtn {
+	text-align: center;
+}
+
+#uploadErrorAlert {
+	display: none;
+	text-align: center;
+}
