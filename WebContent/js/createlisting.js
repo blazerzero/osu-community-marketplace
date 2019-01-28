@@ -1,6 +1,7 @@
+var fileList = [];
+
 $(document).ready(function() {
 	var fileAdder = document.getElementById('fileAdder');
-	var fileList = [];
 	
 	$('#addImageBtn').click(function() {
 		$('#fileAdder').click();
@@ -26,7 +27,7 @@ $(document).ready(function() {
 			$('#uploadedFiles').append(
 					  '<div>'
 					+	fileList[i].name
-					+	'<button type="button" class="close" aria-label="Close" id="closeNotifyX" data-id="'+i+'">'
+					+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
 		        	+	  '<span aria-hidden="true">&times;</span>'
 		        	+	'</button>'
 		        	+ '</div>'
@@ -34,23 +35,21 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.close').click(function() {
-		alert('hi');
-		console.log('data id: ' + $(this).data('id'));
-		var idx = $(this).data('id');
-		fileList.splice(idx, 1);
-		$('#uploadedFiles').html('');
-		for (var i = 0; i < fileList.length; i++) {
-			$('#uploadedFiles').append(
-					  '<div>'
-					+	fileList[i].name
-					+	'<button type="button" class="close" aria-label="Close" id="closeNotifyX" data-id="'+i+'">'
-		        	+	  '<span aria-hidden="true">&times;</span>'
-		        	+	'</button>'
-		        	+ '</div>'
-			);
-		}
-	})
-	
-	
 });
+
+function deletePhoto(deleteBtn) {
+	console.log(deleteBtn.getAttribute('data-id'));
+	var idx = deleteBtn.getAttribute('data-id');
+	fileList.splice(idx, 1);
+	$('#uploadedFiles').html('');
+	for (var i = 0; i < fileList.length; i++) {
+		$('#uploadedFiles').append(
+				  '<div>'
+				+	fileList[i].name
+				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
+	        	+	  '<span aria-hidden="true">&times;</span>'
+	        	+	'</button>'
+	        	+ '</div>'
+		);
+	}
+}
