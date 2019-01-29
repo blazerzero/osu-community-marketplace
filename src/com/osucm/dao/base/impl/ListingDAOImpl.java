@@ -112,5 +112,46 @@ public class ListingDAOImpl implements ListingDAO {
 		}
 		return status;
 	}
+	
+	@Override
+	public String getListingDetails(int listingID) {
+		
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String listingDetails = "";
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.VIEW_LISTINGS);
+			preparedStatement.setInt(1, listingID);
+			resultSet = preparedStatement.executeQuery();
+			
+			listingDetails = "{";
+			listingDetails += "'onid': '" + resultSet.getString("onid") + "', ";
+			listingDetails += "'listingID': '" + resultSet.getInt("listingID") + "', ";
+			listingDetails += "'type': '" + resultSet.getString("type") + "', ";
+			listingDetails += "'title': '" + resultSet.getString("title") + "', ";
+			listingDetails += "'description': '" + resultSet.getString("description") + "', ";
+			listingDetails += "'imageIDs': '" + resultSet.getString("imageIDs") + "', ";
+			listingDetails += "'price': '" + resultSet.getDouble("price") + "', ";
+			listingDetails += "'payFrequency': '" + resultSet.getString("payFrequency") + "', ";
+			listingDetails += "'datePosted': '" + resultSet.getTimestamp("datePosted") + "', ";
+			listingDetails += "'showEmail': '" + resultSet.getInt("showEmail") + "', ";
+			listingDetails += "'otherContact': '" + resultSet.getString("otherContact") + "', ";
+			listingDetails += "'firstname': '" + resultSet.getString("firstname") + "', ";
+			listingDetails += "'middlename': '" + resultSet.getString("middlename") + "', ";
+			listingDetails += "'lastname': '" + resultSet.getString("lastname") + "', ";
+			listingDetails += "'email': '" + resultSet.getString("email") + "'}";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+		return listingDetails;
+	}
 
 }
