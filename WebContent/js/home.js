@@ -1,4 +1,12 @@
 $(document).ready(function() {
+	sessionStorage.setItem('onid', 'usert');
+	sessionStorage.setItem('firstname', 'Test User');
+	sessionStorage.setItem('middlename', '');
+	sessionStorage.setItem('lastname', '');
+	sessionStorage.setItem('email', 'usert@oregonstate.edu');
+	
+	$('#home-name').html('Hi, ' + sessionStorage.getItem('firstname') + '!');
+	
 	var savedLen = 2;
 	var newLen = 2;
 	var myLen = 2;

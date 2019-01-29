@@ -94,7 +94,7 @@ $(document).ready(function() {
 			});
 			console.log(fileNames);
 			var newListing = new Object();
-			newListing.onid = "habibelo"; // once connected with ONID, this should hold the ONID of the logged-in user
+			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
 			newListing.description = $('#listingDescription').val();
