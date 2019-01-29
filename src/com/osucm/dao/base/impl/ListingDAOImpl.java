@@ -170,7 +170,7 @@ public class ListingDAOImpl implements ListingDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_LISTINGS);
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_RECENT_LISTINGS);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {

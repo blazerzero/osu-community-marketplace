@@ -2,6 +2,8 @@ package com.osucm.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,7 +63,12 @@ public class ListingController extends HttpServlet {
             dao = new ListingDAOImpl(); 
             System.out.println("before");
             ArrayList<ListingPojo> listings = dao.getRecentListings();
-            System.out.println("LISTINGOBJ: " + searchListing);
+            Collections.sort(listings, new Comparator<ListingPojo>() {
+            	public int compare(ListingPojo o1, ListingPojo o2) {
+            		return (int)(o1.getDatePosted() - o2.getDatePosted());
+            	}
+            });
+            System.out.println("LISTINGOBJ: " + listings);
             String jsonString = gson.toJson(listings);
             response.getWriter().write(jsonString);          
         }
