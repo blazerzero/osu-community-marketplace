@@ -31,11 +31,21 @@ public class ListingController extends HttpServlet {
             Gson gson = new Gson();
             ListingPojo searchListing = gson.fromJson(jsonData, ListingPojo.class);
             dao = new ListingDAOImpl(); 
+            System.out.println("before");
             ArrayList<ListingPojo> listings = dao.getListings(searchListing.getType());
             System.out.println("LISTINGOBJ: " + searchListing);
             String jsonString = gson.toJson(listings);
             response.getWriter().write(jsonString);
             
+        }
+        
+        else if (null != message && CommonConstants.OP_ADD_LISTING.equalsIgnoreCase(message)) {
+        	
+        	Gson gson = new Gson();
+        	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	dao = new ListingDAOImpl();
+        	String status = dao.addListing(newListing);
+        	response.getWriter().write(status);
         }
 		System.out.println("ListingController:doPost Exiting...");
 	}

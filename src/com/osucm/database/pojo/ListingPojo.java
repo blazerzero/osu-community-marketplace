@@ -6,15 +6,16 @@ import java.util.ArrayList;
 public class ListingPojo {
 	
 	private int listingID;
-	private int onid;
+	private String onid;
 	private String type;
 	private String title;
 	private String description;
-	private ArrayList<Integer> imageIDs;
+	private String imageIDs;
 	private double price;
-	private Timestamp datePosted;
-	private boolean showEmail;
-	private boolean showPhone;
+	private String payFrequency;
+	private long datePosted;
+	private int showEmail;
+	private String otherContact;
 	
 	public int getListingID() {
 		return listingID;
@@ -24,11 +25,11 @@ public class ListingPojo {
 		this.listingID = listingID;
 	}
 	
-	public int getOnid() {
+	public String getOnid() {
 		return onid;
 	}
 	
-	public void setOnid(int onid) {
+	public void setOnid(String onid) {
 		this.onid = onid;
 	}
 	
@@ -56,11 +57,11 @@ public class ListingPojo {
 		this.description = description;
 	}
 	
-	public ArrayList<Integer> getImageIDs() {
+	public String getImageIDs() {
 		return imageIDs;
 	}
 	
-	public void setImageIDs(ArrayList<Integer> imageIDs) {
+	public void setImageIDs(String imageIDs) {
 		this.imageIDs = imageIDs;
 	}
 	
@@ -72,28 +73,36 @@ public class ListingPojo {
 		this.price = price;
 	}
 	
-	public Timestamp getDatePosted() {
+	public String getPayFrequency() {
+		return payFrequency;
+	}
+
+	public void setPayFrequency(String payFrequency) {
+		this.payFrequency = payFrequency;
+	}
+	
+	public long getDatePosted() {
 		return datePosted;
 	}
 	
-	public void setDatePosted(Timestamp datePosted) {
+	public void setDatePosted(long datePosted) {
 		this.datePosted = datePosted;
 	}
 	
-	public boolean isShowEmail() {
+	public int getShowEmail() {
 		return showEmail;
 	}
 	
-	public void setShowEmail(boolean showEmail) {
+	public void setShowEmail(int showEmail) {
 		this.showEmail = showEmail;
 	}
 	
-	public boolean isShowPhone() {
-		return showPhone;
+	public String getOtherContact() {
+		return otherContact;
 	}
 	
-	public void setShowPhone(boolean showPhone) {
-		this.showPhone = showPhone;
+	public void setOtherContact(String otherContact) {
+		this.otherContact = otherContact;
 	}
 	
 }

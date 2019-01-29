@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -48,15 +49,16 @@ public class ListingDAOImpl implements ListingDAO {
 			while(resultSet.next()) {
 				ListingPojo listingPojo = new ListingPojo();
 				listingPojo.setListingID(resultSet.getInt("listingID"));
-				listingPojo.setOnid(resultSet.getInt("onid"));
+				listingPojo.setOnid(resultSet.getString("onid"));
 				listingPojo.setType(resultSet.getString("type"));
 				listingPojo.setTitle(resultSet.getString("title"));
 				listingPojo.setDescription(resultSet.getString("description"));
-				listingPojo.setImageIDs((ArrayList<Integer>) Arrays.stream(resultSet.getString("imageIDs").split(";")).map(Integer::parseInt).collect(Collectors.toList()));
+				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
 				listingPojo.setPrice(resultSet.getDouble("price"));
-				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted"));
-				listingPojo.setShowEmail(resultSet.getBoolean("showEmail"));
-				listingPojo.setShowPhone(resultSet.getBoolean("showPhone"));
+				listingPojo.setPayFrequency(resultSet.getString("payFrequency"));
+				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
+				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
+				listingPojo.setOtherContact(resultSet.getString("otherContact"));
 				
 				listings.add(listingPojo);
 			}
@@ -68,6 +70,47 @@ public class ListingDAOImpl implements ListingDAO {
 		}
 		
 		return listings;
+	}
+	
+	@Override
+	public String addListing(ListingPojo newListing) {
+		
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			Timestamp dt = new Timestamp(newListing.getDatePosted());
+			preparedStatement = connect.prepareStatement(SqlConstants.ADD_LISTING);
+			preparedStatement.setString(1, newListing.getOnid());
+			preparedStatement.setString(2, newListing.getType());
+			preparedStatement.setString(3, newListing.getTitle());
+			preparedStatement.setString(4, newListing.getDescription());
+			preparedStatement.setString(5, newListing.getImageIDs());
+			preparedStatement.setDouble(6, newListing.getPrice());
+			preparedStatement.setString(7, newListing.getPayFrequency());
+			preparedStatement.setInt(8, newListing.getShowEmail());
+			preparedStatement.setString(9, newListing.getOtherContact());
+			preparedStatement.setTimestamp(10, dt);
+
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+			
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
 	}
 
 }

@@ -27,18 +27,19 @@
   	  	<!--  PAGE CONTENT GOES HERE -->
   	  	<h2 id="page-title"></h2>
   	  	<div class="body-section">
-  	  	  <div class="input-group mb-3">
+  	  	  <!-- <div class="input-group mb-3">
   		  	<input type="text" class="form-control" id="searchInput" placeholder="Search listings" aria-label="Search listings" aria-describedby="searchType">
   		  	<div class="input-group-append">
     		  <button class="btn btn-primary" id="searchSubmitBtn">Search</button>
   		  	</div>
-	  	  </div>
+	  	  </div> -->
 	  	<div class="alert alert-danger" role="alert" id="incompleteSearchAlert"></div>
 	  	<div class="body-section sort-section">
 	  	  <h5 class="search-sort-label">Sort Listings</h5>
 	  	  <select class="input-group-text" id="searchSort">
-	  	  	<option value="">Choose one</option>
 	  	  	<option value="date">Most Recent</option>
+	  	  	<option value="price-asc">Low to High Price</option>
+	  	  	<option value="price-desc">High to Low Price</option>
 	  	  	<option value="az">A-Z</option>
 	  	  	<option value="za">Z-A</option>
 	  	  </select>

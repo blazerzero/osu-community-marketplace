@@ -2,18 +2,18 @@ package com.osucm.database.pojo;
 
 public class UserPojo {
 	
-	private int onid;
+	private String onid;
 	private String firstname;
 	private String middlename;
 	private String lastname;
 	private String email;
 	private int phone;
 	
-	public int getOnid() {
+	public String getOnid() {
 		return onid;
 	}
 	
-	public void setOnid(int onid) {
+	public void setOnid(String onid) {
 		this.onid = onid;
 	}
 	

@@ -7,12 +7,17 @@ $(document).ready(function() {
 	var middlename = 'Alexander';
 	var lastname = 'Habibelahian';
 	var email = 'habibelo@oregonstate.edu';
-	var phone = '(555) 555-1234'
+	var type = 'p';
+	var otherContact = '(555) 555-1234'
 	var subject = 'Inquiry About [Listing Name] [via OSU Community Marketplace]';
+	
+	if (type == 'h') {
+		$('#listPayFrequency').css('display', 'block');
+	}
 	
 	$('#listingPoster').append(firstname+' '+middlename+' '+lastname);
 	$('#listingEmail').append(email);
-	$('#listingPhone').append(phone);
+	$('#listingOtherContact').append(otherContact);
 	$('#listingEmail').click(function() {
 		window.location.href="mailto:"+email+"?subject="+subject;
 	});

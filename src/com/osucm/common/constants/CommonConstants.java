@@ -11,4 +11,5 @@ public interface CommonConstants {
 	
 	String OP_ADD_NOTIFY_EMAIL = "addNotifyEmail";
 	String OP_GET_LISTINGS = "getListings";
+	String OP_ADD_LISTING = "addListing";
 }

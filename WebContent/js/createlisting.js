@@ -7,6 +7,19 @@ $(document).ready(function() {
 		$('#fileAdder').click();
 	});
 	
+	$('#selectListingType').change(function() {
+		if ($('#selectListingType').val() == 'h') {
+			$('#payFrequencyLabel').val("mo");
+			$('#payFrequencyLabel').css('display', 'block');
+			$('#selectPayFrequency').css('display', 'block');
+		}
+		else {
+			$('#payFrequencyLabel').val("once");
+			$('#payFrequencyLabel').css('display', 'none');
+			$('#selectPayFrequency').css('display', 'none');
+		}
+	});
+	
 	fileAdder.addEventListener('change', function(e) {
 		var reader = new FileReader();
 		for (var i = 0; i < fileAdder.files.length; i++) {
@@ -70,20 +83,29 @@ $(document).ready(function() {
 		if (ready) {
 			/* code to post listing */
 			var type = "";
-			if ($('#listingType').val() == 'p') type = 'product';
-			else if ($('#listingType').val() == 's') type = 'service';
-			else if ($('#listingType').val() == 'h') type = 'housing';
+			if ($('#selectListingType').val() == 'p') type = 'product';
+			else if ($('#selectListingType').val() == 's') type = 'service';
+			else if ($('#selectListingType').val() == 'h') type = 'housing';
+			console.log('type: ' + type);
+			var fileNames = [];
+			$.each(fileList, function(index, file) {
+				fileNames.push(file.name);
+				sendFile(file, type[0]);
+			});
+			console.log(fileNames);
 			var newListing = new Object();
 			newListing.onid = "habibelo"; // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
 			newListing.description = $('#listingDescription').val();
+			newListing.imageIDs = fileList.toString();
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
+			newListing.payFrequency = ($('#listingPayFrequency').val() == 'once' ? '' : $('listingPayFrequency').val());
 			newListing.showEmail = $('#selectShowEmail').val();
 			newListing.showPhone = $('#selectShowPhone').val();
-			// var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
-			var status = "JDBC_OK";
+			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
+			//var status = "JDBC_OK";
 			if (status == "JDBC_OK") {
 				$('#postListingBtn').removeClass('btn-primary');
 				$('#postListingBtn').addClass('btn-success');
@@ -113,4 +135,14 @@ function deletePhoto(deleteBtn) {
 	        	+ '</div>'
 		);
 	}
+}
+
+function sendFile(file, type) {
+	var formData = new FormData();
+	var request = new XMLHttpRequest();
+	
+	formData.set('file', file);
+	console.log('worksbythepg.com/osucm-images/'+type);
+	request.open("POST", 'worksbythepg.com/osucm-images/'+type);
+	request.send(formData);
 }

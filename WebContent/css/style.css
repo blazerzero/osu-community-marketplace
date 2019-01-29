@@ -134,6 +134,8 @@ html {
 	color: green;
 	padding-top: 1vw;
 	padding-bottom: 1vw;
+	display: flex;
+	flex-direction: row;
 }
 
 .body-section {
@@ -246,8 +248,23 @@ html {
 	width: 40vw;
 }
 
-#listingEmail { cursor: pointer; }
+#listingPayFrequency {
+	display: none;
+}
+
+#listingEmail { 
+	cursor: pointer;
+}
+
+#listingEmail:hover {
+	color: blue;
+}
+
 #saveListingBtn { margin-top: 1vw; }
+
+#listingImageDiv {
+	height: 100%;
+}
 
 /* New Listing Page */
 .listing-split {
@@ -275,4 +292,16 @@ html {
 #uploadErrorAlert {
 	display: none;
 	text-align: center;
+}
+
+.uploaded-photos-title {
+	display: none;
+}
+
+#payFrequencyLabel {
+	display: none;
+}
+
+#selectPayFrequency {
+	display: none;
 }

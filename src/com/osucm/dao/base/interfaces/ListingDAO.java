@@ -8,5 +8,6 @@ import com.osucm.database.pojo.ListingPojo;
 public interface ListingDAO extends GenericDAO {
 	
 	public ArrayList<ListingPojo> getListings(String type);
+	public String addListing(ListingPojo newListing);
 
 }
