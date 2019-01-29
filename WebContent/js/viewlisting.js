@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var listingID = url.searchParams.get("listingID");
 	
 	var detailsJSON = sendDataSync("{'listingID': '"+listingID+"'}", "getListingDetails", "ListingController");
+	console.log(detailsJSON);
 	var listingDetails = jQuery.parseJSON(detailsJSON);
 
 	//var otherContact = '(555) 555-1234';
@@ -14,12 +15,16 @@ $(document).ready(function() {
 		$('#listPayFrequency').css('display', 'block');
 	}
 	
-	var datePosted = new Date(listingDetails.datePosted).substring(4,15);
+	var datePosted = new Date(listingDetails.datePosted).toString().substring(4,15);
 	
 	$('#page-title').append(listingDetails.title);
 	$('#listingPoster').append(listingDetails.firstname+' '+listingDetails.middlename+' '+listingDetails.lastname);
-	$('#listingDatePosted').append(datePosted.substring(0,3)+'. '+datePosted.substring(4,7)+', '+datePosted.substring(8,11));
+	$('#listingDatePosted').append(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
+	$('#listingType').append(listingDetails.type.charAt(0).toUpperCase() + listingDetails.type.slice(1));
+	$('#listingDescription').append(listingDetails.description);
 	$('#listingPrice').append(listingDetails.price);
+	var afterDecimal = listingDetails.price.split('.')[1];
+	if (afterDecimal.length == 1) $('#listingPrice').append('0');
 	$('#listingPayFrequency').append(listingDetails.payFrequency);
 	$('#listingEmail').append(listingDetails.email);
 	$('#listingOtherContact').append(listingDetails.otherContact);
@@ -27,20 +32,22 @@ $(document).ready(function() {
 		window.location.href="mailto:"+listingDetails.email+"?subject="+subject;
 	});
 	
-	var imageIDs = listingDetails.imageIDs.split(',');
-	$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0" class="active"></li>');
-	$('#listingImages').append(
-			  '<div class="carousel-item active">'
-    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[0]+'" id="view-listing-img" alt="listing image">'
-    		+ '</div>'
-	);
-	for (i = 1; i < imageIDs.length; i++) {
-		$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0"></li>');
+	if (listingDetails.imageIDs != '') {
+		var imageIDs = listingDetails.imageIDs.split(',');
+		$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0" class="active"></li>');
 		$('#listingImages').append(
-				  '<div class="carousel-item">'
-	    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[i]+'" id="view-listing-img" alt="listing image">'
+				  '<div class="carousel-item active">'
+	    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[0]+'" id="view-listing-img" alt="listing image">'
 	    		+ '</div>'
 		);
+		for (i = 1; i < imageIDs.length; i++) {
+			$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0"></li>');
+			$('#listingImages').append(
+					  '<div class="carousel-item">'
+		    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[i]+'" id="view-listing-img" alt="listing image">'
+		    		+ '</div>'
+			);
+		}
 	}
 	
 	// insert code to check if the user has already saved this listing

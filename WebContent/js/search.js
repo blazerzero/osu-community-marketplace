@@ -40,19 +40,19 @@ $(document).ready(function() {
 		if ($('#searchSort').val() == 'date') {
 			console.log("sorting listings by date");
 			listings.sort(function(a, b) {
-				return (new Date(a).getTime() - new Date(b).getTime());
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 			});
 		}
 		else if ($('#searchSort').val() == 'price-asc') {
 			console.log("sorting listings by price");
 			listings.sort(function(a, b) {
-				return (a.price - b.price);
+				return (b.price - a.price);
 			});
 		}
 		else if ($('#searchSort').val() == 'price-desc') {
 			console.log("sorting listings by price");
 			listings.sort(function(a, b) {
-				return (b.price - a.price);
+				return (a.price - b.price);
 			});
 		}
 		else if ($('#searchSort').val() == 'az') {
@@ -68,13 +68,13 @@ $(document).ready(function() {
 			});
 		}
 		$('#listings').html('');
-		showListings(listings);
+		showListings(listings, type);
 	});
 });
 
-function showListings(listings) {
+function showListings(listings, type) {
 	var len = listings.length - 1;
-	while (len > 0) {
+	while (len >= 0) {
 		if (len >= 3) {
 			var payFreq = (listings[len].type == 'housing' ? '/'+listings[len].payFrequency : '');
 			$('#listings').append(
@@ -83,13 +83,13 @@ function showListings(listings) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
-		    +    	'<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">'
+		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+listings[len].description+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+listings[len].price+'</strong></h5>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
-	    	+	  	'Posted on '+listings[len].datePosted+
+	    	+	  	'Posted on '+buildDatePosted(listings[len].datePosted)
 	 		+  	  '</div>'
 		    +  	'</div>'
 		  	+ '</div>'
@@ -97,13 +97,13 @@ function showListings(listings) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-1].title+'</h5>'
-		    +    	'<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">'
+		    +    	(listings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+listings[len-1].description+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+listings[len-1].price+'</strong></h5>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-1].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len-1].listingID+'" class="btn btn-primary">View Listing</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
-	    	+	  	'Posted on '+listings[len-1].datePosted+
+	    	+	  	'Posted on '+buildDatePosted(listings[len-1].datePosted)
 	 		+  	  '</div>'
 		    +  	'</div>'
 		  	+ '</div>'
@@ -111,13 +111,13 @@ function showListings(listings) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-2].title+'</h5>'
-		    +    	'<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">'
+		    +    	(listings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+listings[len-2].description+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+listings[len-2].price+'</strong></h5>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-2].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len-2].listingID+'" class="btn btn-primary">View Listing</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
-	    	+	  	'Posted on '+listings[len-2].datePosted+
+	    	+	  	'Posted on '+buildDatePosted(listings[len-2].datePosted)
 	 		+  	  '</div>'
 		    +  	'</div>'
 		  	+ '</div>'
@@ -125,26 +125,26 @@ function showListings(listings) {
 		  	len -= 3;
 		}
 		else {
-			while (len > 0) {
-		    	$('#listings').append(
-				'<div class="row listing-row">'		
-    			+ '<div class="col-sm-4">'
+			var html = '<div class="row listing-row">';
+			while (len >= 0) {
+				html += '<div class="col-sm-4">'
     		    +   '<div class="card">'
     		    +     '<div class="card-body">'
     		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
-    		    +    	'<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">'
+    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
     		    +      	'<p class="card-text">'+listings[len].description+'</p>'
-    		    +      	'<h5 class="card-title list-price"><strong>$'+listings[len].price+'</strong></h5>'
+    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+'</strong></h5>'
     		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
     		    +  	  '</div>'
     		    +  	  '<div class="card-footer text-muted text-center">'
-    	    	+	  	'Posted on '+listings[len].datePosted+
+    	    	+	  	'Posted on '+buildDatePosted(listings[len].datePosted)
     	 		+  	  '</div>'
     		    +  	'</div>'
-    		  	+ '</div>');
+    		  	+ '</div>';
 		    	len--;
 			}
-		    $('#listings').append('</div>');
+			html += '</div>';
+		    $('#listings').append(html);
 	    }
 	}
 }
@@ -161,4 +161,24 @@ function validateSearchForm(input) {
 		return false;
 	}
 	return true;
+}
+
+function buildPrice(listingPrice) {
+	console.log(listingPrice);
+	var afterDecimal = "";
+	var tempPrice = listingPrice.toString();
+	if (tempPrice.includes('.')) {
+		afterDecimal = tempPrice.split('.')[1];
+		if (afterDecimal.length == 1) tempPrice += '0';
+	}
+	else {
+		tempPrice += '.00';
+	}
+	return tempPrice;
+}
+
+function buildDatePosted(listingDatePosted) {
+	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
+	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
+	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
 }

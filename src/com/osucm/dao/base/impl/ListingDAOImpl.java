@@ -96,7 +96,7 @@ public class ListingDAOImpl implements ListingDAO {
 			preparedStatement.setTimestamp(10, dt);
 
 			
-			resultSet = preparedStatement.executeQuery();
+			//resultSet = preparedStatement.executeQuery();
 			
 			int executeUpdate = preparedStatement.executeUpdate();
 
@@ -124,26 +124,31 @@ public class ListingDAOImpl implements ListingDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_LISTINGS);
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_LISTING_DETAILS);
 			preparedStatement.setInt(1, listingID);
+			System.out.println(listingID);
 			resultSet = preparedStatement.executeQuery();
+			System.out.println("After execute");
 			
+			resultSet.next();
 			listingDetails = "{";
-			listingDetails += "'onid': '" + resultSet.getString("onid") + "', ";
-			listingDetails += "'listingID': '" + resultSet.getInt("listingID") + "', ";
-			listingDetails += "'type': '" + resultSet.getString("type") + "', ";
-			listingDetails += "'title': '" + resultSet.getString("title") + "', ";
-			listingDetails += "'description': '" + resultSet.getString("description") + "', ";
-			listingDetails += "'imageIDs': '" + resultSet.getString("imageIDs") + "', ";
-			listingDetails += "'price': '" + resultSet.getDouble("price") + "', ";
-			listingDetails += "'payFrequency': '" + resultSet.getString("payFrequency") + "', ";
-			listingDetails += "'datePosted': '" + resultSet.getTimestamp("datePosted") + "', ";
-			listingDetails += "'showEmail': '" + resultSet.getInt("showEmail") + "', ";
-			listingDetails += "'otherContact': '" + resultSet.getString("otherContact") + "', ";
-			listingDetails += "'firstname': '" + resultSet.getString("firstname") + "', ";
-			listingDetails += "'middlename': '" + resultSet.getString("middlename") + "', ";
-			listingDetails += "'lastname': '" + resultSet.getString("lastname") + "', ";
-			listingDetails += "'email': '" + resultSet.getString("email") + "'}";
+			listingDetails += "\"onid\": \"" + resultSet.getString("onid") + "\", ";
+			listingDetails += "\"listingID\": \"" + resultSet.getInt("listingID") + "\", ";
+			listingDetails += "\"type\": \"" + resultSet.getString("type") + "\", ";
+			listingDetails += "\"title\": \"" + resultSet.getString("title") + "\", ";
+			listingDetails += "\"description\": \"" + resultSet.getString("description") + "\", ";
+			listingDetails += "\"imageIDs\": \"" + resultSet.getString("imageIDs") + "\", ";
+			listingDetails += "\"price\": \"" + resultSet.getDouble("price") + "\", ";
+			listingDetails += "\"payFrequency\": \"" + resultSet.getString("payFrequency") + "\", ";
+			listingDetails += "\"datePosted\": \"" + resultSet.getTimestamp("datePosted") + "\", ";
+			listingDetails += "\"showEmail\": \"" + resultSet.getInt("showEmail") + "\", ";
+			listingDetails += "\"otherContact\": \"" + resultSet.getString("otherContact") + "\", ";
+			listingDetails += "\"firstname\": \"" + resultSet.getString("firstname") + "\", ";
+			listingDetails += "\"middlename\": \"" + resultSet.getString("middlename") + "\", ";
+			listingDetails += "\"lastname\": \"" + resultSet.getString("lastname") + "\", ";
+			listingDetails += "\"email\": \"" + resultSet.getString("email") + "\"}";
+			
+			System.out.println(listingDetails);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

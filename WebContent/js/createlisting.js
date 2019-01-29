@@ -3,9 +3,9 @@ var fileList = [];
 $(document).ready(function() {
 	var fileAdder = document.getElementById('fileAdder');
 	
-	$('#addImageBtn').click(function() {
+	/*$('#addImageBtn').click(function() {
 		$('#fileAdder').click();
-	});
+	});*/
 	
 	$('#selectListingType').change(function() {
 		if ($('#selectListingType').val() == 'h') {
@@ -20,7 +20,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	fileAdder.addEventListener('change', function(e) {
+	/*fileAdder.addEventListener('change', function(e) {
 		var reader = new FileReader();
 		for (var i = 0; i < fileAdder.files.length; i++) {
 			if (!fileList.includes(fileAdder.files[i])) {
@@ -46,7 +46,7 @@ $(document).ready(function() {
 		        	+ '</div>'
 			);
 		}
-	});
+	});*/
 	
 	$('#postListingBtn').click(function() {
 		var ready = true;
@@ -87,12 +87,12 @@ $(document).ready(function() {
 			else if ($('#selectListingType').val() == 's') type = 'service';
 			else if ($('#selectListingType').val() == 'h') type = 'housing';
 			console.log('type: ' + type);
-			var fileNames = [];
+			/*var fileNames = [];
 			$.each(fileList, function(index, file) {
 				fileNames.push(file.name);
 				sendFile(file, type[0]);
-			});
-			console.log(fileNames);
+			});*/
+			//console.log(fileNames);
 			var newListing = new Object();
 			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
@@ -101,9 +101,11 @@ $(document).ready(function() {
 			newListing.imageIDs = fileList.toString();
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
-			newListing.payFrequency = ($('#listingPayFrequency').val() == 'once' ? '' : $('listingPayFrequency').val());
+			newListing.payFrequency = (type == 'h' ? $('#selectPayFrequency').val() : '');
+			if (newListing.payFrequency == 'once') newListing.payFrequency = '';
 			newListing.showEmail = $('#selectShowEmail').val();
-			newListing.showPhone = $('#selectShowPhone').val();
+			newListing.otherContact = $('#listingContact').val();
+			console.log(JSON.stringify(newListing));
 			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
 			//var status = "JDBC_OK";
 			if (status == "JDBC_OK") {

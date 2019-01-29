@@ -30,7 +30,7 @@ public class ListingController extends HttpServlet {
             Gson gson = new Gson();
             ListingPojo searchListing = gson.fromJson(jsonData, ListingPojo.class);
             dao = new ListingDAOImpl(); 
-            System.out.println("before");
+            //System.out.println("before");
             ArrayList<ListingPojo> listings = dao.getListings(searchListing.getType());
             System.out.println("LISTINGOBJ: " + searchListing);
             String jsonString = gson.toJson(listings);
@@ -48,6 +48,8 @@ public class ListingController extends HttpServlet {
         else if (null != message && CommonConstants.OP_GET_LISTING_DETAILS.equalsIgnoreCase(message)) {
         	Gson gson = new Gson();
         	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	//System.out.println("HERE");
+        	//System.out.println(newListing.getListingID());
         	dao = new ListingDAOImpl();
         	String jsonDetails = dao.getListingDetails(newListing.getListingID());
         	response.getWriter().write(jsonDetails);
@@ -58,7 +60,7 @@ public class ListingController extends HttpServlet {
             ListingPojo searchListing = gson.fromJson(jsonData, ListingPojo.class);
             dao = new ListingDAOImpl(); 
             System.out.println("before");
-            ArrayList<ListingPojo> listings = dao.getListings(searchListing.getType());
+            ArrayList<ListingPojo> listings = dao.getRecentListings();
             System.out.println("LISTINGOBJ: " + searchListing);
             String jsonString = gson.toJson(listings);
             response.getWriter().write(jsonString);          
