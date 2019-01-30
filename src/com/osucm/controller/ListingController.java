@@ -71,6 +71,13 @@ public class ListingController extends HttpServlet {
             System.out.println("LISTINGOBJ: " + listings);
             String jsonString = gson.toJson(listings);
             response.getWriter().write(jsonString);          
+        } else if (null != message && CommonConstants.OP_GET_USER_LISTINGS.equalsIgnoreCase(message)) {
+        	Gson gson = new Gson();
+        	ListingPojo userListingPojo = gson.fromJson(jsonData, ListingPojo.class);
+        	dao = new ListingDAOImpl();
+        	ArrayList<ListingPojo> listings = dao.getUserListings(userListingPojo.getOnid());
+        	String jsonString = gson.toJson(listings);
+        	response.getWriter().write(jsonString);
         }
         
 		System.out.println("ListingController:doPost Exiting...");
