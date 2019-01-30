@@ -22,7 +22,7 @@ $(document).ready(function() {
 	}
 	
 	var listingsJSON = sendDataSync("{'type': '"+type+"'}", "getListings", "ListingController");
-	var listings = jQuery.parseJSON(listingsJSON);
+	var listings = jQuery.parseJSON(escapeJSON(listingsJSON));
 	console.log(listings);
 	
 	showListings(listings);
@@ -183,4 +183,8 @@ function buildDatePosted(listingDatePosted) {
 function buildDescription(listingDescription) {
 	var tempDesc = listingDescription;
 	return (tempDesc.length > 128 ? tempDesc.substring(0,64)+'...' : tempDesc);
+}
+
+function escapeJSON(jString) {
+	return jString.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t")
 }

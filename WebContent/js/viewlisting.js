@@ -4,7 +4,7 @@ $(document).ready(function() {
 	
 	var detailsJSON = sendDataSync("{'listingID': '"+listingID+"'}", "getListingDetails", "ListingController");
 	console.log(detailsJSON);
-	var listingDetails = jQuery.parseJSON(detailsJSON);
+	var listingDetails = jQuery.parseJSON(escapeJSON(detailsJSON));
 
 	//var otherContact = '(555) 555-1234';
 	var subject = 'Inquiry About ' + listingDetails.title + ' [via OSU Community Marketplace]';
@@ -68,3 +68,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function escapeJSON(jString) {
+	return jString.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t")
+}

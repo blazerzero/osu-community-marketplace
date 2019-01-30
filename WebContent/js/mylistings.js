@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	/*var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyListings", "ListingController");
-	var myListings = jQuery.parseJSON(myListingsJSON);
+	var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
 	var len = myListings.length - 1;*/
 	var len = 4;
 	while (len > 0) {
@@ -84,3 +84,7 @@ $(document).ready(function() {
 	    }
 	}
 });
+
+function escapeJSON(jString) {
+	return jString.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t")
+}

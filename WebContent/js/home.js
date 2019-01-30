@@ -7,9 +7,6 @@ $(document).ready(function() {
 	
 	$('#home-name').html('Hi, ' + sessionStorage.getItem('firstname') + '!');
 	
-	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
-	var recentListings = jQuery.parseJSON(recentListingsJSON);
-	
 	//var savedLen = 2;
 	var newLen = 2;
 	var myLen = 2;
@@ -34,6 +31,9 @@ $(document).ready(function() {
 	}
 	html += '</div>';
 	$('#home-saved-listings').append(html);*/
+	
+	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
+	var recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
 	
 	html = '<div class="card-deck listing-row">';
 	len = recentListings.length - 1;
@@ -62,7 +62,7 @@ $(document).ready(function() {
 	$('#home-new-listings').append(html);
 	
 	//var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
-	//var myListings = jQuery.parseJSON(myListingsJSON);
+	//var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
 	
 	html = '';
 	html += '<div class="card-deck listing-row">';
@@ -145,4 +145,8 @@ function buildDatePosted(listingDatePosted) {
 function buildDescription(listingDescription) {
 	var tempDesc = listingDescription;
 	return (tempDesc.length > 256 ? tempDesc.substring(0,64)+'...' : tempDesc);
+}
+
+function escapeJSON(jString) {
+	return jString.replace("\\n", "\\\n").replace("\\r", "\\\r").replace("\\t", "\\\t")
 }
