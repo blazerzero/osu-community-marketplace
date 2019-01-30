@@ -98,7 +98,7 @@ $(document).ready(function() {
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
 			newListing.description = $('#listingDescription').val();
-			newListing.imageIDs = fileList.toString();
+			newListing.imageIDs = fileNames.toString();
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
 			newListing.payFrequency = (type[0] == 'h' ? $('#selectPayFrequency').val() : '');
