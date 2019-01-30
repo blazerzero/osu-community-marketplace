@@ -16,10 +16,9 @@ $(document).ready(function() {
 	
 	var html = '';
 	var len = 0;
-	/*html += '<div class="row listing-row">';
+	/*html += '<div class="card-deck listing-row">';
 	while (savedLen > 0) {
-		html += '<div class="col-sm-4">'
-		      +   '<div class="card">'
+		html += '<div class="card">'
 		      +     '<div class="card-body">'
 		      +      	'<h5 class="card-title">Listing Title</h5>'
 		      +    		'<img src="./splash/corvallis.jpg" class="main-listing-img" alt="MU">'
@@ -30,53 +29,63 @@ $(document).ready(function() {
 		      +  	  '<div class="card-footer text-muted text-center">'
 	      	  +	  	'Posted 2 days ago'
 	 		  +  	  '</div>'
-		      +  	'</div>'
-		  	  + '</div>';
+		      +  	'</div>';
 		savedLen--;
 	}
 	html += '</div>';
 	$('#home-saved-listings').append(html);*/
 	
-	html = '<div class="row listing-row">';
+	html = '<div class="card-deck listing-row">';
 	len = recentListings.length - 1;
-	while (len >= 0) {
-		html += '<div class="col-sm-4">'
-	    +   '<div class="card">'
-	    +     '<div class="card-body">'
-	    +      	'<h5 class="card-title">'+recentListings[len].title+'</h5>'
-	    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-	    +      	'<p class="card-text">'+recentListings[len].description+'</p>'
-	    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+'</strong></h5>'
-	    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
-	    +  	  '</div>'
-	    +  	  '<div class="card-footer text-muted text-center">'
-    	+	  	'Posted on '+buildDatePosted(recentListings[len].datePosted)
- 		+  	  '</div>'
-	    +  	'</div>'
-	  	+ '</div>';
-    	len--;
+	for (i = 0; i < 3; i++) {
+		if (len >= 0) {
+			html += '<div class="card">'
+		    +     '<div class="card-body">'
+		    +      	'<h5 class="card-title">'+recentListings[len].title+'</h5>'
+		    +		'<p class="card-text">Listing type: '+recentListings[len].type.charAt(0).toUpperCase()+recentListings[len].type.substring(1)+'</p>'
+		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +      	'<p class="card-text">'+buildDescription(recentListings[len].description)+'</p>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+'</strong></h5>'
+		    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
+		    +  	  '</div>'
+		    +  	  '<div class="card-footer text-muted text-center">'
+	    	+	  	'Posted on '+buildDatePosted(recentListings[len].datePosted)
+	 		+  	  '</div>'
+		    +  	'</div>';
+	    	len--;
+		}
+		else {
+			html += '<div class="card" style="opacity: 0" disabled></div>';
+		}
 	}
 	html += '</div>';
 	$('#home-new-listings').append(html);
 	
-	var html = '';
-	html += '<div class="row listing-row">';
-	while (myLen > 0) {
-		html += '<div class="col-sm-4">'
-		      +   '<div class="card">'
-		      +     '<div class="card-body">'
-		      +      	'<h5 class="card-title">Listing Title</h5>'
-		      +    		'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
-		      +      	'<p class="card-text">Listing description</p>'
-		      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-		      +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
-		      +  	  '</div>'
-		      +  	  '<div class="card-footer text-muted text-center">'
-	      	  +	  	'Posted 2 days ago'
-	 		  +  	  '</div>'
-		      +  	'</div>'
-		  	  + '</div>';
-		myLen--;
+	//var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
+	//var myListings = jQuery.parseJSON(myListingsJSON);
+	
+	html = '';
+	html += '<div class="card-deck listing-row">';
+	for (i = 0; i < 3; i++) {
+		if (myLen > 0) {
+			html += '<div class="card">'
+			      +     '<div class="card-body">'
+			      +      	'<h5 class="card-title">Listing Title</h5>'
+			      +			'<p class="card-text">Listing type: </p>'
+			      +    		'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
+			      +      	'<p class="card-text">Listing description</p>'
+			      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
+			      +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
+			      +  	  '</div>'
+			      +  	  '<div class="card-footer text-muted text-center">'
+		      	  +	  	'Posted 2 days ago'
+		 		  +  	  '</div>'
+			      +  	'</div>';
+			myLen--;
+		}
+		else {
+			html += '<div class="card" style="opacity: 0" disabled></div>';
+		}
 	}
 	html += '</div>';
 	$('#home-my-listings').append(html);
@@ -131,4 +140,9 @@ function buildDatePosted(listingDatePosted) {
 	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
 	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
 	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
+}
+
+function buildDescription(listingDescription) {
+	var tempDesc = listingDescription;
+	return (tempDesc.length > 256 ? tempDesc.substring(0,64)+'...' : tempDesc);
 }
