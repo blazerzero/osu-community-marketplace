@@ -33,6 +33,7 @@ $(document).ready(function() {
 	$('#home-saved-listings').append(html);*/
 	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
+	console.log(recentListingsJSON);
 	var recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
 	
 	html = '<div class="card-deck listing-row">';
@@ -148,5 +149,5 @@ function buildDescription(listingDescription) {
 }
 
 function escapeJSON(jString) {
-	return jString.replace("\\n", "\\\n").replace("\\r", "\\\r").replace("\\t", "\\\t")
+	return jString.replace(/\n/g, "\\\n").replace(/\r/g, "\\\r").replace(/\t/g, "\\\t");
 }
