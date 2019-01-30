@@ -46,7 +46,7 @@ $(document).ready(function() {
 		    +		'<p class="card-text">Listing type: '+recentListings[len].type.charAt(0).toUpperCase()+recentListings[len].type.substring(1)+'</p>'
 		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(recentListings[len].description)+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+'</strong></h5>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+(recentListings[len].payFrequency == '' ? '' : '/'+recentListings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
@@ -145,9 +145,9 @@ function buildDatePosted(listingDatePosted) {
 
 function buildDescription(listingDescription) {
 	var tempDesc = listingDescription;
-	return (tempDesc.length > 256 ? tempDesc.substring(0,64)+'...' : tempDesc);
+	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
 }
 
 function escapeJSON(jString) {
-	return jString.replace(/\n/g, "\\\n").replace(/\r/g, "\\\r").replace(/\t/g, "\\\t");
+	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
 }

@@ -101,7 +101,7 @@ $(document).ready(function() {
 			newListing.imageIDs = fileList.toString();
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
-			newListing.payFrequency = (type == 'h' ? $('#selectPayFrequency').val() : '');
+			newListing.payFrequency = (type[0] == 'h' ? $('#selectPayFrequency').val() : '');
 			if (newListing.payFrequency == 'once') newListing.payFrequency = '';
 			newListing.showEmail = $('#selectShowEmail').val();
 			newListing.otherContact = $('#listingContact').val();

@@ -85,6 +85,25 @@ $(document).ready(function() {
 	}
 });
 
+function buildPrice(listingPrice) {
+	console.log(listingPrice);
+	var afterDecimal = "";
+	var tempPrice = listingPrice.toString();
+	if (tempPrice.includes('.')) {
+		afterDecimal = tempPrice.split('.')[1];
+		if (afterDecimal.length == 1) tempPrice += '0';
+	}
+	else {
+		tempPrice += '.00';
+	}
+	return tempPrice;
+}
+
+function buildDescription(listingDescription) {
+	var tempDesc = listingDescription;
+	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
+}
+
 function escapeJSON(jString) {
-	return jString.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t")
+	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
 }

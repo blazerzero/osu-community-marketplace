@@ -69,6 +69,12 @@ $(document).ready(function() {
 	});
 });
 
+function buildDatePosted(listingDatePosted) {
+	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
+	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
+	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
+}
+
 function escapeJSON(jString) {
-	return jString.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t")
+	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
 }
