@@ -196,7 +196,7 @@ public class ListingDAOImpl implements ListingDAO {
 	}
 
 	@Override
-	public ArrayList<ListingPojo> getUserListings(String onid) {
+	public ArrayList<ListingPojo> getMyListings(String onid) {
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -204,7 +204,46 @@ public class ListingDAOImpl implements ListingDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_USERS_LISTINGS);
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_MY_LISTINGS);
+			preparedStatement.setString(1, onid);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				ListingPojo listingPojo = new ListingPojo();
+				listingPojo.setListingID(resultSet.getInt("listingID"));
+				listingPojo.setOnid(resultSet.getString("onid"));
+				listingPojo.setType(resultSet.getString("type"));
+				listingPojo.setTitle(resultSet.getString("title"));
+				listingPojo.setDescription(resultSet.getString("description"));
+				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
+				listingPojo.setPrice(resultSet.getDouble("price"));
+				listingPojo.setPayFrequency(resultSet.getString("payFrequency"));
+				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
+				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
+				listingPojo.setOtherContact(resultSet.getString("otherContact"));
+				
+				userListings.add(listingPojo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("In getUserListings in DAOImpl: "+userListings.get(0).getTitle());
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+		return userListings;
+	}
+	
+	@Override
+	public ArrayList<ListingPojo> getMyRecentListings(String onid) {
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<ListingPojo> userListings = new ArrayList<>();
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_MY_RECENT_LISTINGS);
 			preparedStatement.setString(1, onid);
 			resultSet = preparedStatement.executeQuery();
 			

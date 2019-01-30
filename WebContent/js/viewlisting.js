@@ -32,6 +32,8 @@ $(document).ready(function() {
 		window.location.href="mailto:"+listingDetails.email+"?subject="+subject;
 	});
 	
+	if (listingDetails.onid == sessionStorage.getItem('onid')) $('#listingPoster').append(' (You)');
+	
 	if (listingDetails.imageIDs != '') {
 		var imageIDs = listingDetails.imageIDs.split(',');
 		$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0" class="active"></li>');

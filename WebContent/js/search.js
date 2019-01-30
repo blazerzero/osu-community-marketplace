@@ -82,7 +82,7 @@ function showListings(listings, type) {
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
-		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
@@ -94,7 +94,7 @@ function showListings(listings, type) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-1].title+'</h5>'
-		    +    	(listings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(listings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-1].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-1].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len-1].listingID+'" class="btn btn-primary">View Listing</a>'
@@ -106,7 +106,7 @@ function showListings(listings, type) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-2].title+'</h5>'
-		    +    	(listings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(listings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-2].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-2].price)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len-2].listingID+'" class="btn btn-primary">View Listing</a>'
@@ -125,7 +125,7 @@ function showListings(listings, type) {
 					html += '<div class="card">'
 	    		    +     '<div class="card-body">'
 	    		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
-	    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+	    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 	    		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 	    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+(listings[len].payFrequency == '' ? '' : '/'+listings[len].payFrequency)+'</strong></h5>'
 	    		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'

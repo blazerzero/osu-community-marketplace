@@ -14,5 +14,6 @@ public interface CommonConstants {
 	String OP_ADD_LISTING = "addListing";
 	String OP_GET_LISTING_DETAILS = "getListingDetails";
 	String OP_GET_RECENT_LISTINGS = "getRecentListings";
-	String OP_GET_USER_LISTINGS = "getMyListings";
+	String OP_GET_MY_LISTINGS = "getMyListings";
+	String OP_GET_MY_RECENT_LISTINGS = "getMyRecentListings";
 }

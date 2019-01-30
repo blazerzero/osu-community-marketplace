@@ -36,6 +36,10 @@ $(document).ready(function() {
 	console.log(recentListingsJSON);
 	var recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
 	
+	recentListings.sort(function(a, b) {
+		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+	});
+	
 	html = '<div class="card-deck listing-row">';
 	len = recentListings.length - 1;
 	for (i = 0; i < 3; i++) {
@@ -44,7 +48,7 @@ $(document).ready(function() {
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+recentListings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+recentListings[len].type.charAt(0).toUpperCase()+recentListings[len].type.substring(1)+'</p>'
-		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+recentListings[len].type[0]+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(recentListings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+(recentListings[len].payFrequency == '' ? '' : '/'+recentListings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
@@ -62,27 +66,32 @@ $(document).ready(function() {
 	html += '</div>';
 	$('#home-new-listings').append(html);
 	
-	//var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
-	//var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
+	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
+	var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
 	
+	myListings.sort(function(a, b) {
+		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+	});
+	
+	len = myListings.length - 1;
 	html = '';
 	html += '<div class="card-deck listing-row">';
 	for (i = 0; i < 3; i++) {
-		if (myLen > 0) {
+		if (len >= 0) {
 			html += '<div class="card">'
 			      +     '<div class="card-body">'
-			      +      	'<h5 class="card-title">Listing Title</h5>'
-			      +			'<p class="card-text">Listing type: </p>'
-			      +    		'<img src="./splash/portland.jpg" class="main-listing-img" alt="MU">'
-			      +      	'<p class="card-text">Listing description</p>'
-			      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-			      +      	'<a href="viewlisting.html?listingID='+myLen+'" class="btn btn-primary">View Listing</a>'
-			      +  	  '</div>'
-			      +  	  '<div class="card-footer text-muted text-center">'
-		      	  +	  	'Posted 2 days ago'
-		 		  +  	  '</div>'
+			      +       '<h5 class="card-title">'+myListings[len].title+'</h5>'
+				  +		  '<p class="card-text">Listing type: '+myListings[len].type.charAt(0).toUpperCase()+myListings[len].type.substring(1)+'</p>'
+				  +    	  (myListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+				  +       '<p class="card-text">'+buildDescription(myListings[len].description)+'</p>'
+				  +       '<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price)+(myListings[len].payFrequency == '' ? '' : '/'+myListings[len].payFrequency)+'</strong></h5>'
+				  +       '<a href="viewlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
+				  +  	  '</div>'
+				  +  	  '<div class="card-footer text-muted text-center">'
+			      +	  		'Posted on '+buildDatePosted(myListings[len].datePosted)
+			 	  +  	  '</div>'
 			      +  	'</div>';
-			myLen--;
+			len--;
 		}
 		else {
 			html += '<div class="card" style="opacity: 0" disabled></div>';
