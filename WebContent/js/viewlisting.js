@@ -12,7 +12,7 @@ $(document).ready(function() {
 	var typeIndicator = listingDetails.type[0];
 	
 	if (typeIndicator == 'h') {
-		$('#listPayFrequency').css('display', 'block');
+		$('#listingPayFrequency').css('display', 'block');
 	}
 	
 	var datePosted = new Date(listingDetails.datePosted).toString().substring(4,15);
