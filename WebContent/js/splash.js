@@ -1,4 +1,16 @@
 $(document).ready(function() {
+  var url = new URL(window.location.href);
+  var ticket = url.searchParams.get('ticket');
+  if (ticket != null && ticket != '') {
+	  const xhr = new XMLHttpRequest();
+	  const httpURL = "https://login.oregonstate.edu/idp/profile/cas/serviceValidate?ticket="+ticket+"&service=http://www.worksbythepg.com:8080/osu-community-marketplace/";
+	  xhr.open("GET", httpURL);
+	  xhr.send();
+	  xhr.onreadystatechange=(e)=>{
+		  console.log(xhr.responseText);
+	  }
+  }
+
   var bgImgPath = './splash/' + chooseBackgroundImg();
   $('#splashImg').attr('src', bgImgPath);
   $('#splashImg').fadeIn(1000);
@@ -50,7 +62,7 @@ $(document).ready(function() {
   });
 
   $('#splashLoginBtn').click(function() {
-    window.location.href = 'https://login.oregonstate.edu/idp/profile/cas/login?service=file:///Users/Omeed/Desktop/OSU/grad/cs562%20-%20software%20proj%20management/project/osu-community-marketplace/osucm/index.html/';
+    window.location.href = 'https://login.oregonstate.edu/idp/profile/cas/login?service=http://www.worksbythepg.com:8080/osu-community-marketplace/';
   });
 });
 
