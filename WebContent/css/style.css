@@ -172,6 +172,7 @@ html {
 .sidenav-option.logout:hover {
 	color: red;
 	text-decoration: none !important;
+	cursor: pointer;
 }
 
 .btn.btn-primary.new-listing {

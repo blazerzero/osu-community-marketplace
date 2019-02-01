@@ -2,7 +2,7 @@ $(document).ready(function() {
 	var url = new URL(window.location.href);
 	var type = url.searchParams.get("type");
 	var query = url.searchParams.get("query");
-	console.log("query: " + query);
+	console.log("Query: " + query);
 	var type = window.location.href.split('=')[1].substring(0,7);
 	console.log("Listing type: " + type);
 	if (type == 'product') {
@@ -26,7 +26,7 @@ $(document).ready(function() {
 	if (listingsJSON != null && listingsJSON.length > 0) {
 		listings = jQuery.parseJSON(escapeJSON(listingsJSON));
 	}
-	console.log(listings);
+	//console.log(listings);
 	
 	showListings(listings);
 	

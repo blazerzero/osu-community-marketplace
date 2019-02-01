@@ -108,6 +108,7 @@ $(document).ready(function() {
 			console.log(JSON.stringify(newListing));
 			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
 			//var status = "JDBC_OK";
+			console.log(status);
 			if (status == "JDBC_OK") {
 				$('#postListingBtn').removeClass('btn-primary');
 				$('#postListingBtn').addClass('btn-success');
