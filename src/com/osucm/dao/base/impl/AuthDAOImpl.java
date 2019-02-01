@@ -57,7 +57,7 @@ public class AuthDAOImpl implements AuthDAO {
 			}
 			
 		} catch (Exception e) {
-			status = CommonConstants.STATUS_JDBC_ERROR;
+			status = e.getMessage();
 			e.printStackTrace();
 		} finally {
 			DBConnectionFactory.close(resultSet, preparedStatement, connect);
