@@ -22,7 +22,10 @@ $(document).ready(function() {
 	}
 	
 	var listingsJSON = sendDataSync("{'type': '"+type+"'}", "getListings", "ListingController");
-	var listings = jQuery.parseJSON(escapeJSON(listingsJSON));
+	var listings = [];
+	if (listingsJSON != null && listingsJSON.length > 0) {
+		listings = jQuery.parseJSON(escapeJSON(listingsJSON));
+	}
 	console.log(listings);
 	
 	showListings(listings);

@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	$('#header').load("header.html");
+	if (sessionStorage.length < 5) {
+		window.location.href = "./index.html";
+	}
 });
 
 window.onscroll = function() {scrollFunction()};

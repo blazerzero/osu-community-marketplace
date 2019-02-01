@@ -2,7 +2,7 @@ package com.osucm.common.constants;
 
 public interface CommonConstants {
 
-	String OP_VALIDATE_lOGIN = "validateLogin";
+	String OP_ADD_USER = "addUser";
 	String OP_LOGOUT = "logout";
 	String STATUS_JDBC_ERROR = "JDBC_Error";
 	String STATUS_JDBC_OK = "JDBC_OK";
@@ -16,4 +16,5 @@ public interface CommonConstants {
 	String OP_GET_RECENT_LISTINGS = "getRecentListings";
 	String OP_GET_MY_LISTINGS = "getMyListings";
 	String OP_GET_MY_RECENT_LISTINGS = "getMyRecentListings";
+
 }

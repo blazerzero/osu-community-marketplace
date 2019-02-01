@@ -2,7 +2,10 @@ $(document).ready(function() {
 	
 	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyListings", "ListingController");
 	console.log(myListingsJSON);
-	var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
+	var myListings = [];
+	if (myListingsJSON != null & myListings.length > 0) {
+		jQuery.parseJSON(escapeJSON(myListingsJSON));
+	}
 	
 	myListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());

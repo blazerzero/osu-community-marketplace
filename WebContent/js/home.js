@@ -1,9 +1,4 @@
 $(document).ready(function() {
-	sessionStorage.setItem('onid', 'usert');
-	sessionStorage.setItem('firstname', 'Test User');
-	sessionStorage.setItem('middlename', '');
-	sessionStorage.setItem('lastname', '');
-	sessionStorage.setItem('email', 'usert@oregonstate.edu');
 	
 	$('#home-name').html('Hi, ' + sessionStorage.getItem('firstname') + '!');
 	
@@ -33,8 +28,11 @@ $(document).ready(function() {
 	$('#home-saved-listings').append(html);*/
 	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
-	console.log(recentListingsJSON);
-	var recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
+	//console.log(recentListingsJSON);
+	var recentListings = [];
+	if (recentListingsJSON != null && recentListingsJSON.length > 0) {
+		recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
+	}
 	
 	recentListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
@@ -67,7 +65,11 @@ $(document).ready(function() {
 	$('#home-new-listings').append(html);
 	
 	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
-	var myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
+	//console.log(myListingsJSON);
+	var myListings = [];
+	if (myListingsJSON != null && myListingsJSON.length > 0) {
+		myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
+	}
 	
 	myListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
