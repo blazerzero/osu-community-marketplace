@@ -249,10 +249,6 @@ html {
 	width: 40vw;
 }
 
-#listingPayFrequency {
-	display: none;
-}
-
 #listingEmail { 
 	cursor: pointer;
 }
@@ -306,3 +302,5 @@ html {
 #selectPayFrequency {
 	display: none;
 }
+
+#incompleteFormAlert { display: none; }

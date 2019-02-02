@@ -24,7 +24,7 @@ $(document).ready(function() {
 	var listingsJSON = sendDataSync("{'type': '"+type+"'}", "getListings", "ListingController");
 	var listings = [];
 	if (listingsJSON != null && listingsJSON.length > 0) {
-		listings = jQuery.parseJSON(escapeJSON(listingsJSON));
+		listings = jQuery.parseJSON(listingsJSON);
 	}
 	//console.log(listings);
 	
@@ -56,18 +56,6 @@ $(document).ready(function() {
 			console.log("sorting listings by price");
 			listings.sort(function(a, b) {
 				return (a.price - b.price);
-			});
-		}
-		else if ($('#searchSort').val() == 'az') {
-			console.log("sorting listings in alphabetical order");
-			listings.sort(function(a, b) {
-				return (a.title - b.title);
-			});
-		}
-		else if ($('#searchSort').val() == 'za') {
-			console.log("sorting listings in reverse alphabetical order");
-			listings.sort(function(a, b) {
-				return (b.title - a.title);
 			});
 		}
 		$('#listings').html('');
@@ -130,7 +118,7 @@ function showListings(listings, type) {
 	    		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
 	    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 	    		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
-	    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+(listings[len].payFrequency == '' ? '' : '/'+listings[len].payFrequency)+'</strong></h5>'
+	    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'
 	    		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
 	    		    +  	  '</div>'
 	    		    +  	  '<div class="card-footer text-muted text-center">'
@@ -161,33 +149,4 @@ function validateSearchForm(input) {
 		return false;
 	}
 	return true;
-}
-
-function buildPrice(listingPrice) {
-	console.log(listingPrice);
-	var afterDecimal = "";
-	var tempPrice = listingPrice.toString();
-	if (tempPrice.includes('.')) {
-		afterDecimal = tempPrice.split('.')[1];
-		if (afterDecimal.length == 1) tempPrice += '0';
-	}
-	else {
-		tempPrice += '.00';
-	}
-	return tempPrice;
-}
-
-function buildDatePosted(listingDatePosted) {
-	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
-	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
-	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
-}
-
-function buildDescription(listingDescription) {
-	var tempDesc = listingDescription;
-	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
-}
-
-function escapeJSON(jString) {
-	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
 }

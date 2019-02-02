@@ -4,7 +4,9 @@ $(document).ready(function() {
 	
 	var detailsJSON = sendDataSync("{'listingID': '"+listingID+"'}", "getListingDetails", "ListingController");
 	console.log(detailsJSON);
-	var listingDetails = jQuery.parseJSON(escapeJSON(detailsJSON));
+	var listingDetails = jQuery.parseJSON(detailsJSON);
+	
+	$(document).attr('title', listingDetails.title + ' - OSU Community Marketplace');
 
 	//var otherContact = '(555) 555-1234';
 	var subject = 'Inquiry About ' + listingDetails.title + ' [via OSU Community Marketplace]';
@@ -19,14 +21,12 @@ $(document).ready(function() {
 	
 	$('#page-title').append(listingDetails.title);
 	$('#listingPoster').append(listingDetails.firstname+' '+listingDetails.middlename+' '+listingDetails.lastname);
-	$('#listingDatePosted').append(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
+	$('#listingDatePosted').append(buildDatePosted(listingDetails.datePosted));
 	$('#listingType').append(listingDetails.type.charAt(0).toUpperCase() + listingDetails.type.slice(1));
 	$('#listingDescription').append(listingDetails.description);
-	$('#listingPrice').append(listingDetails.price);
-	var afterDecimal = listingDetails.price.split('.')[1];
-	if (afterDecimal.length == 1) $('#listingPrice').append('0');
-	$('#listingPayFrequency').append(listingDetails.payFrequency);
+	$('#listingPrice').append(buildPrice(listingDetails.price, listingDetails.payFrequency));
 	$('#listingEmail').append(listingDetails.email);
+	$('#listingShowEmail').append(listingDetails.showEmail);
 	$('#listingOtherContact').append(listingDetails.otherContact);
 	$('#listingEmail').click(function() {
 		window.location.href="mailto:"+listingDetails.email+"?subject="+subject;
@@ -70,13 +70,3 @@ $(document).ready(function() {
 		}
 	});
 });
-
-function buildDatePosted(listingDatePosted) {
-	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
-	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
-	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
-}
-
-function escapeJSON(jString) {
-	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
-}

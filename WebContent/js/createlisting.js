@@ -53,42 +53,70 @@ $(document).ready(function() {
 		if ($('#listingTitle').val() == '') {
 			ready = false;
 			$('#listingTitleSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingTitleSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#listingDescription').val() == '') {
 			ready = false;
 			$('#listingDescriptionSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingDescriptionSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#selectListingType').val() == '') {
 			ready = false;
 			$('#listingTypeSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingTypeSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#listingPrice').val() == '') {
 			ready = false;
 			$('#listingPriceSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#selectShowEmail').val() == '') {
 			ready = false;
 			$('#showEmailSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#showEmailSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#selectShowPhone').val() == '') {
 			ready = false;
 			$('#showPhoneSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#showPhoneSection').css('box-shadow', '0 0 0 white');
 		
+		if ($.isNumeric($('#listingPrice').val())) {
+			$('#incompleteFormAlert').html('Price must be a number.');
+			$('#incompleteFormAlert').css('display', 'block');
+		}
+		
+		/*if ($('#listingDescription').val().includes('"') 
+				|| $('#listingDescription').val().includes('"')
+				|| $('#listingDescription').val().includes('\\')
+				|| $('#listingDescription').val().includes('\n')
+				|| $('#listingDescription').val().includes('\t')
+				|| $('#listingDescription').val().includes('\r')) {
+			$('#incompleteFormAlert').html('Description cannot have double quotes, backslashes, returns, or tabs.');
+			$('#incompleteFormAlert').css('display', 'block');
+		}*/
+		
 		if (ready) {
+			$('#incompleteFormAlert').css('display', 'none');
 			/* code to post listing */
 			var type = "";
 			if ($('#selectListingType').val() == 'p') type = 'product';
 			else if ($('#selectListingType').val() == 's') type = 'service';
 			else if ($('#selectListingType').val() == 'h') type = 'housing';
 			console.log('type: ' + type);
-			/*var fileNames = [];
-			$.each(fileList, function(index, file) {
+			var fileNames = [];
+			/*$.each(fileList, function(index, file) {
 				fileNames.push(file.name);
 				sendFile(file, type[0]);
 			});*/

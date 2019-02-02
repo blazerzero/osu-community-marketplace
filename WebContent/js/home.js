@@ -28,10 +28,10 @@ $(document).ready(function() {
 	$('#home-saved-listings').append(html);*/
 	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
-	//console.log(recentListingsJSON);
+	console.log(recentListingsJSON);
 	var recentListings = [];
 	if (recentListingsJSON != null && recentListingsJSON.length > 0) {
-		recentListings = jQuery.parseJSON(escapeJSON(recentListingsJSON));
+		recentListings = jQuery.parseJSON(recentListingsJSON);
 	}
 	
 	recentListings.sort(function(a, b) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
 		    +		'<p class="card-text">Listing type: '+recentListings[len].type.charAt(0).toUpperCase()+recentListings[len].type.substring(1)+'</p>'
 		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+recentListings[len].type[0]+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(recentListings[len].description)+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price)+(recentListings[len].payFrequency == '' ? '' : '/'+recentListings[len].payFrequency)+'</strong></h5>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price, recentListings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
@@ -68,7 +68,7 @@ $(document).ready(function() {
 	//console.log(myListingsJSON);
 	var myListings = [];
 	if (myListingsJSON != null && myListingsJSON.length > 0) {
-		myListings = jQuery.parseJSON(escapeJSON(myListingsJSON));
+		myListings = jQuery.parseJSON(myListingsJSON);
 	}
 	
 	myListings.sort(function(a, b) {
@@ -86,7 +86,7 @@ $(document).ready(function() {
 				  +		  '<p class="card-text">Listing type: '+myListings[len].type.charAt(0).toUpperCase()+myListings[len].type.substring(1)+'</p>'
 				  +    	  (myListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 				  +       '<p class="card-text">'+buildDescription(myListings[len].description)+'</p>'
-				  +       '<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price)+(myListings[len].payFrequency == '' ? '' : '/'+myListings[len].payFrequency)+'</strong></h5>'
+				  +       '<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price, myListings[len].payFrequency)+'</strong></h5>'
 				  +       '<a href="viewlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
 				  +  	  '</div>'
 				  +  	  '<div class="card-footer text-muted text-center">'
@@ -132,33 +132,4 @@ function validateSearchForm(type, input) {
 		return false;
 	}
 	return true;
-}
-
-function buildPrice(listingPrice) {
-	console.log(listingPrice);
-	var afterDecimal = "";
-	var tempPrice = listingPrice.toString();
-	if (tempPrice.includes('.')) {
-		afterDecimal = tempPrice.split('.')[1];
-		if (afterDecimal.length == 1) tempPrice += '0';
-	}
-	else {
-		tempPrice += '.00';
-	}
-	return tempPrice;
-}
-
-function buildDatePosted(listingDatePosted) {
-	var datePosted = new Date(listingDatePosted).toString().substring(4,15);
-	console.log(datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11));
-	return datePosted.substring(0,3)+'. '+datePosted.substring(4,6)+', '+datePosted.substring(7,11);
-}
-
-function buildDescription(listingDescription) {
-	var tempDesc = listingDescription;
-	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
-}
-
-function escapeJSON(jString) {
-	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "<br/>").replace(/\t/g, "<br/>");
 }

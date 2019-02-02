@@ -136,7 +136,7 @@ public class ListingDAOImpl implements ListingDAO {
 			listingDetails += "\"imageIDs\": \"" + resultSet.getString("imageIDs") + "\", ";
 			listingDetails += "\"price\": \"" + resultSet.getDouble("price") + "\", ";
 			listingDetails += "\"payFrequency\": \"" + resultSet.getString("payFrequency") + "\", ";
-			listingDetails += "\"datePosted\": \"" + resultSet.getTimestamp("datePosted") + "\", ";
+			listingDetails += "\"datePosted\": \"" + resultSet.getTimestamp("datePosted").getTime() + "\", ";
 			listingDetails += "\"showEmail\": \"" + resultSet.getInt("showEmail") + "\", ";
 			listingDetails += "\"otherContact\": \"" + resultSet.getString("otherContact") + "\", ";
 			listingDetails += "\"firstname\": \"" + resultSet.getString("firstname") + "\", ";
