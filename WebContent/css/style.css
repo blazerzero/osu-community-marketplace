@@ -179,6 +179,11 @@ html {
 	margin-bottom: 2vw;
 }
 
+.btn.btn-primary.listing-action {
+	margin-left: 0.25vw;
+	margin-right: 0.25vw;
+}
+
 /* Header */
 .toptitle {
 	background-color: #d73f09;

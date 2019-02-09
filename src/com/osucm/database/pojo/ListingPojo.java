@@ -1,7 +1,8 @@
 package com.osucm.database.pojo;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ListingPojo {
 	
@@ -16,6 +17,7 @@ public class ListingPojo {
 	private long datePosted;
 	private int showEmail;
 	private String otherContact;
+	private List<String> tags;
 	
 	public int getListingID() {
 		return listingID;
@@ -104,5 +106,15 @@ public class ListingPojo {
 	public void setOtherContact(String otherContact) {
 		this.otherContact = otherContact;
 	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = new ArrayList<String>(Arrays.asList(tags.split(",")));
+	}
+	
+	
 	
 }

@@ -26,6 +26,47 @@ function escapeJSON(jString) {
 	return jString.replace(/\n/g, "<br/>").replace(/\r/g, "</br>").replace(/\t/g, " ").replace('"', "\"");
 }
 
+function showHomeListings(listings, location, type) {
+	var html = '<div class="card-deck listing-row">';
+	var len = listings.length - 1;
+	for (i = 0; i < 3; i++) {
+		if (len >= 0) {
+			html += '<div class="card">'
+		    +     '<div class="card-body">'
+		    +		(type == 'saved' 
+		    		? '<button type="button" class="close removeFromSavedListX" aria-label="Close" data-id="'+len+'">'
+		    	        	+		  '<span aria-hidden="true">&times;</span>'
+		    	        	+	  	'</button>'
+		    		: (type == 'my' 
+		    			? '<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+len+'">'
+		    				+	'<span aria-hidden="true">&times;</span>'
+		    				+ '</button>'
+		    			: '')
+		    		)
+		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
+		    +		'<p class="card-text">Listing type: '+listings[len].type.charAt(0).toUpperCase()+listings[len].type.substring(1)+'</p>'
+		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+listings[len].type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
+		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'
+		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
+		    +		(type == 'my' 
+    				? 	'<a href="editlisting.html?listingID='+listings[len].listingID+'" class="btn btn-info listing-action">Edit</a>'
+	    			: '')
+		    +  	  '</div>'
+		    +  	  '<div class="card-footer text-muted text-center">'
+	    	+	  	'Posted on '+buildDatePosted(listings[len].datePosted)
+	 		+  	  '</div>'
+		    +  	'</div>';
+	    	len--;
+		}
+		else {
+			html += '<div class="card" style="opacity: 0" disabled></div>';
+		}
+	}
+	html += '</div>';
+	$(location).append(html);
+}
+
 function buildPrice(listingPrice, payFrequency) {
 	console.log(listingPrice);
 	var afterDecimal = "";

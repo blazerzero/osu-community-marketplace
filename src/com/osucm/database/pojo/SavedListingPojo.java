@@ -1,12 +1,10 @@
 package com.osucm.database.pojo;
 
-import java.sql.Timestamp;
-
 public class SavedListingPojo {
 	
 	private int listingID;
 	private int onid;
-	private Timestamp dateSaved;
+	private long dateSaved;
 	
 	public int getListingID() {
 		return listingID;
@@ -24,11 +22,11 @@ public class SavedListingPojo {
 		this.onid = onid;
 	}
 	
-	public Timestamp getDateSaved() {
+	public long getDateSaved() {
 		return dateSaved;
 	}
 	
-	public void setDateSaved(Timestamp dateSaved) {
+	public void setDateSaved(long dateSaved) {
 		this.dateSaved = dateSaved;
 	}
 	

@@ -28,7 +28,7 @@ $(document).ready(function() {
 	}
 	//console.log(listings);
 	
-	showListings(listings);
+	showListings(listings, type, '#listings');
 	
 	$('#searchSubmitBtn').click(function() {
 		console.log("search submit button clicked");
@@ -63,12 +63,12 @@ $(document).ready(function() {
 	});
 });
 
-function showListings(listings, type) {
+function showListings(listings, type, location) {
 	var len = listings.length - 1;
 	while (len >= 0) {
 		if (len >= 3) {
 			var payFreq = (listings[len].type == 'housing' ? '/'+listings[len].payFrequency : '');
-			$('#listings').append(
+			$(location).append(
 			'<div class="card-deck listing-row">'		
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
@@ -76,7 +76,7 @@ function showListings(listings, type) {
 		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+'</strong></h5>'
-		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
+		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
 	    	+	  	'Posted on '+buildDatePosted(listings[len].datePosted)
@@ -88,7 +88,7 @@ function showListings(listings, type) {
 		    +    	(listings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-1].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-1].price)+'</strong></h5>'
-		    +      	'<a href="viewlisting.html?listingID='+listings[len-1].listingID+'" class="btn btn-primary">View Listing</a>'
+		    +      	'<a href="viewlisting.html?listingID='+listings[len-1].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
 	    	+	  	'Posted on '+buildDatePosted(listings[len-1].datePosted)
@@ -100,7 +100,7 @@ function showListings(listings, type) {
 		    +    	(listings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-2].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-2].price)+'</strong></h5>'
-		    +      	'<a href="viewlisting.html?listingID='+listings[len-2].listingID+'" class="btn btn-primary">View Listing</a>'
+		    +      	'<a href="viewlisting.html?listingID='+listings[len-2].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +  	  '</div>'
 		    +  	  '<div class="card-footer text-muted text-center">'
 	    	+	  	'Posted on '+buildDatePosted(listings[len-2].datePosted)
@@ -119,7 +119,7 @@ function showListings(listings, type) {
 	    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 	    		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 	    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'
-	    		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary">View Listing</a>'
+	    		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 	    		    +  	  '</div>'
 	    		    +  	  '<div class="card-footer text-muted text-center">'
 	    	    	+	  	'Posted on '+buildDatePosted(listings[len].datePosted)
@@ -132,7 +132,7 @@ function showListings(listings, type) {
 				}
 			}
 			html += '</div>';
-		    $('#listings').append(html);
+		    $(location).append(html);
 	    }
 	}
 }

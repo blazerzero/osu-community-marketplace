@@ -2,30 +2,18 @@ $(document).ready(function() {
 	
 	$('#home-name').html('Hi, ' + sessionStorage.getItem('firstname') + '!');
 	
-	//var savedLen = 2;
-	var newLen = 2;
-	var myLen = 2;
-	
-	var html = '';
-	var len = 0;
-	/*html += '<div class="card-deck listing-row">';
-	while (savedLen > 0) {
-		html += '<div class="card">'
-		      +     '<div class="card-body">'
-		      +      	'<h5 class="card-title">Listing Title</h5>'
-		      +    		'<img src="./splash/corvallis.jpg" class="main-listing-img" alt="MU">'
-		      +      	'<p class="card-text">Listing description</p>'
-		      +      	'<h5 class="card-title list-price"><strong>$100</strong></h5>'
-		      +      	'<a href="viewlisting.html?listingID='+savedLen+'" class="btn btn-primary">View Listing</a>'
-		      +  	  '</div>'
-		      +  	  '<div class="card-footer text-muted text-center">'
-	      	  +	  	'Posted 2 days ago'
-	 		  +  	  '</div>'
-		      +  	'</div>';
-		savedLen--;
+	/*var savedListingsJSON = sendDataSync("", "getRecentSavedListings", "ListingController");
+	console.log(savedListingsJSON);
+	var savedListings = [];
+	if (savedListingsJSON != null && savedListingsJSON.length > 0) {
+		savedListings = jQuery.parseJSON(savedListingsJSON);
 	}
-	html += '</div>';
-	$('#home-saved-listings').append(html);*/
+	
+	savedListings.sort(function(a, b) {
+		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+	});
+	
+	showHomeListings(savedListings, '#home-saved-listings', 'saved');*/
 	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
 	console.log(recentListingsJSON);
@@ -38,31 +26,7 @@ $(document).ready(function() {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 	});
 	
-	html = '<div class="card-deck listing-row">';
-	len = recentListings.length - 1;
-	for (i = 0; i < 3; i++) {
-		if (len >= 0) {
-			html += '<div class="card">'
-		    +     '<div class="card-body">'
-		    +      	'<h5 class="card-title">'+recentListings[len].title+'</h5>'
-		    +		'<p class="card-text">Listing type: '+recentListings[len].type.charAt(0).toUpperCase()+recentListings[len].type.substring(1)+'</p>'
-		    +    	(recentListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+recentListings[len].type[0]+'/'+recentListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-		    +      	'<p class="card-text">'+buildDescription(recentListings[len].description)+'</p>'
-		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(recentListings[len].price, recentListings[len].payFrequency)+'</strong></h5>'
-		    +      	'<a href="viewlisting.html?listingID='+recentListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
-		    +  	  '</div>'
-		    +  	  '<div class="card-footer text-muted text-center">'
-	    	+	  	'Posted on '+buildDatePosted(recentListings[len].datePosted)
-	 		+  	  '</div>'
-		    +  	'</div>';
-	    	len--;
-		}
-		else {
-			html += '<div class="card" style="opacity: 0" disabled></div>';
-		}
-	}
-	html += '</div>';
-	$('#home-new-listings').append(html);
+	showHomeListings(recentListings, '#home-new-listings', 'new');
 	
 	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
 	//console.log(myListingsJSON);
@@ -75,32 +39,7 @@ $(document).ready(function() {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 	});
 	
-	len = myListings.length - 1;
-	html = '';
-	html += '<div class="card-deck listing-row">';
-	for (i = 0; i < 3; i++) {
-		if (len >= 0) {
-			html += '<div class="card">'
-			      +     '<div class="card-body">'
-			      +       '<h5 class="card-title">'+myListings[len].title+'</h5>'
-				  +		  '<p class="card-text">Listing type: '+myListings[len].type.charAt(0).toUpperCase()+myListings[len].type.substring(1)+'</p>'
-				  +    	  (myListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-				  +       '<p class="card-text">'+buildDescription(myListings[len].description)+'</p>'
-				  +       '<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price, myListings[len].payFrequency)+'</strong></h5>'
-				  +       '<a href="viewlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-primary">View Listing</a>'
-				  +  	  '</div>'
-				  +  	  '<div class="card-footer text-muted text-center">'
-			      +	  		'Posted on '+buildDatePosted(myListings[len].datePosted)
-			 	  +  	  '</div>'
-			      +  	'</div>';
-			len--;
-		}
-		else {
-			html += '<div class="card" style="opacity: 0" disabled></div>';
-		}
-	}
-	html += '</div>';
-	$('#home-my-listings').append(html);
+	showHomeListings(myListings, '#home-my-listings', 'my');
 	
 	$('#homeSearchSubmitBtn').click(function() {
 		var typeVal = $('#homeSearchType').val();
