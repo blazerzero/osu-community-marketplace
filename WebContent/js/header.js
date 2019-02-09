@@ -3,6 +3,10 @@ $(document).ready(function() {
 	if (sessionStorage.length < 5) {
 		window.location.href = "./index.html";
 	}
+	
+	$('.close').click(function() {
+		console.log($(this).data('id'));
+	});
 });
 
 window.onscroll = function() {scrollFunction()};
@@ -34,11 +38,11 @@ function showHomeListings(listings, location, type) {
 			html += '<div class="card">'
 		    +     '<div class="card-body">'
 		    +		(type == 'saved' 
-		    		? '<button type="button" class="close removeFromSavedListX" aria-label="Close" data-id="'+len+'">'
+		    		? '<button type="button" class="close" id="removeFromSavedListX" aria-label="Close" data-id="saved'+listings[len].listingID+'">'
 		    	        	+		  '<span aria-hidden="true">&times;</span>'
 		    	        	+	  	'</button>'
 		    		: (type == 'my' 
-		    			? '<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+len+'">'
+		    			? '<button type="button" class="close" id="deleteMyListingX" aria-label="Close" data-id="deleteMy'+listings[len].listingID+'">'
 		    				+	'<span aria-hidden="true">&times;</span>'
 		    				+ '</button>'
 		    			: '')

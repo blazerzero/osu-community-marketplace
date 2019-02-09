@@ -1,11 +1,31 @@
-var fileList = [];
-
 $(document).ready(function() {
-	var fileAdder = document.getElementById('fileAdder');
+	var url = new URL(window.location.href);
+	var listingID = url.searchParams.get("listingID");
 	
-	$('#addImageBtn').click(function() {
-		$('#fileAdder').click();
-	});
+	var detailsJSON = sendDataSync("{'listingID': '"+listingID+"'}", "getListingDetails", "ListingController");
+	console.log(detailsJSON);
+	var listingsDetails = [];
+	if (detailsJSON != null && detailsJSON.length > 0) {
+		listingDetails = jQuery.parseJSON(detailsJSON);
+	}
+	
+	if (sessionStorage.getItem('onid') != listingDetails.onid) {
+		alert('You can\'t edit someone else\'s listing.');
+		window.location.href = 'home.html';
+	}
+	
+	$(document).attr('title', 'Edit Listing: ' + listingDetails.title + ' - OSU Community Marketplace');
+
+	$('#page-title').html('Edit Listing: ' + listingDetails.title);
+	$('#listingTitle').val(listingDetails.title);
+	$('#listingDescription').val(listingDetails.description);
+	$('#selectListingType').val(listingDetails.type[0]);
+	$('#listingPrice').val(buildPrice(listingDetails.price));
+	if (listingDetails.type == 'housing') {
+		$('#selectPayFrequency').val(listingDetails.payFrequency);
+		$('#payFrequencyLabel').css('display', 'block');
+		$('#selectPayFrequency').css('display', 'block');
+	}
 	
 	$('#selectListingType').change(function() {
 		if ($('#selectListingType').val() == 'h') {
@@ -20,35 +40,10 @@ $(document).ready(function() {
 		}
 	});
 	
-	fileAdder.addEventListener('change', function(e) {
-		var reader = new FileReader();
-		for (var i = 0; i < fileAdder.files.length; i++) {
-			if (!fileList.includes(fileAdder.files[i])) {
-				console.log('file: ' + fileAdder.files[i].name);
-				fileList.push(fileAdder.files[i]);
-				if (fileList.length == 15) {
-					$('#addImageBtn').attr('disabled', 'disabled');
-					if (i < fileAdder.files.length - 1) {
-						//$('#uploadErrorAlert').html('Not all photos could be uploaded. Maximum number of photos reached.');
-						$('#uploadErrorAlert').css('display', 'block');
-					}
-				}
-			}
-		}
-		$('#uploadedFiles').html('');
-		for (var i = 0; i < fileList.length; i++) {
-			$('#uploadedFiles').append(
-					  '<div>'
-					+	fileList[i].name
-					+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
-		        	+	  '<span aria-hidden="true">&times;</span>'
-		        	+	'</button>'
-		        	+ '</div>'
-			);
-		}
-	});
+	$('#selectShowEmail').val(listingDetails.showEmail);
+	$('#listingContact').val(listingDetails.otherContact);
 	
-	$('#postListingBtn').click(function() {
+	$('#saveChangesBtn').click(function() {
 		var ready = true;
 		if ($('#listingTitle').val() == '') {
 			ready = false;
@@ -142,40 +137,4 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
 });
-
-function deletePhoto(deleteBtn) {
-	console.log(deleteBtn.getAttribute('data-id'));
-	var idx = deleteBtn.getAttribute('data-id');
-	fileList.splice(idx, 1);
-	$('#uploadedFiles').html('');
-	for (var i = 0; i < fileList.length; i++) {
-		$('#uploadedFiles').append(
-				  '<div>'
-				+	fileList[i].name
-				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
-	        	+	  '<span aria-hidden="true">&times;</span>'
-	        	+	'</button>'
-	        	+ '</div>'
-		);
-	}
-}
-
-function sendFile(file, type) {
-	var formData = new FormData();
-	var request = new XMLHttpRequest();
-	
-	var url = 'http://www.worksbythepg.com/osucm-images/'+type+'/'
-	formData.append('upload', file);
-	console.log(url);
-	request.open("POST", url, true);
-	request.setRequestHeader("Content-Type", "multipart/form-data")
-	request.send(formData);
-	
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
-			alert(file.name + ' has been uploaded to ' + url);
-		}
-	}
-}
