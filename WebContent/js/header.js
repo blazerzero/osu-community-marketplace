@@ -49,6 +49,7 @@ function showHomeListings(listings, location, type) {
 		    		)
 		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+listings[len].type.charAt(0).toUpperCase()+listings[len].type.substring(1)+'</p>'
+		    +		'<p class="card-text">Campus: '+(listings[len] == 'Bend' ? 'Bend (Cascades)' : (listings[len] == 'Other' ? 'Other (See description)' : listings[len].campus))+'</p>'
 		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+listings[len].type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'

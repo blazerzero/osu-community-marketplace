@@ -73,6 +73,7 @@ function showListings(listings, type, location) {
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
+		    +		'<p class="card-text">Campus: '+(listings[len].campus == 'Bend' ? 'Bend (Cascades)' : (listings[len].campus == 'Other' ? 'Other (See description)' : listings[len].campus))+'</p>'
 		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price)+'</strong></h5>'
@@ -85,6 +86,7 @@ function showListings(listings, type, location) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-1].title+'</h5>'
+		    +		'<p class="card-text">Campus: '+(listings[len-1].campus == 'Bend' ? 'Bend (Cascades)' : (listings[len-1].campus == 'Other' ? 'Other (See description)' : listings[len-1].campus))+'</p>'
 		    +    	(listings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-1].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-1].price)+'</strong></h5>'
@@ -97,6 +99,7 @@ function showListings(listings, type, location) {
 		    +   '<div class="card">'
 		    +     '<div class="card-body">'
 		    +      	'<h5 class="card-title">'+listings[len-2].title+'</h5>'
+		    +		'<p class="card-text">Campus: '+(listings[len-2].campus == 'Bend' ? 'Bend (Cascades)' : (listings[len-2].campus == 'Other' ? 'Other (See description)' : listings[len-2].campus))+'</p>'
 		    +    	(listings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len-2].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len-2].price)+'</strong></h5>'
@@ -116,6 +119,7 @@ function showListings(listings, type, location) {
 					html += '<div class="card">'
 	    		    +     '<div class="card-body">'
 	    		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
+	    		    +		'<p class="card-text">Campus: '+(listings[len].campus == 'Bend' ? 'Bend (Cascades)' : (listings[len].campus == 'Other' ? 'Other (See description)' : listings[len].campus))+'</p>'
 	    		    +    	(listings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 	    		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 	    		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'

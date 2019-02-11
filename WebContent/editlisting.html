@@ -32,6 +32,19 @@
   		  </div>
  		  <input type="text" class="form-control" aria-label="Listing Title" aria-describedby="listingTitleLabel" id="listingTitle">
 		</div>
+		<div class="input-group mb-3" id="listingCampusSection">
+  		  <div class="input-group-prepend">
+    		<label class="input-group-text" for="selectListingCampus">* Campus:</label>
+  		  </div>
+  		  <select class="custom-select" id="selectListingCampus">
+    		<option value="">Pick a campus</option>
+    		<option value="Corvallis">Corvallis</option>
+    		<option value="Bend">Bend (Cascades)</option>
+    		<option value="Portland">Portland</option>
+    		<option value="Newport">Newport</option>
+    		<option value="Other">Other (See description)</option>
+  		  </select>
+		</div>
 		<div class="input-group mb-3" id="listingDescriptionSection">
   		  <div class="input-group-prepend">
   		  	<span class="input-group-text">* Description</span>
@@ -82,7 +95,13 @@
   		  <div class="input-group-prepend">
     		<span class="input-group-text" id="listingContactLabel">Other Contact</span>
   		  </div>
- 		  <input type="text" class="form-control" aria-label="Other Contact" aria-describedby="listingContactLabel" id="listingContact">
+ 		  <input type="text" class="form-control" aria-label="Other Contact" aria-describedby="listingContactLabel" id="listingContact" placeholder="E.g. a phone number or another email address">
+	  	</div>
+	  	<div class="input-group mb-3" id="tagsSection">
+  		  <div class="input-group-prepend">
+    		<span class="input-group-text" id="tagsLabel">Tags</span>
+  		  </div>
+ 		  <input type="text" class="form-control" aria-label="Tags" aria-describedby="listingContactLabel" id="listingTags" placeholder="E.g. computer, macbook, 2018, etc.">
 	  	</div>
 		<h4 id="page-title">Upload Photos</h4>
 	  	<h6 id="page-title">(Max. 15 photos)</h6>

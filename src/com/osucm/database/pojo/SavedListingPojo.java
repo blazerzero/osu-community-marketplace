@@ -2,9 +2,17 @@ package com.osucm.database.pojo;
 
 public class SavedListingPojo {
 	
+	private String onid;
 	private int listingID;
-	private int onid;
 	private long dateSaved;
+	
+	public String getOnid() {
+		return onid;
+	}
+	
+	public void setOnid(String onid) {
+		this.onid = onid;
+	}
 	
 	public int getListingID() {
 		return listingID;
@@ -12,14 +20,6 @@ public class SavedListingPojo {
 	
 	public void setListingID(int listingID) {
 		this.listingID = listingID;
-	}
-	
-	public int getOnid() {
-		return onid;
-	}
-	
-	public void setOnid(int onid) {
-		this.onid = onid;
 	}
 	
 	public long getDateSaved() {

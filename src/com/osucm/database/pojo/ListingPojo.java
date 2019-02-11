@@ -1,15 +1,12 @@
 package com.osucm.database.pojo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class ListingPojo {
 	
 	private int listingID;
 	private String onid;
 	private String type;
 	private String title;
+	private String campus;
 	private String description;
 	private String imageIDs;
 	private double price;
@@ -17,7 +14,7 @@ public class ListingPojo {
 	private long datePosted;
 	private int showEmail;
 	private String otherContact;
-	private List<String> tags;
+	private String tags;
 	
 	public int getListingID() {
 		return listingID;
@@ -51,6 +48,14 @@ public class ListingPojo {
 		this.title = title;
 	}
 	
+	public String getCampus() {
+		return campus;
+	}
+
+	public void setCampus(String campus) {
+		this.campus = campus;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -107,12 +112,12 @@ public class ListingPojo {
 		this.otherContact = otherContact;
 	}
 
-	public List<String> getTags() {
+	public String getTags() {
 		return tags;
 	}
 
 	public void setTags(String tags) {
-		this.tags = new ArrayList<String>(Arrays.asList(tags.split(",")));
+		this.tags = tags;
 	}
 	
 	

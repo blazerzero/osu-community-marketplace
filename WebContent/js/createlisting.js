@@ -57,6 +57,13 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingTitleSection').css('box-shadow', '0 0 0 white');
 		
+		if ($('#selectListingCampus').val() == '') {
+			ready = false;
+			$('#listingCampusSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
+		} else $('#listingCampusSection').css('box-shadow', '0 0 0 white');
+		
 		if ($('#listingDescription').val() == '') {
 			ready = false;
 			$('#listingDescriptionSection').css('box-shadow', '0 0 5px red');
@@ -118,6 +125,7 @@ $(document).ready(function() {
 			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
+			newListing.campus = $('#selectListingCampus').val();
 			newListing.description = $('#listingDescription').val();
 			//newListing.imageIDs = fileNames.toString();
 			newListing.imageIDs = '';
@@ -127,6 +135,7 @@ $(document).ready(function() {
 			if (newListing.payFrequency == 'once') newListing.payFrequency = '';
 			newListing.showEmail = $('#selectShowEmail').val();
 			newListing.otherContact = $('#listingContact').val();
+			newListing.tags = $('#listingTags').val();
 			console.log(JSON.stringify(newListing));
 			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
 			//var status = "JDBC_OK";

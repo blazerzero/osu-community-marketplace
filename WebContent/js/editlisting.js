@@ -18,6 +18,7 @@ $(document).ready(function() {
 
 	$('#page-title').html('Edit Listing: ' + listingDetails.title);
 	$('#listingTitle').val(listingDetails.title);
+	$('#selectListingCampus').val(listingDetails.campus);
 	$('#listingDescription').val(listingDetails.description);
 	$('#selectListingType').val(listingDetails.type[0]);
 	$('#listingPrice').val(buildPrice(listingDetails.price));
@@ -42,6 +43,7 @@ $(document).ready(function() {
 	
 	$('#selectShowEmail').val(listingDetails.showEmail);
 	$('#listingContact').val(listingDetails.otherContact);
+	$('#listingTags').val(listingDetails.tags);
 	
 	$('#saveChangesBtn').click(function() {
 		var ready = true;
@@ -51,6 +53,13 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').html('Please fill all required fields.');
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingTitleSection').css('box-shadow', '0 0 0 white');
+		
+		if ($('#selectListingCampus').val() == '') {
+			ready = false;
+			$('#listingCampusSection').css('box-shadow', '0 0 5px red');
+			$('#incompleteFormAlert').html('Please fill all required fields.');
+			$('#incompleteFormAlert').css('display', 'block');
+		} else $('#listingCampusSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#listingDescription').val() == '') {
 			ready = false;
@@ -113,6 +122,7 @@ $(document).ready(function() {
 			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
+			newListing.campus = $('#selectListingCampus').val();
 			newListing.description = $('#listingDescription').val();
 			//newListing.imageIDs = fileNames.toString();
 			newListing.imageIDs = '';
@@ -122,9 +132,10 @@ $(document).ready(function() {
 			if (newListing.payFrequency == 'once') newListing.payFrequency = '';
 			newListing.showEmail = $('#selectShowEmail').val();
 			newListing.otherContact = $('#listingContact').val();
+			newListing.tags = $('#listingTags').val();
 			console.log(JSON.stringify(newListing));
-			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
-			//var status = "JDBC_OK";
+			//var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
+			var status = "JDBC_OK";
 			console.log(status);
 			if (status == "JDBC_OK") {
 				$('#postListingBtn').removeClass('btn-primary');

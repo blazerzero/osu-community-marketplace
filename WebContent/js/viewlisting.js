@@ -23,11 +23,26 @@ $(document).ready(function() {
 	$('#listingPoster').append(listingDetails.firstname+' '+listingDetails.middlename+' '+listingDetails.lastname);
 	$('#listingDatePosted').append(buildDatePosted(listingDetails.datePosted));
 	$('#listingType').append(listingDetails.type.charAt(0).toUpperCase() + listingDetails.type.slice(1));
+	$('#listingCampus').append((listingDetails.campus == 'Bend' ? 'Bend (Cascades)' : (listingDetails.campus == 'Other' ? 'Other (See description)' : listingDetails.campus)));
 	$('#listingDescription').append(listingDetails.description);
 	$('#listingPrice').append(buildPrice(listingDetails.price, listingDetails.payFrequency));
 	$('#listingEmail').append(listingDetails.email);
 	$('#listingShowEmail').append(listingDetails.showEmail);
 	$('#listingOtherContact').append(listingDetails.otherContact);
+	var tags = listingDetails.tags.split(", ");
+	var filtered = tags.filter(function (el) {
+		return (el != "" && el != null);
+	});
+	tags = filtered;
+	console.log(tags);
+	console.log(tags.length);
+	if (tags.length == 0) {
+		$('#listingTags').css('display', 'none');
+	}
+	for (i = 0; i < tags.length; i++) {
+		console.log(tags[i]);
+		$('#listingTags').append('<span class="listing-tag"><a href="search.html?type='+listingDetails.type+'&query='+tags[i]+'">'+tags[i]+'</a></span>');
+	}
 	$('#listingEmail').click(function() {
 		window.location.href="mailto:"+listingDetails.email+"?subject="+subject;
 	});

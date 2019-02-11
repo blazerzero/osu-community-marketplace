@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.osucm.dao.base.GenericDAO;
 import com.osucm.database.pojo.ListingPojo;
+import com.osucm.database.pojo.SavedListingPojo;
 
 public interface ListingDAO extends GenericDAO {
 	

@@ -48,6 +48,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setOnid(resultSet.getString("onid"));
 				listingPojo.setType(resultSet.getString("type"));
 				listingPojo.setTitle(resultSet.getString("title"));
+				listingPojo.setCampus(resultSet.getString("campus"));
 				listingPojo.setDescription(resultSet.getString("description"));
 				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
 				listingPojo.setPrice(resultSet.getDouble("price"));
@@ -55,6 +56,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
 				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
 				listingPojo.setOtherContact(resultSet.getString("otherContact"));
+				listingPojo.setTags(resultSet.getString("tags"));
 				
 				listings.add(listingPojo);
 			}
@@ -83,17 +85,16 @@ public class ListingDAOImpl implements ListingDAO {
 			preparedStatement.setString(1, newListing.getOnid());
 			preparedStatement.setString(2, newListing.getType());
 			preparedStatement.setString(3, newListing.getTitle());
-			preparedStatement.setString(4, newListing.getDescription());
-			preparedStatement.setString(5, newListing.getImageIDs());
-			preparedStatement.setDouble(6, newListing.getPrice());
-			preparedStatement.setString(7, newListing.getPayFrequency());
-			preparedStatement.setInt(8, newListing.getShowEmail());
-			preparedStatement.setString(9, newListing.getOtherContact());
-			preparedStatement.setTimestamp(10, dt);
-
-			
-			//resultSet = preparedStatement.executeQuery();
-			
+			preparedStatement.setString(4, newListing.getCampus());
+			preparedStatement.setString(5, newListing.getDescription());
+			preparedStatement.setString(6, newListing.getImageIDs());
+			preparedStatement.setDouble(7, newListing.getPrice());
+			preparedStatement.setString(8, newListing.getPayFrequency());
+			preparedStatement.setInt(9, newListing.getShowEmail());
+			preparedStatement.setString(10, newListing.getOtherContact());
+			preparedStatement.setString(11, newListing.getTags());
+			preparedStatement.setTimestamp(12, dt);
+						
 			int executeUpdate = preparedStatement.executeUpdate();
 
 			if (executeUpdate > 0) {
@@ -132,6 +133,7 @@ public class ListingDAOImpl implements ListingDAO {
 			listingDetails += "\"listingID\": \"" + resultSet.getInt("listingID") + "\", ";
 			listingDetails += "\"type\": \"" + resultSet.getString("type") + "\", ";
 			listingDetails += "\"title\": \"" + resultSet.getString("title") + "\", ";
+			listingDetails += "\"campus\": \"" + resultSet.getString("campus") + "\", ";
 			listingDetails += "\"description\": \"" + resultSet.getString("description") + "\", ";
 			listingDetails += "\"imageIDs\": \"" + resultSet.getString("imageIDs") + "\", ";
 			listingDetails += "\"price\": \"" + resultSet.getDouble("price") + "\", ";
@@ -139,6 +141,7 @@ public class ListingDAOImpl implements ListingDAO {
 			listingDetails += "\"datePosted\": \"" + resultSet.getTimestamp("datePosted").getTime() + "\", ";
 			listingDetails += "\"showEmail\": \"" + resultSet.getInt("showEmail") + "\", ";
 			listingDetails += "\"otherContact\": \"" + resultSet.getString("otherContact") + "\", ";
+			listingDetails += "\"tags\": \"" + resultSet.getString("tags") + "\", ";
 			listingDetails += "\"firstname\": \"" + resultSet.getString("firstname") + "\", ";
 			listingDetails += "\"middlename\": \"" + resultSet.getString("middlename") + "\", ";
 			listingDetails += "\"lastname\": \"" + resultSet.getString("lastname") + "\", ";
@@ -175,6 +178,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setOnid(resultSet.getString("onid"));
 				listingPojo.setType(resultSet.getString("type"));
 				listingPojo.setTitle(resultSet.getString("title"));
+				listingPojo.setCampus(resultSet.getString("campus"));
 				listingPojo.setDescription(resultSet.getString("description"));
 				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
 				listingPojo.setPrice(resultSet.getDouble("price"));
@@ -182,6 +186,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
 				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
 				listingPojo.setOtherContact(resultSet.getString("otherContact"));
+				listingPojo.setTags(resultSet.getString("tags"));
 				
 				listings.add(listingPojo);
 			}
@@ -214,6 +219,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setOnid(resultSet.getString("onid"));
 				listingPojo.setType(resultSet.getString("type"));
 				listingPojo.setTitle(resultSet.getString("title"));
+				listingPojo.setCampus(resultSet.getString("campus"));
 				listingPojo.setDescription(resultSet.getString("description"));
 				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
 				listingPojo.setPrice(resultSet.getDouble("price"));
@@ -221,6 +227,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
 				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
 				listingPojo.setOtherContact(resultSet.getString("otherContact"));
+				listingPojo.setTags(resultSet.getString("tags"));
 				
 				userListings.add(listingPojo);
 			}
@@ -253,6 +260,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setOnid(resultSet.getString("onid"));
 				listingPojo.setType(resultSet.getString("type"));
 				listingPojo.setTitle(resultSet.getString("title"));
+				listingPojo.setCampus(resultSet.getString("campus"));
 				listingPojo.setDescription(resultSet.getString("description"));
 				listingPojo.setImageIDs(resultSet.getString("imageIDs"));
 				listingPojo.setPrice(resultSet.getDouble("price"));
@@ -260,6 +268,7 @@ public class ListingDAOImpl implements ListingDAO {
 				listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
 				listingPojo.setShowEmail(resultSet.getInt("showEmail"));
 				listingPojo.setOtherContact(resultSet.getString("otherContact"));
+				listingPojo.setTags(resultSet.getString("tags"));
 				
 				userListings.add(listingPojo);
 			}
