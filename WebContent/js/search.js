@@ -59,7 +59,7 @@ $(document).ready(function() {
 			});
 		}
 		$('#listings').html('');
-		showListings(listings, type);
+		showListings(listings, type, '#listings');
 	});
 });
 
