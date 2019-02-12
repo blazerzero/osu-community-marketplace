@@ -65,7 +65,7 @@
     <url-pattern>/SavedListingController</url-pattern>
   </servlet-mapping>
   
-  <filter>
+  <!-- <filter>
   	<filter-name>CorsFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
   	<init-param>
@@ -74,7 +74,7 @@
   	</init-param>
   	<init-param>
       <param-name>cors.allowed.methods</param-name>
-      <param-value>GET,POST</param-value>
+      <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
   	</init-param>
   	<init-param>
       <param-name>cors.allowed.headers</param-name>
@@ -96,6 +96,6 @@
   <filter-mapping>
   	<filter-name>CorsFilter</filter-name>
   	<url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
 </web-app>

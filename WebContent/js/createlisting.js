@@ -137,10 +137,10 @@ $(document).ready(function() {
 			newListing.otherContact = $('#listingContact').val();
 			newListing.tags = $('#listingTags').val();
 			console.log(JSON.stringify(newListing));
-			var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
-			//var status = "JDBC_OK";
+			//var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
+			var status = "JDBC_OK";
 			console.log(status);
-			if (status == "JDBC_OK") {
+			/*if (status == "JDBC_OK") {
 				$('#postListingBtn').removeClass('btn-primary');
 				$('#postListingBtn').addClass('btn-success');
 				$('#postListingBtn').attr('disabled', 'disabled');
@@ -148,7 +148,7 @@ $(document).ready(function() {
 				setTimeout(function() {
 					window.location.href = "./mylistings.html";
 				}, 1000);
-			}
+			}*/
 		}
 	});
 	
@@ -175,16 +175,23 @@ function sendFile(file, type) {
 	var formData = new FormData();
 	var request = new XMLHttpRequest();
 	
-	var url = 'http://www.worksbythepg.com/osucm-images/'+type+'/'
-	formData.append('upload', file);
+	var url = 'http://www.worksbythepg.com/osucm-images/image_upload.php/';
+	formData.append('image', file);
+	formData.append('type', type);
 	console.log(url);
+	console.log(Array.from(formData.entries()));
 	request.open("POST", url, true);
-	request.setRequestHeader("Content-Type", "multipart/form-data")
+	//request.setRequestHeader("Content-Type", "multipart/form-data");
+	//request.setRequestHeader("Access-Control-Request-Method", "POST");
+	//request.setRequestHeader("Access-Control-Request-Headers", "X-Custom-Header");
 	request.send(formData);
 	
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
-			alert(file.name + ' has been uploaded to ' + url);
+			console.log(request);
+			if (request.response.includes('SUCCESS')) {
+				console.log(file.name + ' has been uploaded to ' + url);
+			}
 		}
 	}
 }
