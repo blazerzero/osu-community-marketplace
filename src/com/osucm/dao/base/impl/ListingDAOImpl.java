@@ -11,11 +11,13 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Console;
 import com.osucm.common.constants.CommonConstants;
 import com.osucm.common.constants.SqlConstants;
 import com.osucm.dao.base.interfaces.ListingDAO;
 import com.osucm.database.connection.DBConnectionFactory;
 import com.osucm.database.pojo.ListingPojo;
+import com.osucm.database.pojo.SearchListingPojo;
 
 public class ListingDAOImpl implements ListingDAO {
 	
@@ -281,5 +283,88 @@ public class ListingDAOImpl implements ListingDAO {
 		
 		return userListings;
 	}
+	
+	public ArrayList<ListingPojo> searchListings(SearchListingPojo slPojo) {
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<ListingPojo> listings = new ArrayList<>();
+		
+		String[] queryWords = slPojo.getQuery().split(" ");
+		try {
+			connect = getConnection();
+			System.out.println(queryWords.length);
+			for (int i = 0; i < queryWords.length; i++) {
+
+				preparedStatement = connect.prepareStatement(SqlConstants.SEARCH_LISTINGS);
+				preparedStatement.setString(1, slPojo.getType());
+				preparedStatement.setString(2, "%"+queryWords[i]+"%");
+				preparedStatement.setString(3, "%"+queryWords[i]+"%");
+				resultSet = preparedStatement.executeQuery();
+				
+				while(resultSet.next()) {
+					ListingPojo listingPojo = new ListingPojo();
+					listingPojo.setListingID(resultSet.getInt("listingID"));
+					listingPojo.setOnid(resultSet.getString("onid"));
+					listingPojo.setType(resultSet.getString("type"));
+					listingPojo.setTitle(resultSet.getString("title"));
+					listingPojo.setCampus(resultSet.getString("campus"));
+					listingPojo.setDescription(resultSet.getString("description"));
+					listingPojo.setImageIDs(resultSet.getString("imageIDs"));
+					listingPojo.setPrice(resultSet.getDouble("price"));
+					listingPojo.setPayFrequency(resultSet.getString("payFrequency"));
+					listingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
+					listingPojo.setShowEmail(resultSet.getInt("showEmail"));
+					listingPojo.setOtherContact(resultSet.getString("otherContact"));
+					listingPojo.setTags(resultSet.getString("tags"));
+					
+					System.out.println(listingPojo.toString());
+					boolean contains = false;
+					for (int j = 0; j < listings.size(); j++) {
+						if (listingPojo.getListingID() == listings.get(j).getListingID()) {
+							contains = true;
+						}
+					}
+					if (!contains) {
+						listings.add(listingPojo);
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+		return listings;
+	}
+	
+	public String deleteListing(int listingID) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.DELETE_LISTING);
+			preparedStatement.setInt(1, listingID);
+						
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+			
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
+	}
+
 
 }

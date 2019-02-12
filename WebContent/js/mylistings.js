@@ -11,6 +11,8 @@ $(document).ready(function() {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 	});
 	
+	var listingToDelete = 0;
+	
 	var len = myListings.length - 1;
 	console.log(len);
 	while (len >= 0) {
@@ -19,7 +21,7 @@ $(document).ready(function() {
 			'<div class="card-deck listing-row">'		
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+len+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="deleteListing'+myListings[len].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
@@ -37,7 +39,7 @@ $(document).ready(function() {
 		    +  	'</div>'
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+(len-1)+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="deleteListing'+myListings[len-1].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
@@ -55,7 +57,7 @@ $(document).ready(function() {
 		    +  	'</div>'
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+(len-2)+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="deleteListing'+myListings[len-2].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+myListings[len-2].title+'</h5>'
@@ -82,7 +84,7 @@ $(document).ready(function() {
 				if (len >= 0) {
 					html += '<div class="card">'
 					      +     '<div class="card-body">'
-					      +			'<button type="button" class="close deleteMyListingX" aria-label="Close" data-id="'+(len-2)+'">'
+					      +			'<button type="button" class="close" aria-label="Close" data-id="deleteListing'+myListings[len].listingID+'">'
 					      +		  	  '<span aria-hidden="true">&times;</span>'
 					      +	  		'</button>'
 						  +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
@@ -108,4 +110,28 @@ $(document).ready(function() {
 		    $('#my-listings').append(html);
 	    }
 	}
+	
+	$('.close').click(function() {
+		if ($(this).data('id') != null && $(this).data('id').includes('deleteListing')) {
+			listingToDelete = $(this).data('id').substring(13);
+			//alert(id);
+			console.log("listing ID: " + listingToDelete);
+			var listing = myListings.find(function(e) {
+				return e.listingID == listingToDelete;
+			});
+			$('#deleteListingLabel').html('Confirm: Delete "' + listing.title + '"');
+			$('#confirmDeleteListingModal').modal('show');
+		}
+	});
+	
+	$('#deleteListingBtn').click(function() {
+		$('#confirmDeleteListingModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingToDelete + "'}", "deleteListing", "ListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingDeletedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'mylistings.html';
+			}, 2000);
+		}
+	})
 });

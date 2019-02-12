@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.osucm.dao.base.GenericDAO;
 import com.osucm.database.pojo.ListingPojo;
-import com.osucm.database.pojo.SavedListingPojo;
+import com.osucm.database.pojo.SearchListingPojo;
 
 public interface ListingDAO extends GenericDAO {
 	
@@ -14,5 +14,7 @@ public interface ListingDAO extends GenericDAO {
 	public ArrayList<ListingPojo> getRecentListings();
 	public ArrayList<ListingPojo> getMyListings(String onid);
 	public ArrayList<ListingPojo> getMyRecentListings(String onid);
+	public ArrayList<ListingPojo> searchListings(SearchListingPojo slPojo);
+	public String deleteListing(int listingID);
 
 }

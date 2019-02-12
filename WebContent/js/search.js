@@ -20,8 +20,14 @@ $(document).ready(function() {
 		$('#page-title').html('Housing Listings');
 		$('#searchInput').attr('placeholder', 'Search housing listings');
 	}
+	var listingsJSON = '';
 	
-	var listingsJSON = sendDataSync("{'type': '"+type+"'}", "getListings", "ListingController");
+	if (query != null) {
+		listingsJSON = sendDataSync("{'type': '"+type+"', 'query': '"+query+"'}", "searchListings", "ListingController");
+	}
+	else {
+		listingsJSON = sendDataSync("{'type': '"+type+"'}", "getListings", "ListingController");
+	}
 	var listings = [];
 	if (listingsJSON != null && listingsJSON.length > 0) {
 		listings = jQuery.parseJSON(listingsJSON);

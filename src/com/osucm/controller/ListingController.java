@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.osucm.common.constants.CommonConstants;
 import com.osucm.dao.base.impl.ListingDAOImpl;
-import com.osucm.dao.base.impl.SavedListingDAOImpl;
 import com.osucm.dao.base.interfaces.ListingDAO;
 import com.osucm.database.pojo.ListingPojo;
-import com.osucm.database.pojo.SavedListingPojo;
+import com.osucm.database.pojo.SearchListingPojo;
 
 public class ListingController extends HttpServlet {
 	
@@ -91,6 +90,25 @@ public class ListingController extends HttpServlet {
         	ArrayList<ListingPojo> listings = dao.getMyRecentListings(userListingPojo.getOnid());
         	String jsonString = gson.toJson(listings);
         	response.getWriter().write(jsonString);
+        }
+        
+        else if (null != message && CommonConstants.OP_SEARCH_LISTINGS.equalsIgnoreCase(message)) {
+            Gson gson = new Gson();
+            SearchListingPojo searchListing = gson.fromJson(jsonData, SearchListingPojo.class);
+            dao = new ListingDAOImpl(); 
+            //System.out.println("before");
+            ArrayList<ListingPojo> listings = dao.searchListings(searchListing);
+            System.out.println("LISTINGOBJ: " + searchListing);
+            String jsonString = gson.toJson(listings);
+            response.getWriter().write(jsonString);          
+        }
+        
+        else if (null != message && CommonConstants.OP_DELETE_LISTING.equalsIgnoreCase(message)) {      	
+        	Gson gson = new Gson();
+        	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	dao = new ListingDAOImpl();
+        	String status = dao.deleteListing(newListing.getListingID());
+        	response.getWriter().write(status);
         }
         
 		System.out.println("ListingController:doPost Exiting...");
