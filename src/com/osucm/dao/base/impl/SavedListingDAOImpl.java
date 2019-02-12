@@ -91,4 +91,31 @@ public class SavedListingDAOImpl implements SavedListingDAO {
 		return savedListings;
 	}
 	
+	public String removeListingFromSavedList(SavedListingPojo savedListing) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.REMOVE_LISTING_FROM_SAVED_LIST);
+			preparedStatement.setInt(1, savedListing.getListingID());
+			preparedStatement.setString(2, savedListing.getOnid());
+						
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+			
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
+	}
+	
 }

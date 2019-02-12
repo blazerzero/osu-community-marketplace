@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.osucm.common.constants.CommonConstants;
+import com.osucm.dao.base.impl.ListingDAOImpl;
 import com.osucm.dao.base.impl.SavedListingDAOImpl;
 import com.osucm.dao.base.interfaces.ListingDAO;
 import com.osucm.dao.base.interfaces.SavedListingDAO;
+import com.osucm.database.pojo.ListingPojo;
 import com.osucm.database.pojo.SavedListingPojo;
 
 public class SavedListingController extends HttpServlet {
@@ -42,6 +44,14 @@ public class SavedListingController extends HttpServlet {
         	ArrayList<SavedListingPojo> savedListings = dao.getSavedListings(userListingPojo.getOnid());
         	String jsonString = gson.toJson(savedListings);
         	response.getWriter().write(jsonString);
+        }
+		
+        else if (null != message && CommonConstants.OP_REMOVE_LISTING_FROM_SAVED.equalsIgnoreCase(message)) {      	
+        	Gson gson = new Gson();
+        	SavedListingPojo savedListing = gson.fromJson(jsonData, SavedListingPojo.class);
+        	dao = new SavedListingDAOImpl();
+        	String status = dao.removeListingFromSavedList(savedListing);
+        	response.getWriter().write(status);
         }
 		
 		System.out.println("SavedListingController:doPost Exiting...");

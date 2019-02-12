@@ -14,4 +14,5 @@ public interface SqlConstants {
 	String GET_SAVED_LISTING = "SELECT * FROM saved_listings WHERE onid=?";
 	String SEARCH_LISTINGS = "SELECT * FROM listings WHERE type = ? AND (description LIKE ? OR tags LIKE ?)";
 	String DELETE_LISTING = "DELETE FROM listings WHERE listingID = ?";
+	String REMOVE_LISTING_FROM_SAVED_LIST = "DELETE FROM savedlistings WHERE listingID = ? AND onid = ?";
 }

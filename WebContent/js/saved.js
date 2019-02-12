@@ -1,5 +1,7 @@
 $(document).ready(function() {
-	//var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getSavedListings", "ListingController");
+	var listingToRemove = 0;
+	
+	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getSavedListings", "ListingController");
 	//console.log(savedListingsJSON);
 	var savedListings = [];
 	if (savedListingsJSON != null && savedListingsJSON.length > 0) {
@@ -9,15 +11,15 @@ $(document).ready(function() {
 	savedListings.sort(function(a, b) {
 		return (new Date(a.dateSaved).getTime() - new Date(b.dateSaved).getTime());
 	});
+	console.log(savedListings.length);
 	var len = savedListings.length - 1;
-	console.log(len);
 	while (len >= 0) {
 		if (len >= 3) {
 			$('#my-listings').append(
 			'<div class="card-deck listing-row">'		
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close removeFromSavedX" aria-label="Close"data-id="'+len+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="removeSaved'+savedListings[len].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
@@ -35,7 +37,7 @@ $(document).ready(function() {
 		    +  	'</div>'
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close removeFromSavedX" aria-label="Close" data-id="'+(len-1)+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="removeSaved'+savedListings[len-1].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
@@ -52,7 +54,7 @@ $(document).ready(function() {
 		    +  	'</div>'
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'
-		    +		'<button type="button" class="close removeFromSavedX" aria-label="Close" data-id="'+(len-2)+'">'
+		    +		'<button type="button" class="close" aria-label="Close" data-id="removeSaved'+savedListings[len-2].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
 		    +      	'<h5 class="card-title">'+savedListings[len-2].title+'</h5>'
@@ -78,7 +80,7 @@ $(document).ready(function() {
 				if (len >= 0) {
 					html += '<div class="card">'
 					      +     '<div class="card-body">'
-					      +			'<button type="button" class="close removeFromSavedX" aria-label="Close" data-id="'+(len-2)+'">'
+					      +			'<button type="button" class="close" aria-label="Close" data-id="removeSaved'+savedListings[len].listingID+'">'
 					      +		  	  '<span aria-hidden="true">&times;</span>'
 					      +	  		'</button>'
 						  +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
@@ -103,4 +105,28 @@ $(document).ready(function() {
 		    $('#my-listings').append(html);
 	    }
 	}
+	
+	$('.close').click(function() {
+		if ($(this).data('id') != null && $(this).data('id').includes('removeSaved')) {
+			listingToRemove = $(this).data('id').substring(11);
+			//alert(id);
+			console.log("listing ID: " + listingToRemove);
+			var listing = myListings.find(function(e) {
+				return e.listingID == listingToRemove;
+			});
+			$('#removeFromSavedLabel').html('Confirm: Remove "' + listing.title + '" from your saved list');
+			$('#confirmRemoveFromSavedModal').modal('show');
+		}
+	});
+	
+	$('#removeFromSavedBtn').click(function() {
+		$('#confirmRemoveFromSavedModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingToRemove + "', 'onid': '"+sessionStorage.getItem('onid')+"'}", "removeListingFromSavedList", "SavedListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingRemovedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'saved.html';
+			}, 2000);
+		}
+	})
 })
