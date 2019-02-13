@@ -9,8 +9,9 @@ import com.osucm.database.pojo.SearchListingPojo;
 public interface ListingDAO extends GenericDAO {
 	
 	public ArrayList<ListingPojo> getListings(String type);
-	public String addListing(ListingPojo newListing);
+	public int addListing(ListingPojo newListing);
 	public String getListingDetails(int listingID);
+	public String addImageIDToNewListing(int listingID, String imageID);
 	public ArrayList<ListingPojo> getRecentListings();
 	public ArrayList<ListingPojo> getMyListings(String onid);
 	public ArrayList<ListingPojo> getMyRecentListings(String onid);

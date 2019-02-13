@@ -44,8 +44,9 @@ public class ListingController extends HttpServlet {
         	Gson gson = new Gson();
         	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
         	dao = new ListingDAOImpl();
-        	String status = dao.addListing(newListing);
-        	response.getWriter().write(status);
+        	String listingID = String.valueOf(dao.addListing(newListing));
+        	System.out.println("ListingController -- listingID: " + listingID);
+        	response.getWriter().write(listingID);
         }
         
         else if (null != message && CommonConstants.OP_GET_LISTING_DETAILS.equalsIgnoreCase(message)) {
@@ -108,6 +109,15 @@ public class ListingController extends HttpServlet {
         	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
         	dao = new ListingDAOImpl();
         	String status = dao.deleteListing(newListing.getListingID());
+        	response.getWriter().write(status);
+        }
+        
+        else if (null != message && CommonConstants.OP_ADD_IMAGE_ID_TO_NEW_LISTING.equalsIgnoreCase(message)) {
+        	Gson gson = new Gson();
+        	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	System.out.println("got json");
+        	dao = new ListingDAOImpl();
+        	String status = dao.addImageIDToNewListing(newListing.getListingID(), newListing.getImageIDs());
         	response.getWriter().write(status);
         }
         

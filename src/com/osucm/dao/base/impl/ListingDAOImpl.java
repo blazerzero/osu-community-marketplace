@@ -73,12 +73,13 @@ public class ListingDAOImpl implements ListingDAO {
 	}
 
 	@Override
-	public String addListing(ListingPojo newListing) {
+	public int addListing(ListingPojo newListing) {
 		
 		String status = CommonConstants.STATUS_JDBC_ERROR;
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int listingID = 0;
 		
 		try {
 			connect = getConnection();
@@ -89,21 +90,53 @@ public class ListingDAOImpl implements ListingDAO {
 			preparedStatement.setString(3, newListing.getTitle());
 			preparedStatement.setString(4, newListing.getCampus());
 			preparedStatement.setString(5, newListing.getDescription());
-			preparedStatement.setString(6, newListing.getImageIDs());
-			preparedStatement.setDouble(7, newListing.getPrice());
-			preparedStatement.setString(8, newListing.getPayFrequency());
-			preparedStatement.setInt(9, newListing.getShowEmail());
-			preparedStatement.setString(10, newListing.getOtherContact());
-			preparedStatement.setString(11, newListing.getTags());
-			preparedStatement.setTimestamp(12, dt);
+			preparedStatement.setDouble(6, newListing.getPrice());
+			preparedStatement.setString(7, newListing.getPayFrequency());
+			preparedStatement.setInt(8, newListing.getShowEmail());
+			preparedStatement.setString(9, newListing.getOtherContact());
+			preparedStatement.setString(10, newListing.getTags());
+			preparedStatement.setTimestamp(11, dt);
 						
 			int executeUpdate = preparedStatement.executeUpdate();
 
 			if (executeUpdate > 0) {
 				status = CommonConstants.STATUS_JDBC_OK;
+				preparedStatement = connect.prepareStatement(SqlConstants.GET_NEW_LISTING_ID);
+				preparedStatement.setString(1, newListing.getOnid());
+				resultSet = preparedStatement.executeQuery();
+				
+				resultSet.next();
+				listingID = resultSet.getInt("listingID");
 			}
 			
 		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		System.out.println("listing ID: " + listingID);
+		return listingID;
+	}
+	
+	@Override
+	public String addImageIDToNewListing(int listingID, String imageID) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.ADD_IMAGE_ID_TO_LISTING);
+			preparedStatement.setString(1, imageID);
+			preparedStatement.setInt(2, listingID);
+			int executeUpdate = preparedStatement.executeUpdate();
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+		}
+		catch (Exception e) {
 			status = CommonConstants.STATUS_JDBC_ERROR;
 			e.printStackTrace();
 		} finally {

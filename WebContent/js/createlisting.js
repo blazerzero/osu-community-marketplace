@@ -1,4 +1,6 @@
 var fileList = [];
+var fileNames = [];
+var statusCodes = [];
 
 $(document).ready(function() {
 	var fileAdder = document.getElementById('fileAdder');
@@ -92,7 +94,7 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#showEmailSection').css('box-shadow', '0 0 0 white');
 		
-		if ($.isNumeric($('#listingPrice').val())) {
+		if (!$.isNumeric($('#listingPrice').val())) {
 			$('#incompleteFormAlert').html('Price must be a number.');
 			$('#incompleteFormAlert').css('display', 'block');
 		}
@@ -115,12 +117,21 @@ $(document).ready(function() {
 			else if ($('#selectListingType').val() == 's') type = 'service';
 			else if ($('#selectListingType').val() == 'h') type = 'housing';
 			console.log('type: ' + type);
-			var fileNames = [];
-			$.each(fileList, function(index, file) {
-				fileNames.push(file.name);
-				sendFile(file, type[0]);
+			/*setTimeout(function() {
+				console.log(fileNames);
+			}, 1000);*/
+			/*var allImagesUploaded = true;
+			$.each(statusCodes, function(index, value) {
+				if (value.substring(0,7) != 'SUCCESS') allImagesUploaded = false;
+				else fileNames.push(value.substring(8));
 			});
 			console.log(fileNames);
+			if (!allImagesUploaded) {
+				$('#incompleteFormAlert').removeClass('alert-danger');
+				$('#incompleteFormAlert').addClass('alert-warning');
+				$('#incompleteFormAlert').html('WARNING: Not all images were successfully uploaded to the server.');
+				$('#incompleteFormAlert').css('display', 'block');
+			}*/
 			var newListing = new Object();
 			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
@@ -128,7 +139,7 @@ $(document).ready(function() {
 			newListing.campus = $('#selectListingCampus').val();
 			newListing.description = $('#listingDescription').val();
 			//newListing.imageIDs = fileNames.toString();
-			newListing.imageIDs = '';
+			//newListing.imageIDs = '';
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
 			newListing.payFrequency = (type[0] == 'h' ? $('#selectPayFrequency').val() : '');
@@ -137,18 +148,15 @@ $(document).ready(function() {
 			newListing.otherContact = $('#listingContact').val();
 			newListing.tags = $('#listingTags').val();
 			console.log(JSON.stringify(newListing));
-			//var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
-			var status = "JDBC_OK";
-			console.log(status);
-			/*if (status == "JDBC_OK") {
-				$('#postListingBtn').removeClass('btn-primary');
-				$('#postListingBtn').addClass('btn-success');
-				$('#postListingBtn').attr('disabled', 'disabled');
-				$('#postListingBtn').html('Posted!');
-				setTimeout(function() {
-					window.location.href = "./mylistings.html";
-				}, 1000);
-			}*/
+			var listingID = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
+			//var status = "JDBC_OK";
+			console.log(listingID);
+			if (listingID != 0) {
+			 	$.each(fileList, function(index, file) {
+			 		var numLeftToUpload = fileList.length - index;
+					sendFile(file, type[0], listingID, numLeftToUpload);
+				});
+			}
 		}
 	});
 	
@@ -171,11 +179,12 @@ function deletePhoto(deleteBtn) {
 	}
 }
 
-function sendFile(file, type) {
+function sendFile(file, type, listingID, numLeftToUpload) {
 	var formData = new FormData();
 	var request = new XMLHttpRequest();
 	
-	var url = 'http://www.worksbythepg.com/osucm-images/image_upload.php/';
+	var baseURL = 'http://www.worksbythepg.com/osucm-images/';
+	var url = baseURL + 'image_upload.php/';
 	formData.append('image', file);
 	formData.append('type', type);
 	console.log(url);
@@ -188,9 +197,36 @@ function sendFile(file, type) {
 	
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
-			console.log(request);
-			if (request.response.includes('SUCCESS')) {
-				console.log(file.name + ' has been uploaded to ' + url);
+			console.log(request.response);
+			var xml = $.parseXML( request.response );
+			var response = $( xml );
+			var code = response.find("code").text();
+			statusCodes.push(code);
+			console.log(statusCodes);
+			console.log(code);
+			if (code == 'SUCCESS') {
+				var savedName = response.find("message").text();
+				console.log(file.name + ' has been uploaded to ' + baseURL + type + ' as ' + savedName);
+				//fileNames.push(savedName);
+				//console.log(fileNames);
+				console.log("id: " + listingID);
+				var status = sendDataSync("{'listingID': '"+listingID+"', 'imageIDs': '"+savedName+"'}", "addImageIDToNewListing", "ListingController");
+				console.log(status);
+				if (status != 'JDBC_OK') {
+					$('#incompleteFormAlert').removeClass('alert-danger');
+					$('#incompleteFormAlert').addClass('alert-warning');
+					$('#incompleteFormAlert').html('WARNING: Not all images were successfully uploaded to the server.');
+					$('#incompleteFormAlert').css('display', 'block');
+				}
+				if (numLeftToUpload - 1 == 0) {
+					$('#postListingBtn').removeClass('btn-primary');
+					$('#postListingBtn').addClass('btn-success');
+					$('#postListingBtn').attr('disabled', 'disabled');
+					$('#postListingBtn').html('Posted!');
+					setTimeout(function() {
+						//window.location.href = "./mylistings.html";
+					}, 1000);
+				}
 			}
 		}
 	}
