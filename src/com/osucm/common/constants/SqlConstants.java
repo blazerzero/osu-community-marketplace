@@ -10,4 +10,5 @@ public interface SqlConstants {
 	String GET_RECENT_LISTINGS = "SELECT * FROM listings ORDER BY datePosted DESC LIMIT 3";
 	String GET_MY_LISTINGS = "SELECT * FROM listings where onid = ? ORDER BY datePosted DESC";
 	String GET_MY_RECENT_LISTINGS = "SELECT * FROM listings where onid = ? ORDER BY datePosted DESC LIMIT 3";
+	String DELETE_LISTING = "DELETE FROM listings WHERE listingID = ?";
 }
