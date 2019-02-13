@@ -13,5 +13,6 @@ public interface ListingDAO extends GenericDAO {
 	public ArrayList<ListingPojo> getRecentListings();
 	public ArrayList<ListingPojo> getMyListings(String onid);
 	public ArrayList<ListingPojo> getMyRecentListings(String onid);
+	public void deleteListing(int listingID);
 
 }

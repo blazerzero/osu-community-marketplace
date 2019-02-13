@@ -273,4 +273,24 @@ public class ListingDAOImpl implements ListingDAO {
 		return userListings;
 	}
 
+	public void deleteListing(int listingID) {
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.DELETE_LISTING);
+			preparedStatement.setInt(1, listingID);
+			System.out.println("ListingID to be deleted: "+listingID);
+			resultSet = preparedStatement.executeQuery();
+		} catch (ClassNotFoundException | SQLException | IOException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			System.out.println("In deleteListing in ListingDAOImpl!");
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+	}
 }
