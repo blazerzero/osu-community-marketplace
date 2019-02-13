@@ -9,6 +9,14 @@ $(document).ready(function() {
 		savedListings = jQuery.parseJSON(savedListingsJSON);
 	}
 	
+	$.each(savedListings, function(index, value) {
+		var imageIDs = value.imageIDs;
+		var imageIDList = imageIDs.split(', ');
+		console.log(imageIDList);
+		imageIDList.shift();
+		value.imageIDs = imageIDList;
+	});
+	
 	savedListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 	});
@@ -16,7 +24,7 @@ $(document).ready(function() {
 	showHomeListings(savedListings, '#home-saved-listings', 'saved');*/
 	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
-	console.log(recentListingsJSON);
+	//console.log(recentListingsJSON);
 	var recentListings = [];
 	if (recentListingsJSON != null && recentListingsJSON.length > 0) {
 		recentListings = jQuery.parseJSON(recentListingsJSON);
@@ -24,6 +32,14 @@ $(document).ready(function() {
 	
 	recentListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+	});
+	
+	$.each(recentListings, function(index, value) {
+		var imageIDs = value.imageIDs;
+		var imageIDList = imageIDs.split(', ');
+		console.log(imageIDList);
+		imageIDList.shift();
+		value.imageIDs = imageIDList;
 	});
 	
 	showHomeListings(recentListings, '#home-new-listings', 'new');
@@ -38,6 +54,16 @@ $(document).ready(function() {
 	myListings.sort(function(a, b) {
 		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 	});
+	
+	$.each(myListings, function(index, value) {
+		var imageIDs = value.imageIDs;
+		var imageIDList = imageIDs.split(', ');
+		console.log(imageIDList);
+		imageIDList.shift();
+		value.imageIDs = imageIDList;
+	});
+	
+	console.log(myListings);
 	
 	showHomeListings(myListings, '#home-my-listings', 'my');
 	

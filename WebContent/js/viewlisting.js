@@ -4,7 +4,16 @@ $(document).ready(function() {
 	
 	var detailsJSON = sendDataSync("{'listingID': '"+listingID+"'}", "getListingDetails", "ListingController");
 	console.log(detailsJSON);
-	var listingDetails = jQuery.parseJSON(detailsJSON);
+	//var listingDetails = jQuery.parseJSON(detailsJSON);
+	if (detailsJSON != null && detailsJSON.length > 0) {
+		listingDetails = jQuery.parseJSON(detailsJSON);
+	}
+	
+	var imageIDs = listingDetails.imageIDs;
+	var imageIDList = imageIDs.split(', ');
+	console.log(imageIDList);
+	imageIDList.shift();
+	listingDetails.imageIDs = imageIDList;
 	
 	$(document).attr('title', listingDetails.title + ' - OSU Community Marketplace');
 
@@ -28,7 +37,12 @@ $(document).ready(function() {
 	$('#listingPrice').append(buildPrice(listingDetails.price, listingDetails.payFrequency));
 	$('#listingEmail').append(listingDetails.email);
 	$('#listingShowEmail').append(listingDetails.showEmail);
-	$('#listingOtherContact').append(listingDetails.otherContact);
+	if (listingDetails.otherContact != '') {
+		$('#listingOtherContact').append(listingDetails.otherContact);
+	}
+	else {
+		$('#listingOtherContact').css('display', 'none');
+	}
 	var tags = listingDetails.tags.split(", ");
 	var filtered = tags.filter(function (el) {
 		return (el != "" && el != null);
@@ -49,19 +63,18 @@ $(document).ready(function() {
 	
 	if (listingDetails.onid == sessionStorage.getItem('onid')) $('#listingPoster').append(' (You)');
 	
-	if (listingDetails.imageIDs != '') {
-		var imageIDs = listingDetails.imageIDs.split(',');
+	if (listingDetails.imageIDs.length != 0) {
 		$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0" class="active"></li>');
 		$('#listingImages').append(
 				  '<div class="carousel-item active">'
-	    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[0]+'" id="view-listing-img" alt="listing image">'
+	    		+	'<img src="http://www.worksbythepg.com/osucm-images/'+typeIndicator+'/'+listingDetails.imageIDs[0]+'" id="view-listing-img" alt="listing image">'
 	    		+ '</div>'
 		);
-		for (i = 1; i < imageIDs.length; i++) {
+		for (i = 1; i < listingDetails.imageIDs.length; i++) {
 			$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0"></li>');
 			$('#listingImages').append(
 					  '<div class="carousel-item">'
-		    		+	'<img src="worksbythepg.com/osucm-images/'+typeIndicator+'/'+imageIDs[i]+'" id="view-listing-img" alt="listing image">'
+		    		+	'<img src="http://www.worksbythepg.com/osucm-images/'+typeIndicator+'/'+listingDetails.imageIDs[i]+'" id="view-listing-img" alt="listing image">'
 		    		+ '</div>'
 			);
 		}

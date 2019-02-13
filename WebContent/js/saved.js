@@ -8,6 +8,14 @@ $(document).ready(function() {
 		savedListings = jQuery.parseJSON(savedListingsJSON);
 	}
 	
+	$.each(savedListings, function(index, value) {
+		var imageIDs = value.imageIDs;
+		var imageIDList = imageIDs.split(', ');
+		console.log(imageIDList);
+		imageIDList.shift();
+		value.imageIDs = imageIDList;
+	});
+	
 	savedListings.sort(function(a, b) {
 		return (new Date(a.dateSaved).getTime() - new Date(b.dateSaved).getTime());
 	});
@@ -25,7 +33,7 @@ $(document).ready(function() {
 		    +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+savedListings[len].type.charAt(0).toUpperCase()+savedListings[len].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(savedListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (savedListings[len].campus == 'Other' ? 'Other (See description)' : savedListings[len].campus))+'</p>'
-		    +    	(savedListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+savedListings[len].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(savedListings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+savedListings[len].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+savedListings[len].description+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len].price, savedListings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+savedListings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
@@ -43,7 +51,7 @@ $(document).ready(function() {
 		    +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+savedListings[len-1].type.charAt(0).toUpperCase()+savedListings[len-1].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(savedListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (savedListings[len].campus == 'Other' ? 'Other (See description)' : savedListings[len].campus))+'</p>'
-		    +    	(savedListings[len-1].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+savedListings[len-1].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(savedListings[len-1].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+savedListings[len-1].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+savedListings[len-1].description+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len-1].price)+(savedListings[len-1].payFrequency == '' ? '' : '/'+savedListings[len-1].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+savedListings[len-1].listingID+'" class="btn btn-primary listing-action">View Details</a>'
@@ -60,7 +68,7 @@ $(document).ready(function() {
 		    +      	'<h5 class="card-title">'+savedListings[len-2].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+savedListings[len-2].type.charAt(0).toUpperCase()+savedListings[len-2].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(savedListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (savedListings[len].campus == 'Other' ? 'Other (See description)' : savedListings[len].campus))+'</p>'
-		    +    	(savedListings[len-2].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+savedListings[len-2].type[0]+'/'+savedListings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	(savedListings[len-2].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+savedListings[len-2].type[0]+'/'+savedListings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+savedListings[len-2].description+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len-2].price)+(savedListings[len-2].payFrequency == '' ? '' : '/'+savedListings[len-2].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+savedListings[len-2].listingID+'" class="btn btn-primary listing-action">View Details</a>'
@@ -86,7 +94,7 @@ $(document).ready(function() {
 						  +      	'<h5 class="card-title">'+savedListings[len].title+'</h5>'
 						  +			'<p class="card-text">Listing type: '+savedListings[len].type.charAt(0).toUpperCase()+savedListings[len].type.substring(1)+'</p>'
 						  +			'<p class="card-text">Campus: '+(savedListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (savedListings[len].campus == 'Other' ? 'Other (See description)' : savedListings[len].campus))+'</p>'
-						  +    		(savedListings[len].imageIDs == '' ? '' : '<img src="worksbythepg.com/osucm-images/'+savedListings[len].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+						  +    		(savedListings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+savedListings[len].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 						  +      	'<p class="card-text">'+savedListings[len].description+'</p>'
 						  +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len].price)+(savedListings[len].payFrequency == '' ? '' : '/'+savedListings[len].payFrequency)+'</strong></h5>'
 						  +      	'<a href="viewlisting.html?listingID='+savedListings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
