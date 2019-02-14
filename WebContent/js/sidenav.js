@@ -4,5 +4,5 @@ $(document).ready(function() {
 
 function logout() {
 	sessionStorage.clear();
-	window.location.href = "./index.html";
+	window.location.href = 'https://login.oregonstate.edu/idp/profile/cas/logout';
 }
