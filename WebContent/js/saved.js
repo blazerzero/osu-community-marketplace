@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var listingToRemove = 0;
 	
-	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getSavedListings", "ListingController");
+	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getSavedListings", "SavedListingController");
 	//console.log(savedListingsJSON);
 	var savedListings = [];
 	if (savedListingsJSON != null && savedListingsJSON.length > 0) {
@@ -9,6 +9,7 @@ $(document).ready(function() {
 	}
 	
 	$.each(savedListings, function(index, value) {
+		console.log(value);
 		var imageIDs = value.imageIDs;
 		var imageIDList = imageIDs.split(', ');
 		console.log(imageIDList);
@@ -19,6 +20,7 @@ $(document).ready(function() {
 	savedListings.sort(function(a, b) {
 		return (new Date(a.dateSaved).getTime() - new Date(b.dateSaved).getTime());
 	});
+	
 	console.log(savedListings.length);
 	var len = savedListings.length - 1;
 	while (len >= 0) {
@@ -96,7 +98,7 @@ $(document).ready(function() {
 						  +			'<p class="card-text">Campus: '+(savedListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (savedListings[len].campus == 'Other' ? 'Other (See description)' : savedListings[len].campus))+'</p>'
 						  +    		(savedListings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+savedListings[len].type[0]+'/'+savedListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 						  +      	'<p class="card-text">'+savedListings[len].description+'</p>'
-						  +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len].price)+(savedListings[len].payFrequency == '' ? '' : '/'+savedListings[len].payFrequency)+'</strong></h5>'
+						  +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(savedListings[len].price, savedListings[len].payFrequency)+'</strong></h5>'
 						  +      	'<a href="viewlisting.html?listingID='+savedListings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 						  +  	  '</div>'
 						  +  	  '<div class="card-footer text-muted text-center">'
@@ -110,7 +112,7 @@ $(document).ready(function() {
 				}
 			}
 			html += '</div>';
-		    $('#my-listings').append(html);
+		    $('#saved-listings').append(html);
 	    }
 	}
 	
@@ -119,7 +121,7 @@ $(document).ready(function() {
 			listingToRemove = $(this).data('id').substring(11);
 			//alert(id);
 			console.log("listing ID: " + listingToRemove);
-			var listing = myListings.find(function(e) {
+			var listing = savedListings.find(function(e) {
 				return e.listingID == listingToRemove;
 			});
 			$('#removeFromSavedLabel').html('Confirm: Remove "' + listing.title + '" from your saved list');
@@ -136,5 +138,5 @@ $(document).ready(function() {
 				window.location.href = 'saved.html';
 			}, 2000);
 		}
-	})
-})
+	});
+});

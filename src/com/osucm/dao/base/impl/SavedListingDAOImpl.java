@@ -70,14 +70,23 @@ public class SavedListingDAOImpl implements SavedListingDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_RECENT_LISTINGS);
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_SAVED_LISTINGS);
+			preparedStatement.setString(1, onid);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
+				System.out.println(resultSet);
 				SavedListingPojo savedListingPojo = new SavedListingPojo();
 				savedListingPojo.setOnid(resultSet.getString("onid"));
 				savedListingPojo.setListingID(resultSet.getInt("listingID"));
 				savedListingPojo.setDateSaved(resultSet.getTimestamp("dateSaved").getTime());
+				savedListingPojo.setTitle(resultSet.getString("title"));
+				savedListingPojo.setType(resultSet.getString("type"));
+				savedListingPojo.setCampus(resultSet.getString("campus"));
+				savedListingPojo.setImageIDs(resultSet.getString("imageIDs"));
+				savedListingPojo.setDescription(resultSet.getString("description"));
+				savedListingPojo.setPrice(resultSet.getDouble("price"));
+				savedListingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
 				
 				savedListings.add(savedListingPojo);
 			}

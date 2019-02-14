@@ -39,9 +39,10 @@ public class SavedListingController extends HttpServlet {
         
         else if (null != message && CommonConstants.OP_GET_SAVED_LISTINGS.equalsIgnoreCase(message)) {
         	Gson gson = new Gson();
-        	SavedListingPojo userListingPojo = gson.fromJson(jsonData, SavedListingPojo.class);
+        	SavedListingPojo savedListingPojo = gson.fromJson(jsonData, SavedListingPojo.class);
         	dao = new SavedListingDAOImpl();
-        	ArrayList<SavedListingPojo> savedListings = dao.getSavedListings(userListingPojo.getOnid());
+        	System.out.println(savedListingPojo.getOnid());
+        	ArrayList<SavedListingPojo> savedListings = dao.getSavedListings(savedListingPojo.getOnid());
         	String jsonString = gson.toJson(savedListings);
         	response.getWriter().write(jsonString);
         }

@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var listingToRemove = 0;
+	
 	var url = new URL(window.location.href);
 	var listingID = url.searchParams.get("listingID");
 	
@@ -82,19 +84,53 @@ $(document).ready(function() {
 	
 	// insert code to check if the user has already saved this listing
 	// retrieve the list of the user's saved listings and check if this listing is in that list
+	var savedListingJSON = sendDataSync("{'onid': '"+sessionStorage.getItem('onid')+"'}", "getSavedListings", "SavedListingController");
+	console.log(savedListingJSON);
+	savedListingList = []
+	if (savedListingJSON != null && savedListingJSON.length > 0) {
+		savedListingList = jQuery.parseJSON(savedListingJSON);
+	}
+	
+	for (i = 0; i < savedListingList.length; i++) {
+		if (savedListingList[i].onid == sessionStorage.getItem('onid')) {
+			$('#saveListingBtn').removeClass('btn-primary');
+			$('#saveListingBtn').addClass('btn-danger');
+			//$('#saveListingBtn').attr('disabled', 'disabled');
+			$('#saveListingBtn').html('Remove from Saved List');
+		}
+	}
 	
 	$('#saveListingBtn').click(function() {
 		var savedListing = new Object;
 		savedListing.onid = sessionStorage.getItem('onid'); // this should hold the ONID of the logged-in user
 		savedListing.listingID = listingID;
 		savedListing.dateSaved = new Date().getTime();
-		// var status = sendDataSync(JSON.stringify(savedListing), "saveListing", "ListingController");
-		var status = "JDBC_OK";
-		if (status == "JDBC_OK") {
-			$('#saveListingBtn').removeClass('btn-primary');
-			$('#saveListingBtn').addClass('btn-success');
-			$('#saveListingBtn').attr('disabled', 'disabled');
-			$('#saveListingBtn').html('Saved!');
+		if ($('#saveListingBtn').hasClass('btn-primary')) {
+			var status = sendDataSync(JSON.stringify(savedListing), "saveListing", "SavedListingController");
+			//var status = "JDBC_OK";
+			if (status == "JDBC_OK") {
+				$('#saveListingBtn').removeClass('btn-primary');
+				$('#saveListingBtn').addClass('btn-success');
+				$('#saveListingBtn').attr('disabled', 'disabled');
+				$('#saveListingBtn').html('Saved!');
+			}
+		}
+		else if ($('#saveListingBtn').hasClass('btn-danger')) {
+			console.log("listing ID: " + listingID);
+			
+			$('#removeFromSavedLabel').html('Confirm: Remove "' + listingDetails.title + '" from your saved list');
+			$('#confirmRemoveFromSavedModal').modal('show');
+		}
+	});
+	
+	$('#removeFromSavedBtn').click(function() {
+		$('#confirmRemoveFromSavedModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingID + "', 'onid': '"+sessionStorage.getItem('onid')+"'}", "removeListingFromSavedList", "SavedListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingRemovedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'search.html?type='+listingDetails.type;
+			}, 2000);
 		}
 	});
 });

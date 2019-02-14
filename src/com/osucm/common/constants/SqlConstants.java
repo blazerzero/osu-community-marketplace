@@ -13,8 +13,8 @@ public interface SqlConstants {
 	String GET_MY_LISTINGS = "SELECT * FROM listings WHERE onid = ? ORDER BY datePosted DESC";
 	String GET_MY_RECENT_LISTINGS = "SELECT * FROM listings WHERE onid = ? ORDER BY datePosted DESC LIMIT 3";
 	String SAVE_LISTING = "INSERT INTO saved_listings (onid, listingID, dateSaved) VALUES (?, ?, ?)";
-	String GET_SAVED_LISTING = "SELECT * FROM saved_listings WHERE onid=?";
+	String GET_SAVED_LISTINGS = "SELECT SL.*, L.title, L.type, L.campus, L.imageIDs, L.description, L.price, L.datePosted FROM saved_listings SL, listings L WHERE SL.listingID = L.listingID AND SL.onid = ?";
 	String SEARCH_LISTINGS = "SELECT * FROM listings WHERE type = ? AND (description LIKE ? OR tags LIKE ?)";
 	String DELETE_LISTING = "DELETE FROM listings WHERE listingID = ?";
-	String REMOVE_LISTING_FROM_SAVED_LIST = "DELETE FROM savedlistings WHERE listingID = ? AND onid = ?";
+	String REMOVE_LISTING_FROM_SAVED_LIST = "DELETE FROM saved_listings WHERE listingID = ? AND onid = ?";
 }
