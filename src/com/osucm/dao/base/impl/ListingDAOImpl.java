@@ -413,15 +413,15 @@ public class ListingDAOImpl implements ListingDAO {
 			preparedStatement.setString(2, listingPojo.getTitle());
 			preparedStatement.setString(3, listingPojo.getCampus());
 			preparedStatement.setString(4, listingPojo.getDescription());
-			//TODO - Add code to update imageID at index 5.
+			//TODO - Add code to update imageID 
 			//preparedStatement.setString(5, listingPojo.get);
-			preparedStatement.setDouble(6, listingPojo.getPrice());
-			preparedStatement.setLong(7, listingPojo.getDatePosted());
-			preparedStatement.setInt(8, listingPojo.getShowEmail());
-			preparedStatement.setString(9, listingPojo.getOtherContact());
-			preparedStatement.setString(10, listingPojo.getTags());
-			preparedStatement.setInt(9, listingPojo.getListingID());
-			preparedStatement.setString(9, listingPojo.getOnid());
+			preparedStatement.setDouble(5, listingPojo.getPrice());
+			preparedStatement.setLong(6, listingPojo.getDatePosted());
+			preparedStatement.setInt(7, listingPojo.getShowEmail());
+			preparedStatement.setString(8, listingPojo.getOtherContact());
+			preparedStatement.setString(9, listingPojo.getTags());
+			preparedStatement.setInt(10, listingPojo.getListingID());
+			preparedStatement.setString(11, listingPojo.getOnid());
 			
 			int executeUpdate = preparedStatement.executeUpdate();
 			
