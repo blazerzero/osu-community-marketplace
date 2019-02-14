@@ -398,4 +398,46 @@ public class ListingDAOImpl implements ListingDAO {
 		}
 		return status;
 	}
+
+	@Override
+	public String updateListing(ListingPojo listingPojo) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.UPDATE_LISTING);
+			preparedStatement.setString(1, listingPojo.getType());
+			preparedStatement.setString(2, listingPojo.getTitle());
+			preparedStatement.setString(3, listingPojo.getCampus());
+			preparedStatement.setString(4, listingPojo.getDescription());
+			//TODO - Add code to update imageID at index 5.
+			//preparedStatement.setString(5, listingPojo.get);
+			preparedStatement.setDouble(6, listingPojo.getPrice());
+			preparedStatement.setLong(7, listingPojo.getDatePosted());
+			preparedStatement.setInt(8, listingPojo.getShowEmail());
+			preparedStatement.setString(9, listingPojo.getOtherContact());
+			preparedStatement.setString(10, listingPojo.getTags());
+			preparedStatement.setInt(9, listingPojo.getListingID());
+			preparedStatement.setString(9, listingPojo.getOnid());
+			
+			int executeUpdate = preparedStatement.executeUpdate();
+			
+			if(executeUpdate == 1) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+			
+		} catch (ClassNotFoundException | SQLException | IOException | NamingException e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+		
+		
+		return status;
+	}
 }
