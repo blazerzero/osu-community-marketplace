@@ -35,12 +35,25 @@
 	  	  </div>
 	  	<div class="alert alert-danger" role="alert" id="incompleteSearchAlert"></div>
 	  	<div class="body-section sort-section">
-	  	  <h5 class="search-sort-label">Sort Listings</h5>
-	  	  <select class="input-group-text" id="searchSort">
-	  	  	<option value="date">Most Recent</option>
-	  	  	<option value="price-asc">Low to High Price</option>
-	  	  	<option value="price-desc">High to Low Price</option>
-	  	  </select>
+	  	  <div style="display: flex; flex-direction: row; padding-right: 5vw;">
+	  	  	<h5 class="search-sort-label">Sort Listings</h5>
+	  	  	<select class="input-group-text" id="searchSort">
+	  	  	  <option value="date">Most Recent</option>
+	  	  	  <option value="price-asc">Low to High Price</option>
+	  	  	 <option value="price-desc">High to Low Price</option>
+	  	  	</select>
+  	  	  </div>
+  	  	  <div style="display: flex; flex-direction: row; padding-left: 5vw;">
+	  	  	<h5 class="search-sort-label">Filter by Campus: </h5>
+	  	  	<select class="input-group-text" id="selectSearchCampus">
+    		  <option value="">Pick a campus</option>
+    		  <option value="Corvallis">Corvallis</option>
+    		  <option value="Bend">Bend (Cascades)</option>
+    		  <option value="Portland">Portland</option>
+    		  <option value="Newport">Newport</option>
+    		  <option value="Other">Other (See description)</option>
+  		  	</select>
+  	  	  </div>
 	  	</div><br/>
   	  	<div id="listings"></div>  
   	  </div>

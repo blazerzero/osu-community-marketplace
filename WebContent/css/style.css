@@ -223,6 +223,7 @@ html {
 .sort-section {
 	display: flex;
 	flex-direction: row;
+	width: 100%;
 }
 .search-sort-label {
 	padding-right: 1vw;

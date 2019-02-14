@@ -157,6 +157,15 @@ $(document).ready(function() {
 					sendFile(file, type[0], listingID, numLeftToUpload);
 				});
 			}
+			else {
+				$('#postListingBtn').removeClass('btn-primary');
+				$('#postListingBtn').addClass('btn-success');
+				$('#postListingBtn').attr('disabled', 'disabled');
+				$('#postListingBtn').html('Posted!');
+				setTimeout(function() {
+					window.location.href = "./mylistings.html";
+				}, 1000);
+			}
 		}
 	});
 	
@@ -224,7 +233,7 @@ function sendFile(file, type, listingID, numLeftToUpload) {
 					$('#postListingBtn').attr('disabled', 'disabled');
 					$('#postListingBtn').html('Posted!');
 					setTimeout(function() {
-						//window.location.href = "./mylistings.html";
+						window.location.href = "./mylistings.html";
 					}, 1000);
 				}
 			}
