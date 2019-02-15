@@ -42,6 +42,22 @@ $(document).ready(function() {
 		value.imageIDs = imageIDList;
 	});
 	
+	var listingsShown = listings;
+	
+	var corvallisListings = [];
+	var bendListings = [];
+	var portlandListings = [];
+	var newportListings = [];
+	var otherListings = [];
+	
+	$.each(listingsShown, function(index, value) {
+		if (value.campus == 'Corvallis') corvallisListings.push(value);
+		else if (value.campus == 'Bend') bendListings.push(value);
+		else if (value.campus == 'Portland') portlandListings.push(value);
+		else if (value.campus == 'Newport') newportListings.push(value);
+		else if (value.campus == 'Other') otherListings.push(value);
+	});
+	
 	showListings(listings, type, '#listings');
 	
 	$('#searchSubmitBtn').click(function() {
@@ -53,10 +69,38 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#selectSearchCampus').change(function() {
+		if ($(this).val() == 'Corvallis') listingsShown = corvallisListings;
+		else if ($(this).val() == 'Bend') listingsShown = bendListings;
+		else if ($(this).val() == 'Portland') listingsShown = portlandListings;
+		else if ($(this).val() == 'Newport') listingsShown = newportListings;
+		else if ($(this).val() == 'Other') listingsShown = otherListings;
+		else listingsShown = listings;
+		showListings(listingsShown, type, "#listings");
+	});
+	
 	$('#searchSort').change(function() {
 		if ($('#searchSort').val() == 'date') {
 			console.log("sorting listings by date");
 			listings.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			listingsShown.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			corvallisListings.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			bendListings.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			portlandListings.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			newportListings.sort(function(a, b) {
+				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+			});
+			otherListings.sort(function(a, b) {
 				return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
 			});
 		}
@@ -65,19 +109,56 @@ $(document).ready(function() {
 			listings.sort(function(a, b) {
 				return (b.price - a.price);
 			});
+			listingsShown.sort(function(a, b) {
+				return (b.price - a.price);
+			});
+			corvallisListings.sort(function(a, b) {
+				return (b.price - a.price);
+			});
+			bendListings.sort(function(a, b) {
+				return (b.price - a.price);
+			});
+			portlandListings.sort(function(a, b) {
+				return (b.price - a.price);
+			});
+			newportListings.sort(function(a, b) {
+				return (b.price - a.price);
+			});
+			otherListings.sort(function(a, b) {
+				return (b.price - a.price);
+			});
 		}
 		else if ($('#searchSort').val() == 'price-desc') {
 			console.log("sorting listings by price");
 			listings.sort(function(a, b) {
 				return (a.price - b.price);
 			});
+			listingsShown.sort(function(a, b) {
+				return (a.price - b.price);
+			});
+			corvallisListings.sort(function(a, b) {
+				return (a.price - b.price);
+			});
+			bendListings.sort(function(a, b) {
+				return (a.price - b.price);
+			});
+			portlandListings.sort(function(a, b) {
+				return (a.price - b.price);
+			});
+			newportListings.sort(function(a, b) {
+				return (a.price - b.price);
+			});
+			otherListings.sort(function(a, b) {
+				return (a.price - b.price);
+			});
 		}
 		$('#listings').html('');
-		showListings(listings, type, '#listings');
+		showListings(listingsShown, type, '#listings');
 	});
 });
 
 function showListings(listings, type, location) {
+	$(location).html('');
 	var len = listings.length - 1;
 	while (len >= 0) {
 		if (len >= 3) {
