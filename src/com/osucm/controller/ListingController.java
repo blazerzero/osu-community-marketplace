@@ -121,6 +121,14 @@ public class ListingController extends HttpServlet {
         	response.getWriter().write(status);
         }
         
+        else if (null != message && CommonConstants.OP_UPDATE_LISTING.equalsIgnoreCase(message)) {      	
+        	Gson gson = new Gson();
+        	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	dao = new ListingDAOImpl();
+        	String status = dao.updateListing(newListing);
+        	response.getWriter().write(status);
+        }
+        
 		System.out.println("ListingController:doPost Exiting...");
 	}
 

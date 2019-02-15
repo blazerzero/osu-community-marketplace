@@ -9,6 +9,8 @@ $(document).ready(function() {
 		listingDetails = jQuery.parseJSON(detailsJSON);
 	}
 	
+	var originalListingDetails = listingDetails;
+	
 	if (sessionStorage.getItem('onid') != listingDetails.onid) {
 		alert('You can\'t edit someone else\'s listing.');
 		window.location.href = 'home.html';
@@ -45,6 +47,123 @@ $(document).ready(function() {
 	$('#listingContact').val(listingDetails.otherContact);
 	$('#listingTags').val(listingDetails.tags);
 	
+	/*$('#listingTitle').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#selectListingCampus').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#listingDescription').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#selectListingType').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#listingPrice').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#selectPayFrequency').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#selectShowEmail').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#listingContact').keyup(function(e) {
+		//print(e);
+		console.log(e);
+		if (checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});
+	
+	$('#listingTags').keyup(function(e) {
+		//print(e);
+		console.log("checking tag changes");
+		if (!checkChanges(originalListingDetails)) {
+			$('#saveChangesBtn').removeAttr('disabled');
+			$('#saveChangesBtn').html('Save Changes');
+		}
+		else {
+			$('#saveChangesBtn').attr('disabled', 'disabled');
+			$('#saveChangesBtn').html('No Changes Made');
+		}
+	});*/
+	
 	$('#saveChangesBtn').click(function() {
 		var ready = true;
 		if ($('#listingTitle').val() == '') {
@@ -80,7 +199,12 @@ $(document).ready(function() {
 			$('#listingPriceSection').css('box-shadow', '0 0 5px red');
 			$('#incompleteFormAlert').html('Please fill all required fields.');
 			$('#incompleteFormAlert').css('display', 'block');
-		} else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
+		} 
+		else if ($.isNumeric($('#listingPrice').val())) {
+			$('#incompleteFormAlert').html('Price must be a number.');
+			$('#incompleteFormAlert').css('display', 'block');
+		}
+		else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#selectShowEmail').val() == '') {
 			ready = false;
@@ -88,11 +212,6 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').html('Please fill all required fields.');
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#showEmailSection').css('box-shadow', '0 0 0 white');
-		
-		if ($.isNumeric($('#listingPrice').val())) {
-			$('#incompleteFormAlert').html('Price must be a number.');
-			$('#incompleteFormAlert').css('display', 'block');
-		}
 		
 		/*if ($('#listingDescription').val().includes('"') 
 				|| $('#listingDescription').val().includes('"')
@@ -113,19 +232,21 @@ $(document).ready(function() {
 			else if ($('#selectListingType').val() == 'h') type = 'housing';
 			console.log('type: ' + type);
 			var fileNames = [];
-			$.each(fileList, function(index, file) {
+			/*$.each(fileList, function(index, file) {
 				fileNames.push(file.name);
 				sendFile(file, type[0]);
-			});
+			});*/
 			console.log(fileNames);
 			var newListing = new Object();
+			newListing.listingID = originalListingDetails.listingID;
 			newListing.onid = sessionStorage.getItem('onid'); // once connected with ONID, this should hold the ONID of the logged-in user
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
 			newListing.campus = $('#selectListingCampus').val();
 			newListing.description = $('#listingDescription').val();
 			//newListing.imageIDs = fileNames.toString();
-			newListing.imageIDs = '';
+			//newListing.imageIDs = '';
+			newListing.imageIDs = originalListingDetails.imageIDs;
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
 			newListing.payFrequency = (type[0] == 'h' ? $('#selectPayFrequency').val() : '');
@@ -134,14 +255,14 @@ $(document).ready(function() {
 			newListing.otherContact = $('#listingContact').val();
 			newListing.tags = $('#listingTags').val();
 			console.log(JSON.stringify(newListing));
-			//var status = sendDataSync(JSON.stringify(newListing), "addListing", "ListingController");
-			var status = "JDBC_OK";
+			var status = sendDataSync(JSON.stringify(newListing), "updateListing", "ListingController");
+			//var status = "JDBC_OK";
 			console.log(status);
 			if (status == "JDBC_OK") {
-				$('#postListingBtn').removeClass('btn-primary');
-				$('#postListingBtn').addClass('btn-success');
-				$('#postListingBtn').attr('disabled', 'disabled');
-				$('#postListingBtn').html('Posted!');
+				$('#saveChangesBtn').removeClass('btn-primary');
+				$('#saveChangesBtn').addClass('btn-success');
+				$('#saveChangesBtn').attr('disabled', 'disabled');
+				$('#saveChangesBtn').html('Changes Saved!');
 				setTimeout(function() {
 					window.location.href = "./mylistings.html";
 				}, 1000);
@@ -149,3 +270,34 @@ $(document).ready(function() {
 		}
 	});
 });
+
+/*function checkChanges(originalListingDetails) {
+	if ($('#listingTitle').val() != originalListingDetails.title) {
+		return false;
+	}
+	else if ($('#selectListingCampus').val() != originalListingDetails.campus) {
+		return false;
+	}
+	else if ($('#listingDescription').val() != originalListingDetails.description) {
+		return false;
+	}
+	else if ($('#selectListingType').val() != originalListingDetails.type) {
+		return false;
+	}
+	else if ($('#listingPrice').val() != originalListingDetails.price) {
+		return false;
+	}
+	else if ($('#selectPayFrequency').val() != originalListingDetails.payFrequency) {
+		return false;
+	}
+	else if ($('#selectShowEmail').val() != originalListingDetails.showEmail) {
+		return false;
+	}
+	else if ($('#listingContact').val() != originalListingDetails.otherContact) {
+		return false;
+	}
+	else if ($('#listingTags').val() != originalListingDetails.tags) {
+		return false;
+	}
+	else return true;
+}*/

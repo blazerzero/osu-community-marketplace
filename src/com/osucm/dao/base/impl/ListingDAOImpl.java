@@ -409,6 +409,7 @@ public class ListingDAOImpl implements ListingDAO {
 		try {
 			connect = getConnection();
 			preparedStatement = connect.prepareStatement(SqlConstants.UPDATE_LISTING);
+			Timestamp dt = new Timestamp(listingPojo.getDatePosted());
 			preparedStatement.setString(1, listingPojo.getType());
 			preparedStatement.setString(2, listingPojo.getTitle());
 			preparedStatement.setString(3, listingPojo.getCampus());
@@ -416,16 +417,18 @@ public class ListingDAOImpl implements ListingDAO {
 			//TODO - Add code to update imageID 
 			//preparedStatement.setString(5, listingPojo.get);
 			preparedStatement.setDouble(5, listingPojo.getPrice());
-			preparedStatement.setLong(6, listingPojo.getDatePosted());
-			preparedStatement.setInt(7, listingPojo.getShowEmail());
-			preparedStatement.setString(8, listingPojo.getOtherContact());
-			preparedStatement.setString(9, listingPojo.getTags());
-			preparedStatement.setInt(10, listingPojo.getListingID());
-			preparedStatement.setString(11, listingPojo.getOnid());
+			preparedStatement.setString(6, listingPojo.getPayFrequency());
+			preparedStatement.setTimestamp(7, dt);
+			preparedStatement.setInt(8, listingPojo.getShowEmail());
+			preparedStatement.setString(9, listingPojo.getOtherContact());
+			preparedStatement.setString(10, listingPojo.getTags());
+			preparedStatement.setInt(11, listingPojo.getListingID());
+			//preparedStatement.setString(12, listingPojo.getOnid());
 			
 			int executeUpdate = preparedStatement.executeUpdate();
+			System.out.println(executeUpdate);
 			
-			if(executeUpdate == 1) {
+			if(executeUpdate > 0) {
 				status = CommonConstants.STATUS_JDBC_OK;
 			}
 			
