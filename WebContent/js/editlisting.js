@@ -186,6 +186,25 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+	$('#deleteListingBtn').click(function() {
+		listingToDelete = originalListingDetails.listingID;
+		//alert(id);
+		console.log("listing ID: " + listingToDelete);
+		$('#deleteListingLabel').html('Confirm: Delete "' + originalListingDetails.title + '"');
+		$('#confirmDeleteListingModal').modal('show');
+	});
+	
+	$('#confirmDeleteListingBtn').click(function() {
+		$('#confirmDeleteListingModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingToDelete + "'}", "deleteListing", "ListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingDeletedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'mylistings.html';
+			}, 2000);
+		}
+	});
 });
 
 function deletePhoto(deleteBtn) {

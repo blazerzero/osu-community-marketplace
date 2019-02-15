@@ -141,5 +141,5 @@ $(document).ready(function() {
 				window.location.href = 'mylistings.html';
 			}, 2000);
 		}
-	})
+	});
 });
