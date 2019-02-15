@@ -23,9 +23,9 @@ $(document).ready(function() {
 	});
 	
 	fileAdder.addEventListener('change', function(e) {
-		var reader = new FileReader();
+		//var reader = new FileReader();
 		for (var i = 0; i < fileAdder.files.length; i++) {
-			if (!fileList.includes(fileAdder.files[i])) {
+			//if (!fileList.includes(fileAdder.files[i])) {
 				console.log('file: ' + fileAdder.files[i].name);
 				fileList.push(fileAdder.files[i]);
 				if (fileList.length == 15) {
@@ -35,9 +35,12 @@ $(document).ready(function() {
 						$('#uploadErrorAlert').css('display', 'block');
 					}
 				}
-			}
+			//}
 		}
-		$('#uploadedFiles').html('');
+		if (fileList.length > 0) {
+			$('.uploaded-photos-title').css('display', 'block');
+		}
+		//$('#uploadedFiles').html('');
 		for (var i = 0; i < fileList.length; i++) {
 			$('#uploadedFiles').append(
 					  '<div>'
@@ -188,6 +191,9 @@ function deletePhoto(deleteBtn) {
 	        	+	'</button>'
 	        	+ '</div>'
 		);
+	}
+	if (fileList.length == 0) {
+		$('.uploaded-photos-title').css('display', 'none');
 	}
 }
 

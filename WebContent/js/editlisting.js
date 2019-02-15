@@ -47,122 +47,36 @@ $(document).ready(function() {
 	$('#listingContact').val(listingDetails.otherContact);
 	$('#listingTags').val(listingDetails.tags);
 	
-	/*$('#listingTitle').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
+	fileAdder.addEventListener('change', function(e) {
+		//var reader = new FileReader();
+		for (var i = 0; i < fileAdder.files.length; i++) {
+			//if (!fileList.includes(fileAdder.files[i])) {
+				console.log('file: ' + fileAdder.files[i].name);
+				fileList.push(fileAdder.files[i]);
+				if (fileList.length == 15) {
+					$('#addImageBtn').attr('disabled', 'disabled');
+					if (i < fileAdder.files.length - 1) {
+						//$('#uploadErrorAlert').html('Not all photos could be uploaded. Maximum number of photos reached.');
+						$('#uploadErrorAlert').css('display', 'block');
+					}
+				}
+			//}
 		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
+		if (fileList.length > 0) {
+			$('.uploaded-photos-title').css('display', 'block');
 		}
-	});
-	
-	$('#selectListingCampus').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#listingDescription').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
+		//$('#uploadedFiles').html('');
+		for (var i = 0; i < fileList.length; i++) {
+			$('#uploadedFiles').append(
+					  '<div>'
+					+	fileList[i].name
+					+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
+		        	+	  '<span aria-hidden="true">&times;</span>'
+		        	+	'</button>'
+		        	+ '</div>'
+			);
 		}
 	});
-	
-	$('#selectListingType').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#listingPrice').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#selectPayFrequency').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#selectShowEmail').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#listingContact').keyup(function(e) {
-		//print(e);
-		console.log(e);
-		if (checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});
-	
-	$('#listingTags').keyup(function(e) {
-		//print(e);
-		console.log("checking tag changes");
-		if (!checkChanges(originalListingDetails)) {
-			$('#saveChangesBtn').removeAttr('disabled');
-			$('#saveChangesBtn').html('Save Changes');
-		}
-		else {
-			$('#saveChangesBtn').attr('disabled', 'disabled');
-			$('#saveChangesBtn').html('No Changes Made');
-		}
-	});*/
 	
 	$('#saveChangesBtn').click(function() {
 		var ready = true;
@@ -274,33 +188,75 @@ $(document).ready(function() {
 	});
 });
 
-/*function checkChanges(originalListingDetails) {
-	if ($('#listingTitle').val() != originalListingDetails.title) {
-		return false;
+function deletePhoto(deleteBtn) {
+	console.log(deleteBtn.getAttribute('data-id'));
+	var idx = deleteBtn.getAttribute('data-id');
+	fileList.splice(idx, 1);
+	$('#uploadedFiles').html('');
+	for (var i = 0; i < fileList.length; i++) {
+		$('#uploadedFiles').append(
+				  '<div>'
+				+	fileList[i].name
+				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
+	        	+	  '<span aria-hidden="true">&times;</span>'
+	        	+	'</button>'
+	        	+ '</div>'
+		);
 	}
-	else if ($('#selectListingCampus').val() != originalListingDetails.campus) {
-		return false;
+	if (fileList.length == 0) {
+		$('.uploaded-photos-title').css('display', 'none');
 	}
-	else if ($('#listingDescription').val() != originalListingDetails.description) {
-		return false;
+}
+
+function sendFile(file, type, listingID, numLeftToUpload) {
+	var formData = new FormData();
+	var request = new XMLHttpRequest();
+	
+	var baseURL = 'http://www.worksbythepg.com/osucm-images/';
+	var url = baseURL + 'image_upload.php/';
+	formData.append('image', file);
+	formData.append('type', type);
+	console.log(url);
+	console.log(Array.from(formData.entries()));
+	request.open("POST", url, true);
+	//request.setRequestHeader("Content-Type", "multipart/form-data");
+	//request.setRequestHeader("Access-Control-Request-Method", "POST");
+	//request.setRequestHeader("Access-Control-Request-Headers", "X-Custom-Header");
+	request.send(formData);
+	
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
+			console.log(request.response);
+			var xml = $.parseXML( request.response );
+			var response = $( xml );
+			var code = response.find("code").text();
+			statusCodes.push(code);
+			console.log(statusCodes);
+			console.log(code);
+			if (code == 'SUCCESS') {
+				var savedName = response.find("message").text();
+				console.log(file.name + ' has been uploaded to ' + baseURL + type + ' as ' + savedName);
+				//fileNames.push(savedName);
+				//console.log(fileNames);
+				console.log("id: " + listingID);
+				var status = sendDataSync("{'listingID': '"+listingID+"', 'imageIDs': '"+savedName+"'}", "addImageIDToNewListing", "ListingController");
+				console.log(status);
+				if (status != 'JDBC_OK') {
+					$('#incompleteFormAlert').removeClass('alert-danger');
+					$('#incompleteFormAlert').addClass('alert-warning');
+					$('#incompleteFormAlert').html('WARNING: Not all images were successfully uploaded to the server.');
+					$('#incompleteFormAlert').css('display', 'block');
+				}
+				if (numLeftToUpload - 1 == 0) {
+					$('#postListingBtn').removeClass('btn-primary');
+					$('#postListingBtn').addClass('btn-success');
+					$('#postListingBtn').attr('disabled', 'disabled');
+					$('#postListingBtn').html('Posted!');
+					setTimeout(function() {
+						window.location.href = "./mylistings.html";
+					}, 1000);
+				}
+			}
+		}
 	}
-	else if ($('#selectListingType').val() != originalListingDetails.type) {
-		return false;
-	}
-	else if ($('#listingPrice').val() != originalListingDetails.price) {
-		return false;
-	}
-	else if ($('#selectPayFrequency').val() != originalListingDetails.payFrequency) {
-		return false;
-	}
-	else if ($('#selectShowEmail').val() != originalListingDetails.showEmail) {
-		return false;
-	}
-	else if ($('#listingContact').val() != originalListingDetails.otherContact) {
-		return false;
-	}
-	else if ($('#listingTags').val() != originalListingDetails.tags) {
-		return false;
-	}
-	else return true;
-}*/
+}
