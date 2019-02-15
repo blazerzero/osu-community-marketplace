@@ -225,6 +225,9 @@ $(document).ready(function() {
 		
 		if (ready) {
 			$('#incompleteFormAlert').css('display', 'none');
+			var descriptionText = $('#listingDescription').val().replace(/\r?\n|\r/g, "; ").replace('"', "'");
+			//$('#listingDescription').val(descriptionText);
+			
 			/* code to post listing */
 			var type = "";
 			if ($('#selectListingType').val() == 'p') type = 'product';
@@ -243,7 +246,7 @@ $(document).ready(function() {
 			newListing.title = $('#listingTitle').val();
 			newListing.type = type;
 			newListing.campus = $('#selectListingCampus').val();
-			newListing.description = $('#listingDescription').val();
+			newListing.description = descriptionText;
 			//newListing.imageIDs = fileNames.toString();
 			//newListing.imageIDs = '';
 			newListing.imageIDs = originalListingDetails.imageIDs;
