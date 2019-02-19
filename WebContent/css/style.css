@@ -27,11 +27,11 @@ html {
   text-align: center;
 }
 
-.comingsoon {
-  background-color: #b8dde1;
+.version-indicator {
+  background-color: #fdd26e;
   border-radius: 4vw;
-  padding-top: 0.6vw;
-  padding-bottom: 0.6vw;
+  padding-top: 0.2vw;
+  padding-bottom: 0.2vw;
   padding-left: 5vw;
   padding-right: 5vw;
   font-weight: bold;
