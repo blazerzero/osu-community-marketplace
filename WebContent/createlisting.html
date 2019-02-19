@@ -104,13 +104,13 @@
  		  <input type="text" class="form-control" aria-label="Tags" aria-describedby="listingContactLabel" id="listingTags" placeholder="E.g. computer, macbook, 2018, etc.">
 	  	</div>
 		<h4 id="page-title">Upload Photos</h4>
-	  	<h6 id="page-title">(Max. 15 photos)</h6>
+	  	<h6 id="page-title">(Max. 10 photos, image size limit 2MB)</h6>
 		<input class="file-adder" type="file" id="fileAdder" accept=".jpg,.jpeg,.png" multiple>
-		<center><button class="btn btn-secondary" id="addImageBtn">Add Photos</button></center><br/><br/>
-		<div class="alert alert-danger" role="alert" id="uploadErrorAlert">Not all photos could be uploaded. Maximum number of photos reached.</div>
+		<center><button class="btn btn-secondary" id="addImageBtn">Add Photos</button></center><br/>
+		<div class="alert alert-warning" role="alert" id="uploadErrorAlert">Not all photos could be uploaded. Maximum number of photos reached.</div>
 		<h5 class="uploaded-photos-title" id="page-title">Uploaded Photos</h5>
-		<div id="uploadedFiles"></div>
-        <div class="alert alert-danger" role="alert" id="incompleteFormAlert"></div>
+		<div id="uploadedFiles"></div><br/>
+        <div class="alert alert-danger" role="alert" id="incompleteFormAlert"></div><br/>
 		<center><button class="btn btn-lg btn-primary" id="postListingBtn">Post Listing!</button></center>
 	  </div>
   	</div>

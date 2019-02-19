@@ -1,4 +1,11 @@
+var numOriginalImages = 0;
+var originalImages = [];
+var fileList = [];
+var statusCodes = [];
+
 $(document).ready(function() {
+	var fileAdder = document.getElementById('fileAdder');
+
 	var url = new URL(window.location.href);
 	var listingID = url.searchParams.get("listingID");
 	
@@ -18,14 +25,14 @@ $(document).ready(function() {
 	
 	$(document).attr('title', 'Edit Listing: ' + listingDetails.title + ' - OSU Community Marketplace');
 
-	$('#page-title').html('Edit Listing: ' + listingDetails.title);
-	$('#listingTitle').val(listingDetails.title);
-	$('#selectListingCampus').val(listingDetails.campus);
-	$('#listingDescription').val(listingDetails.description);
-	$('#selectListingType').val(listingDetails.type[0]);
-	$('#listingPrice').val(buildPrice(listingDetails.price));
-	if (listingDetails.type == 'housing') {
-		$('#selectPayFrequency').val(listingDetails.payFrequency);
+	$('#page-title').html('Edit Listing: ' + originalListingDetails.title);
+	$('#listingTitle').val(originalListingDetails.title);
+	$('#selectListingCampus').val(originalListingDetails.campus);
+	$('#listingDescription').val(originalListingDetails.description);
+	$('#selectListingType').val(originalListingDetails.type[0]);
+	$('#listingPrice').val(buildPrice(originalListingDetails.price));
+	if (originalListingDetails.type == 'housing') {
+		$('#selectPayFrequency').val(originalListingDetails.payFrequency);
 		$('#payFrequencyLabel').css('display', 'block');
 		$('#selectPayFrequency').css('display', 'block');
 	}
@@ -43,24 +50,57 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#selectShowEmail').val(listingDetails.showEmail);
-	$('#listingContact').val(listingDetails.otherContact);
-	$('#listingTags').val(listingDetails.tags);
+	$('#selectShowEmail').val(originalListingDetails.showEmail);
+	$('#listingContact').val(originalListingDetails.otherContact);
+	$('#listingTags').val(originalListingDetails.tags);
+	
+	if (originalListingDetails.imageIDs != "") {
+		originalImages = originalListingDetails.imageIDs.split(', ');
+		console.log("originalImages: " + originalImages);
+		originalImages.shift();
+		originalListingDetails.imageIDs = originalImages;
+		numOriginalImages = originalImages.length;
+	}
+	
+	if (numOriginalImages > 0) {
+		$('.uploaded-photos-title').css('display', 'block');
+	}
+	
+	$('#addImageBtn').click(function() {
+		$('#fileAdder').click();
+	});
+	
+	for (var i = 0; i < originalImages.length; i++) {
+		$('#uploadedFiles').append(
+				  '<div>'
+				+	originalImages[i] + i
+				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
+	        	+	  '<span aria-hidden="true">&times;</span>'
+	        	+	'</button>'
+	        	+ '</div>'
+		);
+	}
 	
 	fileAdder.addEventListener('change', function(e) {
-		//var reader = new FileReader();
 		for (var i = 0; i < fileAdder.files.length; i++) {
-			//if (!fileList.includes(fileAdder.files[i])) {
+			if (!fileList.includes(fileAdder.files[i])) {
 				console.log('file: ' + fileAdder.files[i].name);
-				fileList.push(fileAdder.files[i]);
-				if (fileList.length == 15) {
-					$('#addImageBtn').attr('disabled', 'disabled');
-					if (i < fileAdder.files.length - 1) {
-						//$('#uploadErrorAlert').html('Not all photos could be uploaded. Maximum number of photos reached.');
-						$('#uploadErrorAlert').css('display', 'block');
+				if (fileAdder.files[i].size <= 2097152) {
+					fileList.push(fileAdder.files[i]);
+					if (fileList.length == 10) {
+						$('#addImageBtn').attr('disabled', 'disabled');
+						if (i < fileAdder.files.length - 1) {
+							$('#uploadErrorAlert').html('Maximum number of images reached. Only ten (10) images can be uploaded per listing.');
+							$('#uploadErrorAlert').css('display', 'block');
+							break;
+						}
 					}
 				}
-			//}
+				else {
+					$('#uploadErrorAlert').html('Some images exceeded the maximum size limit.');
+					$('#uploadErrorAlert').css('display', 'block');
+				}
+			}
 		}
 		if (fileList.length > 0) {
 			$('.uploaded-photos-title').css('display', 'block');
@@ -127,20 +167,9 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#showEmailSection').css('box-shadow', '0 0 0 white');
 		
-		/*if ($('#listingDescription').val().includes('"') 
-				|| $('#listingDescription').val().includes('"')
-				|| $('#listingDescription').val().includes('\\')
-				|| $('#listingDescription').val().includes('\n')
-				|| $('#listingDescription').val().includes('\t')
-				|| $('#listingDescription').val().includes('\r')) {
-			$('#incompleteFormAlert').html('Description cannot have double quotes, backslashes, returns, or tabs.');
-			$('#incompleteFormAlert').css('display', 'block');
-		}*/
-		
 		if (ready) {
 			$('#incompleteFormAlert').css('display', 'none');
 			var descriptionText = $('#listingDescription').val().replace(/\r?\n|\r/g, "; ").replace('"', "'");
-			//$('#listingDescription').val(descriptionText);
 			
 			/* code to post listing */
 			var type = "";
@@ -163,7 +192,7 @@ $(document).ready(function() {
 			newListing.description = descriptionText;
 			//newListing.imageIDs = fileNames.toString();
 			//newListing.imageIDs = '';
-			newListing.imageIDs = originalListingDetails.imageIDs;
+			//newListing.imageIDs = originalListingDetails.imageIDs;
 			newListing.datePosted = new Date().getTime();
 			newListing.price = $('#listingPrice').val();
 			newListing.payFrequency = (type[0] == 'h' ? $('#selectPayFrequency').val() : '');
@@ -176,13 +205,46 @@ $(document).ready(function() {
 			//var status = "JDBC_OK";
 			console.log(status);
 			if (status == "JDBC_OK") {
-				$('#saveChangesBtn').removeClass('btn-primary');
+				console.log("fileList length: " + fileList.length);
+				console.log("originalImages length: " + originalImages.length);
+				if (fileList.length > 0 || originalImages.length > 0) {
+					$.each(originalListingDetails.imageIDs, function(index, value) {
+						if (!originalImages.includes(value)) {
+							deleteFileFromServer(value, type[0]);
+						}
+					});
+					if (fileList.length > 0) {
+						$.each(fileList, function(index, file) {
+					 		var numLeftToUpload = fileList.length - index;
+							sendFile(file, type[0], newListing.listingID, numLeftToUpload);
+						});
+					}
+					else {
+						$('#saveChangesBtn').removeClass('btn-primary');
+						$('#saveChangesBtn').addClass('btn-success');
+						$('#saveChangesBtn').attr('disabled', 'disabled');
+						$('#saveChangesBtn').html('Changes Saved!');
+						setTimeout(function() {
+							window.location.href = "./mylistings.html";
+						}, 1000);
+					}
+				}
+				else {
+					$('#saveChangesBtn').removeClass('btn-primary');
+					$('#saveChangesBtn').addClass('btn-success');
+					$('#saveChangesBtn').attr('disabled', 'disabled');
+					$('#saveChangesBtn').html('Changes Saved!');
+					setTimeout(function() {
+						window.location.href = "./mylistings.html";
+					}, 1000);
+				}
+				/*$('#saveChangesBtn').removeClass('btn-primary');
 				$('#saveChangesBtn').addClass('btn-success');
 				$('#saveChangesBtn').attr('disabled', 'disabled');
 				$('#saveChangesBtn').html('Changes Saved!');
 				setTimeout(function() {
 					window.location.href = "./mylistings.html";
-				}, 1000);
+				}, 1000);*/
 			}
 		}
 	});
@@ -210,19 +272,41 @@ $(document).ready(function() {
 function deletePhoto(deleteBtn) {
 	console.log(deleteBtn.getAttribute('data-id'));
 	var idx = deleteBtn.getAttribute('data-id');
-	fileList.splice(idx, 1);
+	console.log("idx: " + idx);
+	console.log("numOriginalImages: " + numOriginalImages);
+	console.log("original images: " + originalImages);
+	if (idx < numOriginalImages) {
+		console.log("originalImages length before: " + originalImages.length);
+		originalImages.splice(idx, 1);
+		console.log("originalImages length after: " + originalImages.length);
+	}
+	else {
+		console.log("fileList length before: " + fileList.length);
+		fileList.splice(idx - numOriginalImages, 1);
+		console.log("fileList length after: " + fileList.length);
+	}
 	$('#uploadedFiles').html('');
-	for (var i = 0; i < fileList.length; i++) {
+	for (var i = 0; i < originalImages.length; i++) {
 		$('#uploadedFiles').append(
 				  '<div>'
-				+	fileList[i].name
+				+	originalImages[i]
 				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
 	        	+	  '<span aria-hidden="true">&times;</span>'
 	        	+	'</button>'
 	        	+ '</div>'
 		);
 	}
-	if (fileList.length == 0) {
+	for (var i = 0; i < fileList.length; i++) {
+		$('#uploadedFiles').append(
+				  '<div>'
+				+	fileList[i].name
+				+	'<button type="button" class="close" aria-label="Close" data-id="'+(i+numOriginalImages)+'" onclick="deletePhoto(this)">'
+	        	+	  '<span aria-hidden="true">&times;</span>'
+	        	+	'</button>'
+	        	+ '</div>'
+		);
+	}
+	if (fileList.length == 0 && originalImages.length == 0) {
 		$('.uploaded-photos-title').css('display', 'none');
 	}
 }
@@ -267,15 +351,36 @@ function sendFile(file, type, listingID, numLeftToUpload) {
 					$('#incompleteFormAlert').css('display', 'block');
 				}
 				if (numLeftToUpload - 1 == 0) {
-					$('#postListingBtn').removeClass('btn-primary');
-					$('#postListingBtn').addClass('btn-success');
-					$('#postListingBtn').attr('disabled', 'disabled');
-					$('#postListingBtn').html('Posted!');
+					$('#saveChangesBtn').removeClass('btn-primary');
+					$('#saveChangesBtn').addClass('btn-success');
+					$('#saveChangesBtn').attr('disabled', 'disabled');
+					$('#saveChangesBtn').html('Changes Saved!');
 					setTimeout(function() {
 						window.location.href = "./mylistings.html";
 					}, 1000);
 				}
 			}
+		}
+	}
+}
+
+function deleteFileFromServer(filename, type) {
+	var formData = new FormData();
+	var request = new XMLHttpRequest();
+	
+	var baseURL = 'http://www.worksbythepg.com/osucm-images/';
+	var url = baseURL + 'image_deletion.php/';
+	formData.append('filename', filename);
+	formData.append('type', type);
+	request.open("POST", url, true);
+	request.send(formData);
+	
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
+			console.log(filename + " has been deleted from the server.");
+		}
+		else {
+			console.warn("WARNING: some images may not have been deleted from the server.");
 		}
 	}
 }

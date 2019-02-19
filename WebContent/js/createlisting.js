@@ -23,19 +23,25 @@ $(document).ready(function() {
 	});
 	
 	fileAdder.addEventListener('change', function(e) {
-		//var reader = new FileReader();
 		for (var i = 0; i < fileAdder.files.length; i++) {
-			//if (!fileList.includes(fileAdder.files[i])) {
+			if (!fileList.includes(fileAdder.files[i])) {
 				console.log('file: ' + fileAdder.files[i].name);
-				fileList.push(fileAdder.files[i]);
-				if (fileList.length == 15) {
-					$('#addImageBtn').attr('disabled', 'disabled');
-					if (i < fileAdder.files.length - 1) {
-						//$('#uploadErrorAlert').html('Not all photos could be uploaded. Maximum number of photos reached.');
-						$('#uploadErrorAlert').css('display', 'block');
+				if (fileAdder.files[i].size <= 2097152) {
+					fileList.push(fileAdder.files[i]);
+					if (fileList.length == 10) {
+						$('#addImageBtn').attr('disabled', 'disabled');
+						if (i < fileAdder.files.length - 1) {
+							$('#uploadErrorAlert').html('Maximum number of images reached. Only ten (10) images can be uploaded per listing.');
+							$('#uploadErrorAlert').css('display', 'block');
+							break;
+						}
 					}
 				}
-			//}
+				else {
+					$('#uploadErrorAlert').html('Some images exceeded the maximum size limit.');
+					$('#uploadErrorAlert').css('display', 'block');
+				}
+			}
 		}
 		if (fileList.length > 0) {
 			$('.uploaded-photos-title').css('display', 'block');
