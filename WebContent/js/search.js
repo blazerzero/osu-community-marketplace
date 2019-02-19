@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	var url = new URL(window.location.href);
 	var type = url.searchParams.get("type");
 	var query = url.searchParams.get("query");

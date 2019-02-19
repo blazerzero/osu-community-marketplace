@@ -100,6 +100,47 @@ public class SavedListingDAOImpl implements SavedListingDAO {
 		return savedListings;
 	}
 	
+	@Override
+	public ArrayList<SavedListingPojo> getRecentSavedListings(String onid) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<SavedListingPojo> savedListings = new ArrayList<>();
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_RECENT_SAVED_LISTINGS);
+			preparedStatement.setString(1, onid);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				System.out.println(resultSet);
+				SavedListingPojo savedListingPojo = new SavedListingPojo();
+				savedListingPojo.setOnid(resultSet.getString("onid"));
+				savedListingPojo.setListingID(resultSet.getInt("listingID"));
+				savedListingPojo.setDateSaved(resultSet.getTimestamp("dateSaved").getTime());
+				savedListingPojo.setTitle(resultSet.getString("title"));
+				savedListingPojo.setType(resultSet.getString("type"));
+				savedListingPojo.setCampus(resultSet.getString("campus"));
+				savedListingPojo.setImageIDs(resultSet.getString("imageIDs"));
+				savedListingPojo.setDescription(resultSet.getString("description"));
+				savedListingPojo.setPrice(resultSet.getDouble("price"));
+				savedListingPojo.setDatePosted(resultSet.getTimestamp("datePosted").getTime());
+				
+				savedListings.add(savedListingPojo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		
+		return savedListings;
+	}
+	
+	@Override
 	public String removeListingFromSavedList(SavedListingPojo savedListing) {
 		String status = CommonConstants.STATUS_JDBC_ERROR;
 		Connection connect = null;

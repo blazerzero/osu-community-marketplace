@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
   $('#splashContent').css('display', 'none');
   var url = new URL(window.location.href);
   var ticket = url.searchParams.get('ticket');
@@ -74,7 +75,7 @@ $(document).ready(function() {
 		  //window.location.href = "./home.html";
 	  }*/
 	  $('#splashContent').css('display', 'block');
-	
+	  //logActivity("index.html");
 	
 	  var bgImgPath = './splash/' + chooseBackgroundImg();
 	  $('#splashImg').attr('src', bgImgPath);
@@ -84,8 +85,6 @@ $(document).ready(function() {
 	    $('#notifyEmail').val('');
 	    $('#invalidNotifyEmailAlert').hide();
 	  });
-	  
-	  
 	
 	  $('#submitNotifyBtn').click(function() {
 		var notifyObj = new Object();

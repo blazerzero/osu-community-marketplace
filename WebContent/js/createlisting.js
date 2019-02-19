@@ -3,6 +3,7 @@ var fileNames = [];
 var statusCodes = [];
 
 $(document).ready(function() {
+	
 	var fileAdder = document.getElementById('fileAdder');
 	
 	$('#addImageBtn').click(function() {
@@ -26,19 +27,19 @@ $(document).ready(function() {
 		for (var i = 0; i < fileAdder.files.length; i++) {
 			if (!fileList.includes(fileAdder.files[i])) {
 				console.log('file: ' + fileAdder.files[i].name);
+				fileList.push(fileAdder.files[i]);
 				if (fileAdder.files[i].size <= 2097152) {
-					fileList.push(fileAdder.files[i]);
 					if (fileList.length == 10) {
 						$('#addImageBtn').attr('disabled', 'disabled');
 						if (i < fileAdder.files.length - 1) {
-							$('#uploadErrorAlert').html('Maximum number of images reached. Only ten (10) images can be uploaded per listing.');
+							$('#uploadErrorAlert').html('Maximum number of images reached. The first 10 images will be uploaded.');
 							$('#uploadErrorAlert').css('display', 'block');
 							break;
 						}
 					}
 				}
 				else {
-					$('#uploadErrorAlert').html('Some images exceeded the maximum size limit.');
+					$('#uploadErrorAlert').html('Some images exceed the maximum size limit.');
 					$('#uploadErrorAlert').css('display', 'block');
 				}
 			}

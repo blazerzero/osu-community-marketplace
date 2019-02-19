@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	var listingToRemove = 0;
 	
 	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getSavedListings", "SavedListingController");

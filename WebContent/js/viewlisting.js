@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	var listingToRemove = 0;
 	
 	var url = new URL(window.location.href);

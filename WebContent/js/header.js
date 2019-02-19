@@ -3,6 +3,11 @@ $(document).ready(function() {
 	if (sessionStorage.length < 5) {
 		window.location.href = "./index.html";
 	}
+	else {
+		var urlPieces = window.location.href.split("/");
+		var pageName = urlPieces[urlPieces.length-1];
+		logActivity(pageName);
+	}
 	
 	$('.close').click(function() {
 		console.log($(this).data('id'));
@@ -101,4 +106,23 @@ function buildDatePosted(listingDatePosted) {
 function buildDescription(listingDescription) {
 	var tempDesc = listingDescription;
 	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
+}
+
+function logActivity(page_visited) {
+	var formData = new FormData();
+	var request = new XMLHttpRequest();
+	
+	var url = 'http://www.worksbythepg.com/osucm-logs/activity.php';
+	formData.append('user', sessionStorage.getItem('onid'));
+	formData.append('page_visited', page_visited);
+	request.open("POST", url, true);
+	request.send(formData);
+	
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
+			if (request.response != 'SUCCESS') {
+				console.warn('Error logging page to activity file.');
+			}
+		}
+	}
 }

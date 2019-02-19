@@ -2,29 +2,7 @@ $(document).ready(function() {
 	
 	$('#home-name').html('Hi, ' + sessionStorage.getItem('firstname') + '!');
 	
-	/*var savedListingsJSON = sendDataSync("", "getRecentSavedListings", "ListingController");
-	console.log(savedListingsJSON);
-	var savedListings = [];
-	if (savedListingsJSON != null && savedListingsJSON.length > 0) {
-		savedListings = jQuery.parseJSON(savedListingsJSON);
-	}
-	
-	$.each(savedListings, function(index, value) {
-		var imageIDs = value.imageIDs;
-		var imageIDList = imageIDs.split(', ');
-		console.log(imageIDList);
-		imageIDList.shift();
-		value.imageIDs = imageIDList;
-	});
-	
-	savedListings.sort(function(a, b) {
-		return (new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
-	});
-	
-	showHomeListings(savedListings, '#home-saved-listings', 'saved');*/
-	
 	var recentListingsJSON = sendDataSync("", "getRecentListings", "ListingController");
-	//console.log(recentListingsJSON);
 	var recentListings = [];
 	if (recentListingsJSON != null && recentListingsJSON.length > 0) {
 		recentListings = jQuery.parseJSON(recentListingsJSON);
@@ -44,8 +22,27 @@ $(document).ready(function() {
 	
 	showHomeListings(recentListings, '#home-new-listings', 'new');
 	
+	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem('onid')+"'}", "getRecentSavedListings", "SavedListingController");
+	var savedListings = [];
+	if (savedListingsJSON != null && savedListingsJSON.length > 0) {
+		savedListings = jQuery.parseJSON(savedListingsJSON);
+	}
+	
+	$.each(savedListings, function(index, value) {
+		var imageIDs = value.imageIDs;
+		var imageIDList = imageIDs.split(', ');
+		console.log(imageIDList);
+		imageIDList.shift();
+		value.imageIDs = imageIDList;
+	});
+	
+	savedListings.sort(function(a, b) {
+		return (new Date(a.dateSaved).getTime() - new Date(b.dateSaved).getTime());
+	});
+	
+	showHomeListings(savedListings, '#home-saved-listings', 'saved');
+	
 	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
-	//console.log(myListingsJSON);
 	var myListings = [];
 	if (myListingsJSON != null && myListingsJSON.length > 0) {
 		myListings = jQuery.parseJSON(myListingsJSON);

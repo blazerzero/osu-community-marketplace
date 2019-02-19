@@ -9,6 +9,7 @@ public interface SavedListingDAO extends GenericDAO {
 	
 	public String saveListing(SavedListingPojo savedListing);
 	public ArrayList<SavedListingPojo> getSavedListings(String onid);
+	public ArrayList<SavedListingPojo> getRecentSavedListings(String onid);
 	public String removeListingFromSavedList(SavedListingPojo savedListing);
 
 }
