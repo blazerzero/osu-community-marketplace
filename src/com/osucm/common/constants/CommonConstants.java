@@ -24,5 +24,6 @@ public interface CommonConstants {
 	String OP_DELETE_LISTING = "deleteListing";
 	String OP_REMOVE_LISTING_FROM_SAVED = "removeListingFromSavedList";
 	String OP_UPDATE_LISTING = "updateListing";
+	String OP_DELETE_IMAGES_FROM_LISTING = "deleteImagesFromListing";
 
 }

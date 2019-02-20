@@ -439,8 +439,32 @@ public class ListingDAOImpl implements ListingDAO {
 			DBConnectionFactory.close(resultSet, preparedStatement, connect);
 		}
 		
+		return status;
+	}
+	
+	@Override
+	public String deleteImagesFromListing(int listingID, String imageIDs) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 		
-		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.DELETE_IMAGES_FROM_LISTING);
+			preparedStatement.setString(1, imageIDs);
+			preparedStatement.setInt(2, listingID);
+			int executeUpdate = preparedStatement.executeUpdate();
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+		}
+		catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
 		return status;
 	}
 }

@@ -2,6 +2,7 @@ var numOriginalImages = 0;
 var originalImages = [];
 var fileList = [];
 var statusCodes = [];
+var originalListingDetails = [];
 
 $(document).ready(function() {
 	
@@ -17,7 +18,7 @@ $(document).ready(function() {
 		listingDetails = jQuery.parseJSON(detailsJSON);
 	}
 	
-	var originalListingDetails = listingDetails;
+	originalListingDetails = listingDetails;
 	
 	if (sessionStorage.getItem('onid') != listingDetails.onid) {
 		alert('You can\'t edit someone else\'s listing.');
@@ -59,9 +60,11 @@ $(document).ready(function() {
 		originalImages = originalListingDetails.imageIDs.split(', ');
 		console.log("originalImages: " + originalImages);
 		originalImages.shift();
-		originalListingDetails.imageIDs = originalImages;
+		originalListingDetails.imageIDs = originalImages.slice(0);
 		numOriginalImages = originalImages.length;
 	}
+	
+	console.log("originalListingDetails.imageIDs.length: " + originalListingDetails.imageIDs.length);
 	
 	if (numOriginalImages > 0) {
 		$('.uploaded-photos-title').css('display', 'block');
@@ -74,7 +77,7 @@ $(document).ready(function() {
 	for (var i = 0; i < originalImages.length; i++) {
 		$('#uploadedFiles').append(
 				  '<div>'
-				+	originalImages[i] + i
+				+	originalImages[i]
 				+	'<button type="button" class="close" aria-label="Close" data-id="'+i+'" onclick="deletePhoto(this)">'
 	        	+	  '<span aria-hidden="true">&times;</span>'
 	        	+	'</button>'
@@ -120,6 +123,7 @@ $(document).ready(function() {
 	});
 	
 	$('#saveChangesBtn').click(function() {
+		console.log("originalListingDetails.imageIDs.length: " + originalListingDetails.imageIDs.length);
 		var ready = true;
 		if ($('#listingTitle').val() == '') {
 			ready = false;
@@ -207,37 +211,74 @@ $(document).ready(function() {
 			console.log(status);
 			if (status == "JDBC_OK") {
 				console.log("fileList length: " + fileList.length);
-				console.log("originalImages length: " + originalImages.length);
-				if (fileList.length > 0 || originalImages.length > 0) {
+				console.log("originalListingDetails.imageIDs length: " + originalListingDetails.imageIDs.length);
+				console.log("num original images: " + numOriginalImages);
+				if (fileList.length > 0 || originalListingDetails.imageIDs.length > 0) {
 					$.each(originalListingDetails.imageIDs, function(index, value) {
 						if (!originalImages.includes(value)) {
 							deleteFileFromServer(value, type[0]);
 						}
 					});
-					if (fileList.length > 0) {
+					if (fileList.length == 0 && originalImages.length < numOriginalImages) {
+						var status = sendDataSync("{'listingID': '"+listingID+"', 'imageIDs': '"+originalImages.join(', ')+"'}", "deleteImagesFromListing", "ListingController");
+						console.log(status);
+						if (status != 'JDBC_OK') {
+							$('#incompleteFormAlert').removeClass('alert-danger');
+							$('#incompleteFormAlert').addClass('alert-warning');
+							$('#incompleteFormAlert').html('WARNING: Some images were not completely removed.');
+							$('#incompleteFormAlert').css('display', 'block');
+						}
+						else {
+							$('#saveChangesBtn').removeClass('btn-primary');
+							$('#saveChangesBtn').addClass('btn-success');
+							$('#saveChangesBtn').attr('disabled', 'disabled');
+							$('#saveChangesBtn').html('Changes Saved!');
+							setTimeout(function() {
+								window.location.href = "./mylistings.html";
+							}, 1000);
+						}
+					}
+					else if (fileList.length > 0) {
 						$.each(fileList, function(index, file) {
 					 		var numLeftToUpload = fileList.length - index;
 							sendFile(file, type[0], newListing.listingID, numLeftToUpload);
 						});
 					}
-					else {
+					/*else {
+						var status = sendDataSync("{'listingID': '"+listingID+"', 'imageIDs': '"+savedName+"'}", "addImageIDToNewListing", "ListingController");
+						console.log(status);
+						if (status != 'JDBC_OK') {
+							$('#incompleteFormAlert').removeClass('alert-danger');
+							$('#incompleteFormAlert').addClass('alert-warning');
+							$('#incompleteFormAlert').html('WARNING: Not all images were successfully uploaded to the server.');
+							$('#incompleteFormAlert').css('display', 'block');
+						}
+						if (numLeftToUpload - 1 == 0) {
+							$('#saveChangesBtn').removeClass('btn-primary');
+							$('#saveChangesBtn').addClass('btn-success');
+							$('#saveChangesBtn').attr('disabled', 'disabled');
+							$('#saveChangesBtn').html('Changes Saved!');
+							setTimeout(function() {
+								window.location.href = "./mylistings.html";
+							}, 1000);
+						}
 						$('#saveChangesBtn').removeClass('btn-primary');
 						$('#saveChangesBtn').addClass('btn-success');
 						$('#saveChangesBtn').attr('disabled', 'disabled');
-						$('#saveChangesBtn').html('Changes Saved!');
-						setTimeout(function() {
+						$('#saveChangesBtn').html('Changes Saved!');*/
+						/*setTimeout(function() {
 							window.location.href = "./mylistings.html";
-						}, 1000);
-					}
+						}, 1000);*/
+					//}
 				}
 				else {
 					$('#saveChangesBtn').removeClass('btn-primary');
 					$('#saveChangesBtn').addClass('btn-success');
 					$('#saveChangesBtn').attr('disabled', 'disabled');
 					$('#saveChangesBtn').html('Changes Saved!');
-					setTimeout(function() {
+					/*setTimeout(function() {
 						window.location.href = "./mylistings.html";
-					}, 1000);
+					}, 1000);*/
 				}
 				/*$('#saveChangesBtn').removeClass('btn-primary');
 				$('#saveChangesBtn').addClass('btn-success');
@@ -276,6 +317,7 @@ function deletePhoto(deleteBtn) {
 	console.log("idx: " + idx);
 	console.log("numOriginalImages: " + numOriginalImages);
 	console.log("original images: " + originalImages);
+	console.log("originalListingDetails.imageIDs.length: " + originalListingDetails.imageIDs.length);
 	if (idx < numOriginalImages) {
 		console.log("originalImages length before: " + originalImages.length);
 		originalImages.splice(idx, 1);
@@ -286,6 +328,8 @@ function deletePhoto(deleteBtn) {
 		fileList.splice(idx - numOriginalImages, 1);
 		console.log("fileList length after: " + fileList.length);
 	}
+	console.log("originalListingDetails.imageIDs.length: " + originalListingDetails.imageIDs.length);
+
 	$('#uploadedFiles').html('');
 	for (var i = 0; i < originalImages.length; i++) {
 		$('#uploadedFiles').append(
@@ -366,6 +410,7 @@ function sendFile(file, type, listingID, numLeftToUpload) {
 }
 
 function deleteFileFromServer(filename, type) {
+	console.log("deleting " + filename + " from server");
 	var formData = new FormData();
 	var request = new XMLHttpRequest();
 	
@@ -378,10 +423,13 @@ function deleteFileFromServer(filename, type) {
 	
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && (request.status == 200 || request.status == 201 || request.status == 202)) {
-			console.log(filename + " has been deleted from the server.");
-		}
-		else {
-			console.warn("WARNING: some images may not have been deleted from the server.");
+			console.log(request.response);
+			if (request.response == 'SUCCESS') {
+				console.log(filename + " has been deleted from the server.");
+			}
+			else {
+				console.warn("WARNING: some images may not have been deleted from the server.");
+			}
 		}
 	}
 }

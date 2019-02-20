@@ -129,6 +129,15 @@ public class ListingController extends HttpServlet {
         	response.getWriter().write(status);
         }
         
+        else if (null != message && CommonConstants.OP_DELETE_IMAGES_FROM_LISTING.equalsIgnoreCase(message)) {
+        	Gson gson = new Gson();
+        	ListingPojo newListing = gson.fromJson(jsonData, ListingPojo.class);
+        	System.out.println("got json");
+        	dao = new ListingDAOImpl();
+        	String status = dao.deleteImagesFromListing(newListing.getListingID(), newListing.getImageIDs());
+        	response.getWriter().write(status);
+        }
+        
 		System.out.println("ListingController:doPost Exiting...");
 	}
 

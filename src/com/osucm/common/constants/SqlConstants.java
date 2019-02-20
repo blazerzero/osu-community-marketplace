@@ -19,4 +19,6 @@ public interface SqlConstants {
 	String DELETE_LISTING = "DELETE FROM listings WHERE listingID = ?";
 	String REMOVE_LISTING_FROM_SAVED_LIST = "DELETE FROM saved_listings WHERE listingID = ? AND onid = ?";
 	String UPDATE_LISTING = "UPDATE listings SET type = ?, title = ?, campus = ?, description = ?, price = ?, payFrequency = ?, datePosted = ?, showEmail = ?, otherContact = ?, tags = ? WHERE listingID = ?"; 
+	String DELETE_IMAGES_FROM_LISTING = "UPDATE listings SET imageIDs = ? WHERE listingID = ?";
+
 }

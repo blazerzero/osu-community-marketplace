@@ -18,5 +18,6 @@ public interface ListingDAO extends GenericDAO {
 	public ArrayList<ListingPojo> searchListings(SearchListingPojo slPojo);
 	public String deleteListing(int listingID);
 	public String updateListing(ListingPojo listingPojo);
+	public String deleteImagesFromListing(int listingID, String imageIDs);
 
 }
