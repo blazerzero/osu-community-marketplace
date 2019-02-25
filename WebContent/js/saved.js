@@ -23,10 +23,15 @@ $(document).ready(function() {
 	});
 	
 	console.log(savedListings.length);
+	
+	if (savedListings.length == 0) {
+		$('#saved-listings').html("<center><strong>You have not saved any listings.</center></strong>");
+	}
+	
 	var len = savedListings.length - 1;
 	while (len >= 0) {
 		if (len >= 3) {
-			$('#my-listings').append(
+			$('#saved-listings').append(
 			'<div class="card-deck listing-row">'		
 		    + 	'<div class="card">'
 		    +     '<div class="card-body">'

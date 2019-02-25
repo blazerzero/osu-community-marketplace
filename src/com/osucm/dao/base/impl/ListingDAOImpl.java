@@ -333,6 +333,7 @@ public class ListingDAOImpl implements ListingDAO {
 				preparedStatement.setString(1, slPojo.getType());
 				preparedStatement.setString(2, "%"+queryWords[i]+"%");
 				preparedStatement.setString(3, "%"+queryWords[i]+"%");
+				preparedStatement.setString(4, "%"+queryWords[i]+"%");
 				resultSet = preparedStatement.executeQuery();
 				
 				while(resultSet.next()) {

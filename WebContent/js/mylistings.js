@@ -21,8 +21,12 @@ $(document).ready(function() {
 	
 	var listingToDelete = 0;
 	
+	if (myListings.length == 0) {
+		$('#my-listings').html("<center><strong>You have not posted any listings yet.</strong><div><a href='createlisting.html' class='btn btn-primary'>Create a Listing!</a></div></center>");
+	}
+	
 	var len = myListings.length - 1;
-	console.log(len);
+	//console.log(len);
 	while (len >= 0) {
 		if (len >= 3) {
 			$('#my-listings').append(

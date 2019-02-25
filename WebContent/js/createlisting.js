@@ -89,18 +89,17 @@ $(document).ready(function() {
 			$('#incompleteFormAlert').html('Please fill all required fields.');
 			$('#incompleteFormAlert').css('display', 'block');
 		} else $('#listingTypeSection').css('box-shadow', '0 0 0 white');
-		
+				
 		if ($('#listingPrice').val() == '') {
 			ready = false;
 			$('#listingPriceSection').css('box-shadow', '0 0 5px red');
 			$('#incompleteFormAlert').html('Please fill all required fields.');
 			$('#incompleteFormAlert').css('display', 'block');
-		}
-		else if (!$.isNumeric($('#listingPrice').val())) {
+		} else if (isNaN($('#listingPrice').val())) {
+			ready = false;
 			$('#incompleteFormAlert').html('Price must be a number.');
 			$('#incompleteFormAlert').css('display', 'block');
-		}
-		else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
+		} else $('#listingPriceSection').css('box-shadow', '0 0 0 white');
 		
 		if ($('#selectShowEmail').val() == '') {
 			ready = false;

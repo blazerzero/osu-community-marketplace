@@ -59,7 +59,12 @@ $(document).ready(function() {
 		else if (value.campus == 'Other') otherListings.push(value);
 	});
 	
-	showListings(listings, type, '#listings');
+	if (listings.length > 0) {
+		showListings(listings, type, '#listings');
+	}
+	else {
+		$('#listings').html("<center><strong>There are no " + type + " listings in the marketplace.</strong></center>");
+	}
 	
 	$('#searchSubmitBtn').click(function() {
 		console.log("search submit button clicked");

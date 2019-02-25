@@ -93,11 +93,12 @@ $(document).ready(function() {
 	}
 	
 	for (i = 0; i < savedListingList.length; i++) {
-		if (savedListingList[i].onid == sessionStorage.getItem('onid')) {
+		if (savedListingList[i].onid == sessionStorage.getItem('onid') && savedListingList[i].listingID == listingID) {
 			$('#saveListingBtn').removeClass('btn-primary');
 			$('#saveListingBtn').addClass('btn-danger');
 			//$('#saveListingBtn').attr('disabled', 'disabled');
 			$('#saveListingBtn').html('Remove from Saved List');
+			break;
 		}
 	}
 	

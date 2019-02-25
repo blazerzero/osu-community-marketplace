@@ -20,7 +20,12 @@ $(document).ready(function() {
 		value.imageIDs = imageIDList;
 	});
 	
-	showHomeListings(recentListings, '#home-new-listings', 'new');
+	if (recentListings.length > 0) {
+		showHomeListings(recentListings, '#home-new-listings', 'new');
+	}
+	else {
+		$('#home-new-listings').html("<center>No listings are on the marketplace right now.</center>");
+	}
 	
 	var savedListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem('onid')+"'}", "getRecentSavedListings", "SavedListingController");
 	var savedListings = [];
@@ -40,7 +45,12 @@ $(document).ready(function() {
 		return (new Date(a.dateSaved).getTime() - new Date(b.dateSaved).getTime());
 	});
 	
-	showHomeListings(savedListings, '#home-saved-listings', 'saved');
+	if (savedListings.length > 0) {
+		showHomeListings(savedListings, '#home-saved-listings', 'saved');
+	}
+	else {
+		$('#home-saved-listings').html("<center>You haven't saved any listings.</center>");
+	}
 	
 	var myListingsJSON = sendDataSync("{'onid': '"+sessionStorage.getItem("onid")+"'}", "getMyRecentListings", "ListingController");
 	var myListings = [];
@@ -62,7 +72,12 @@ $(document).ready(function() {
 	
 	console.log(myListings);
 	
-	showHomeListings(myListings, '#home-my-listings', 'my');
+	if (myListings.length > 0) {
+		showHomeListings(myListings, '#home-my-listings', 'my');
+	}
+	else {
+		$('#home-my-listings').html("<center>You haven't posted any listings yet.</center>");
+	}
 	
 	$('#homeSearchSubmitBtn').click(function() {
 		var typeVal = $('#homeSearchType').val();
