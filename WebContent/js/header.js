@@ -44,11 +44,11 @@ function showHomeListings(listings, location, type) {
 			html += '<div class="card">'
 		    +     '<div class="card-body">'
 		    +		(type == 'saved' 
-		    		? '<button type="button" class="close" id="removeFromSavedListX" aria-label="Close" data-id="saved'+listings[len].listingID+'">'
+		    		? '<button type="button" class="close" aria-label="Close" data-id="removeSaved'+listings[len].listingID+'">'
 		    	        	+		  '<span aria-hidden="true">&times;</span>'
 		    	        	+	  	'</button>'
 		    		: (type == 'my' 
-		    			? '<button type="button" class="close" id="deleteMyListingX" aria-label="Close" data-id="deleteMy'+listings[len].listingID+'">'
+		    			? '<button type="button" class="close" aria-label="Close" data-id="deleteListing'+listings[len].listingID+'">'
 		    				+	'<span aria-hidden="true">&times;</span>'
 		    				+ '</button>'
 		    			: '')

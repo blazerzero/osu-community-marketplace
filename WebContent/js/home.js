@@ -90,6 +90,52 @@ $(document).ready(function() {
 			window.location.href="search.html?type="+type+"&query="+input;
 		}
 	});
+	
+	$('.close').click(function() {
+		console.log($(this).data('id'));
+		if ($(this).data('id') != null && $(this).data('id').includes('removeSaved')) {
+			listingToRemove = $(this).data('id').substring(11);
+			//alert(id);
+			console.log("listing ID: " + listingToRemove);
+			var listing = savedListings.find(function(e) {
+				return e.listingID == listingToRemove;
+			});
+			$('#removeFromSavedLabel').html('Confirm: Remove "' + listing.title + '" from your saved list');
+			$('#confirmRemoveFromSavedModal').modal('show');
+		}
+		else if ($(this).data('id') != null && $(this).data('id').includes('deleteListing')) {
+			listingToDelete = $(this).data('id').substring(13);
+			//alert(id);
+			console.log("listing ID: " + listingToDelete);
+			var listing = myListings.find(function(e) {
+				return e.listingID == listingToDelete;
+			});
+			$('#deleteListingLabel').html('Confirm: Delete "' + listing.title + '"');
+			$('#confirmDeleteListingModal').modal('show');
+		} 
+	});
+	
+	$('#removeFromSavedBtn').click(function() {
+		$('#confirmRemoveFromSavedModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingToRemove + "', 'onid': '"+sessionStorage.getItem('onid')+"'}", "removeListingFromSavedList", "SavedListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingRemovedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'home.html';
+			}, 2000);
+		}
+	});
+	
+	$('#deleteListingBtn').click(function() {
+		$('#confirmDeleteListingModal').modal('hide');
+		var status = sendDataSync("{'listingID': '" + listingToDelete + "'}", "deleteListing", "ListingController");
+		if (status == 'JDBC_OK') {
+			$('#listingDeletedModal').modal('show');
+			setTimeout(function() {
+				window.location.href = 'home.html';
+			}, 2000);
+		}
+	});
 });
 
 function validateSearchForm(type, input) {
