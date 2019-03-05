@@ -56,7 +56,7 @@ function showHomeListings(listings, location, type) {
 		    +      	'<h5 class="card-title">'+listings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+listings[len].type.charAt(0).toUpperCase()+listings[len].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(listings[len] == 'Bend' ? 'Bend (Cascades)' : (listings[len] == 'Other' ? 'Other (See description)' : listings[len].campus))+'</p>'
-		    +    	(listings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+listings[len].type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +    	((listings[len].imageIDs.length == 0 || listings[len].imageIDs[0] == '') ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+listings[len].type[0]+'/'+listings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
 		    +      	'<p class="card-text">'+buildDescription(listings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(listings[len].price, listings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+listings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
@@ -105,7 +105,8 @@ function buildDatePosted(listingDatePosted) {
 
 function buildDescription(listingDescription) {
 	var tempDesc = listingDescription;
-	return (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc);
+	var descToShow = (tempDesc.length > 128 ? tempDesc.substring(0,128)+'...' : tempDesc).split('; ')[0];
+	return descToShow;
 }
 
 function logActivity(page_visited) {

@@ -47,7 +47,7 @@ $(document).ready(function() {
 		if (fileList.length > 0) {
 			$('.uploaded-photos-title').css('display', 'block');
 		}
-		//$('#uploadedFiles').html('');
+		$('#uploadedFiles').html('');
 		for (var i = 0; i < fileList.length; i++) {
 			$('#uploadedFiles').append(
 					  '<div>'

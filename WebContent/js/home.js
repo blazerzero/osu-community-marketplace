@@ -16,7 +16,9 @@ $(document).ready(function() {
 		var imageIDs = value.imageIDs;
 		var imageIDList = imageIDs.split(', ');
 		console.log(imageIDList);
-		imageIDList.shift();
+		if (imageIDs.includes(', ')) {
+			imageIDList.shift();
+		}
 		value.imageIDs = imageIDList;
 	});
 	
@@ -37,7 +39,9 @@ $(document).ready(function() {
 		var imageIDs = value.imageIDs;
 		var imageIDList = imageIDs.split(', ');
 		console.log(imageIDList);
-		imageIDList.shift();
+		if (imageIDs.includes(', ')) {
+			imageIDList.shift();
+		}
 		value.imageIDs = imageIDList;
 	});
 	
@@ -66,7 +70,9 @@ $(document).ready(function() {
 		var imageIDs = value.imageIDs;
 		var imageIDList = imageIDs.split(', ');
 		console.log(imageIDList);
-		imageIDList.shift();
+		if (imageIDs.includes(', ')) {
+			imageIDList.shift();
+		}
 		value.imageIDs = imageIDList;
 	});
 	

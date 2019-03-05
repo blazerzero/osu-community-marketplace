@@ -19,6 +19,8 @@ $(document).ready(function() {
 	}
 	
 	originalListingDetails = listingDetails;
+	var formattedDesc = originalListingDetails.description.split("; ").join("\n");
+	originalListingDetails.description = formattedDesc;
 	
 	if (sessionStorage.getItem('onid') != listingDetails.onid) {
 		alert('You can\'t edit someone else\'s listing.');
@@ -59,7 +61,9 @@ $(document).ready(function() {
 	if (originalListingDetails.imageIDs != "") {
 		originalImages = originalListingDetails.imageIDs.split(', ');
 		console.log("originalImages: " + originalImages);
-		originalImages.shift();
+		if (originalListingDetails.imageIDs.includes(', ')) {
+			originalImages.shift();
+		}
 		originalListingDetails.imageIDs = originalImages.slice(0);
 		numOriginalImages = originalImages.length;
 	}

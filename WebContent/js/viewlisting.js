@@ -15,7 +15,9 @@ $(document).ready(function() {
 	var imageIDs = listingDetails.imageIDs;
 	var imageIDList = imageIDs.split(', ');
 	console.log(imageIDList);
-	imageIDList.shift();
+	if (imageIDs.includes(', ')) {
+		imageIDList.shift();
+	}
 	listingDetails.imageIDs = imageIDList;
 	
 	$(document).attr('title', listingDetails.title + ' - OSU Community Marketplace');
@@ -36,7 +38,7 @@ $(document).ready(function() {
 	$('#listingDatePosted').append(buildDatePosted(listingDetails.datePosted));
 	$('#listingType').append(listingDetails.type.charAt(0).toUpperCase() + listingDetails.type.slice(1));
 	$('#listingCampus').append((listingDetails.campus == 'Bend' ? 'Bend (Cascades)' : (listingDetails.campus == 'Other' ? 'Other (See description)' : listingDetails.campus)));
-	$('#listingDescription').append(listingDetails.description);
+	$('#listingDescription').append(listingDetails.description.split("; ").join("<br/>"));
 	$('#listingPrice').append(buildPrice(listingDetails.price, listingDetails.payFrequency));
 	$('#listingEmail').append(listingDetails.email);
 	$('#listingShowEmail').append(listingDetails.showEmail);
@@ -66,7 +68,7 @@ $(document).ready(function() {
 	
 	if (listingDetails.onid == sessionStorage.getItem('onid')) $('#listingPoster').append(' (You)');
 	
-	if (listingDetails.imageIDs.length != 0) {
+	if (listingDetails.imageIDs.length != 0 && listingDetails.imageIDs[0] != '') {
 		$('#listingCarouselIndicators').append('<li data-target="#listingImageDiv" data-slide-to="0" class="active"></li>');
 		$('#listingImages').append(
 				  '<div class="carousel-item active">'

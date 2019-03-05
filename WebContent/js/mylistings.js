@@ -15,7 +15,9 @@ $(document).ready(function() {
 		var imageIDs = value.imageIDs;
 		var imageIDList = imageIDs.split(', ');
 		console.log(imageIDList);
-		imageIDList.shift();
+		if (imageIDs.includes(', ')) {
+			imageIDList.shift();
+		}
 		value.imageIDs = imageIDList;
 	});
 	
@@ -39,8 +41,8 @@ $(document).ready(function() {
 		    +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+myListings[len].type.charAt(0).toUpperCase()+myListings[len].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(myListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (myListings[len].campus == 'Other' ? 'Other (See description)' : myListings[len].campus))+'</p>'
-		    +    	(myListings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-		    +      	'<p class="card-text">'+myListings[len].description+'</p>'
+		    +    	((myListings[len].imageIDs.length == 0 || myListings[len].imageIDs[0] == '') ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +      	'<p class="card-text">'+buildDescription(myListings[len].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price, myListings[len].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +      	'<a href="editlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-info listing-action">Edit</a>'
@@ -54,11 +56,11 @@ $(document).ready(function() {
 		    +		'<button type="button" class="close" aria-label="Close" data-id="deleteListing'+myListings[len-1].listingID+'">'
         	+		  '<span aria-hidden="true">&times;</span>'
         	+	  	'</button>'
-		    +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
+		    +      	'<h5 class="card-title">'+myListings[len-1].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+myListings[len-1].type.charAt(0).toUpperCase()+myListings[len-1].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(myListings[len-1].campus == 'Bend' ? 'Bend (Cascades)' : (myListings[len-1].campus == 'Other' ? 'Other (See description)' : myListings[len-1].campus))+'</p>'
-		    +    	(myListings[len-1].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len-1].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-		    +      	'<p class="card-text">'+myListings[len-1].description+'</p>'
+		    +    	((myListings[len-1].imageIDs.length == 0 || myListings[len-1].imageIDs[0] == '') ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len-1].type[0]+'/'+myListings[len-1].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +      	'<p class="card-text">'+buildDescription(myListings[len-1].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len-1].price)+(myListings[len-1].payFrequency == '' ? '' : '/'+myListings[len-1].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+myListings[len-1].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +      	'<a href="editlisting.html?listingID='+myListings[len-1].listingID+'" class="btn btn-info listing-action">Edit</a>'
@@ -75,8 +77,8 @@ $(document).ready(function() {
 		    +      	'<h5 class="card-title">'+myListings[len-2].title+'</h5>'
 		    +		'<p class="card-text">Listing type: '+myListings[len-2].type.charAt(0).toUpperCase()+myListings[len-2].type.substring(1)+'</p>'
 		    +		'<p class="card-text">Campus: '+(myListings[len-2].campus == 'Bend' ? 'Bend (Cascades)' : (myListings[len-2].campus == 'Other' ? 'Other (See description)' : myListings[len-2].campus))+'</p>'
-		    +    	(myListings[len-2].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len-2].type[0]+'/'+myListings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-		    +      	'<p class="card-text">'+myListings[len-2].description+'</p>'
+		    +    	((myListings[len-2].imageIDs.length == 0 || myListings[len-2].imageIDs[0] == '') ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len-2].type[0]+'/'+myListings[len-2].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+		    +      	'<p class="card-text">'+buildDescription(myListings[len-2].description)+'</p>'
 		    +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len-2].price)+(myListings[len-2].payFrequency == '' ? '' : '/'+myListings[len-2].payFrequency)+'</strong></h5>'
 		    +      	'<a href="viewlisting.html?listingID='+myListings[len-2].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 		    +      	'<a href="editlisting.html?listingID='+myListings[len-2].listingID+'" class="btn btn-info listing-action">Edit</a>'
@@ -102,8 +104,8 @@ $(document).ready(function() {
 						  +      	'<h5 class="card-title">'+myListings[len].title+'</h5>'
 						  +			'<p class="card-text">Listing type: '+myListings[len].type.charAt(0).toUpperCase()+myListings[len].type.substring(1)+'</p>'
 						  +			'<p class="card-text">Campus: '+(myListings[len].campus == 'Bend' ? 'Bend (Cascades)' : (myListings[len].campus == 'Other' ? 'Other (See description)' : myListings[len].campus))+'</p>'
-						  +    		(myListings[len].imageIDs.length == 0 ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
-						  +      	'<p class="card-text">'+myListings[len].description+'</p>'
+						  +    		((myListings[len].imageIDs.length == 0 || myListings[len].imageIDs[0] == '') ? '' : '<img src="http://www.worksbythepg.com/osucm-images/'+myListings[len].type[0]+'/'+myListings[len].imageIDs[0]+'" class="main-listing-img" alt="listing image">')
+						  +      	'<p class="card-text">'+buildDescription(myListings[len].description)+'</p>'
 						  +      	'<h5 class="card-title list-price"><strong>$'+buildPrice(myListings[len].price)+(myListings[len].payFrequency == '' ? '' : '/'+myListings[len].payFrequency)+'</strong></h5>'
 						  +      	'<a href="viewlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-primary listing-action">View Details</a>'
 						  +      	'<a href="editlisting.html?listingID='+myListings[len].listingID+'" class="btn btn-info listing-action">Edit</a>'
