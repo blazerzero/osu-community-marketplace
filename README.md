@@ -1,6 +1,7 @@
 # OSU Community Marketplace
 
 Project Manager: Omeed Habibelahian
+
 Contributors:
 - Omeed Habibelahian
 - Sheekha Jariwala
